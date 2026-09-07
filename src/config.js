@@ -34,7 +34,7 @@ export const CONFIG = {
     // The product gallery on the reveal page: she should see it clearly.
     // Drop more shots into public/photos/bag/ and list them here, first one
     // is the one shown when the page opens.
-    bagShots: ['photos/bag.png', 'photos/bag/01.jpg', 'photos/bag/02.jpg', 'photos/bag-open.png'],
+    bagShots: ['photos/bag.png', 'photos/bag/01.png', 'photos/bag/02.png', 'photos/bag-open.png'],
     // Her mid sheet-mask, for the spa advertorial. Funny on purpose.
     mask: 'photos/mask.jpg',
     // A childhood photograph, for the "this is who turns 28" pass.
@@ -170,8 +170,6 @@ export const PLAN = {
   ],
   cue: 'tap the list',
 
-  // The turn, in her words, and then our list.
-  claim: 'We would gift them to you if we could.',
   ourTitle: 'So here is the list we would write for you.',
   // TODO YOURS. These lines are the gift on this page and they have to come
   // from you: written by me they read as somebody impersonating your group.

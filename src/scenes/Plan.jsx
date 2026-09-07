@@ -4,13 +4,11 @@ import { useCta, useExperience } from '../experience.js'
 import { PLAN } from '../config.js'
 import { Rule } from '../components/Paper.jsx'
 
-// Her homework, traded for our list.
-//
-// Every earlier version of this page only ever took something away: the lines
-// were crossed off, then they vanished, and both messages were consolation.
-// Nothing arrived, so there was no reward in it. Now the programme she asked
-// for is crossed off and a different list writes itself into the space, which
-// is a thing being given rather than a thing being removed.
+// One list, all the way through. Her programme is crossed off and the line
+// that was never hers to do is added to the foot of the same list, so the
+// five struck rows and the one standing row are in view together. Putting
+// that on a following screen threw the contrast away, and a line of
+// commentary in between only delayed it.
 
 // A hand-drawn strike: off-level and slightly bowed, so it reads as a pen.
 function Strike({ show, delay = 0, seed = 0 }) {
@@ -38,7 +36,7 @@ function Strike({ show, delay = 0, seed = 0 }) {
   )
 }
 
-function Underline({ show, delay = 0 }) {
+function Underline({ delay = 0 }) {
   return (
     <svg
       className="absolute pointer-events-none"
@@ -54,7 +52,7 @@ function Underline({ show, delay = 0 }) {
         strokeWidth="2.4"
         strokeLinecap="round"
         initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: show ? 1 : 0, opacity: show ? 1 : 0 }}
+        animate={{ pathLength: 1, opacity: 1 }}
         transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
       />
     </svg>
@@ -63,162 +61,132 @@ function Underline({ show, delay = 0 }) {
 
 export default function Plan() {
   const { next } = useExperience()
-  const [phase, setPhase] = useState('list') // list · struck · ours
+  const [phase, setPhase] = useState('list') // list · struck · given
   const timers = useRef([])
 
-  useCta(phase === 'ours' ? { onClick: next } : null, [phase, next])
+  useCta(phase === 'given' ? { onClick: next } : null, [phase, next])
   useEffect(() => () => timers.current.forEach(clearTimeout), [])
+
+  const lastStrike = (PLAN.items.length - 1) * 0.16 + 0.36
 
   const cross = () => {
     if (phase !== 'list') return
     setPhase('struck')
-    timers.current.push(setTimeout(() => setPhase('ours'), 2600))
+    timers.current.push(setTimeout(() => setPhase('given'), (lastStrike + 0.45) * 1000))
   }
 
   const struck = phase !== 'list'
-  const ours = phase === 'ours'
+  const given = phase === 'given'
 
   return (
-    <div className="w-full max-w-[380px] mx-auto relative" style={{ minHeight: 560 }}>
-      <AnimatePresence>
-        {!ours && (
-          <motion.div
-            key="programme"
-            className="absolute inset-x-0 top-0"
-            exit={{ opacity: 0, y: -16, transition: { duration: 0.7 } }}
-          >
-            <p className="display" style={{ fontSize: 24, lineHeight: 1.32, fontWeight: 400 }}>
-              {PLAN.standfirst}
-            </p>
+    <div className="w-full max-w-[380px] mx-auto">
+      <p className="display" style={{ fontSize: 24, lineHeight: 1.32, fontWeight: 400 }}>
+        {PLAN.standfirst}
+      </p>
 
-            <button
-              onClick={cross}
-              className="w-full text-left bg-transparent border-0 p-0 mt-5"
-              style={{ cursor: phase === 'list' ? 'pointer' : 'default' }}
-              aria-label="Cross the programme off"
-            >
-              <Rule />
-              {PLAN.items.map((item, i) => (
-                <div key={i}>
-                  <div style={{ padding: '15px 2px' }}>
-                    <span className="relative inline-block">
-                      <motion.span
-                        className="block"
-                        style={{ fontSize: 16.5, lineHeight: 1.35 }}
-                        animate={{ color: struck ? 'var(--ink-40)' : 'var(--ink)' }}
-                        transition={{ delay: struck ? i * 0.16 : 0, duration: 0.4 }}
-                      >
-                        {item}
-                      </motion.span>
-                      <Strike show={struck} delay={i * 0.16} seed={i} />
-                    </span>
-                  </div>
-                  <Rule />
-                </div>
-              ))}
-            </button>
-
-            <div className="mt-5 text-center" style={{ minHeight: 74 }}>
-              <AnimatePresence mode="wait">
-                {phase === 'list' ? (
-                  <motion.p
-                    key="cue"
-                    className="script"
-                    style={{ fontSize: 17, color: 'var(--accent)' }}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, y: [0, -3, 0] }}
-                    exit={{ opacity: 0, transition: { duration: 0.3 } }}
-                    transition={{ y: { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }, opacity: { duration: 0.3 } }}
-                  >
-                    {PLAN.cue}
-                  </motion.p>
-                ) : (
-                  <motion.p
-                    key="claim"
-                    className="script"
-                    style={{ fontSize: 23, lineHeight: 1.3, color: 'var(--accent)' }}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.05, duration: 0.8 }}
-                  >
-                    {PLAN.claim}
-                  </motion.p>
-                )}
-              </AnimatePresence>
+      <button
+        onClick={cross}
+        className="w-full text-left bg-transparent border-0 p-0 mt-5"
+        style={{ cursor: phase === 'list' ? 'pointer' : 'default' }}
+        aria-label="Cross the programme off"
+      >
+        <Rule />
+        {PLAN.items.map((item, i) => (
+          <div key={i}>
+            <div style={{ padding: '15px 2px' }}>
+              <span className="relative inline-block">
+                <motion.span
+                  className="block"
+                  style={{ fontSize: 16.5, lineHeight: 1.35 }}
+                  animate={{ color: struck ? 'var(--ink-40)' : 'var(--ink)' }}
+                  transition={{ delay: struck ? i * 0.16 : 0, duration: 0.4 }}
+                >
+                  {item}
+                </motion.span>
+                <Strike show={struck} delay={i * 0.16} seed={i} />
+              </span>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <Rule />
+          </div>
+        ))}
 
-      {/* our list, writing itself into the space the other one left */}
-      <AnimatePresence>
-        {ours && (
-          <motion.div
-            key="ours"
-            className="absolute inset-x-0 top-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-          >
-            {PLAN.ours.length > 0 && (
-              <motion.p
-                className="display"
-                style={{ fontSize: 25, lineHeight: 1.3 }}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.45, duration: 0.8 }}
-              >
-                {PLAN.ourTitle}
-              </motion.p>
-            )}
-
-            <div className={PLAN.ours.length ? 'mt-6' : ''}>
-              {PLAN.ours.length > 0 && <Rule />}
-              {PLAN.ours.map((item, i) => (
+        {/* added to the foot of the same list, once the rest is crossed off */}
+        <AnimatePresence>
+          {given && (
+            <motion.div
+              key="given"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {/* whatever the sixteen decide to add goes in here first */}
+              {PLAN.ours.map((line, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: -14 }}
+                  initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.9 + i * 0.28, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ delay: 0.5 + i * 0.26, duration: 0.55 }}
                 >
                   <div className="flex items-baseline gap-3" style={{ padding: '15px 2px' }}>
-                    <span className="numeral shrink-0" style={{ fontSize: 15, color: 'var(--accent)', width: 18 }}>
+                    <span className="numeral shrink-0" style={{ fontSize: 15, color: 'var(--accent)', width: 16 }}>
                       {i + 1}
                     </span>
-                    <span style={{ fontSize: 16.5, lineHeight: 1.35 }}>{item}</span>
+                    <span style={{ fontSize: 16.5, lineHeight: 1.35 }}>{line}</span>
                   </div>
                   <Rule />
                 </motion.div>
               ))}
 
-              {/* the one that was never anybody's to do */}
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9 + PLAN.ours.length * 0.28 + 0.35, duration: 0.8 }}
+                transition={{ delay: 0.5 + PLAN.ours.length * 0.26, duration: 0.7 }}
               >
-                <div style={{ padding: '19px 2px 16px' }}>
+                <div style={{ padding: '18px 2px 14px' }}>
                   <span className="relative inline-block">
-                    <span className="display block" style={{ fontSize: 23, lineHeight: 1.2 }}>
+                    <span className="display block" style={{ fontSize: 22, lineHeight: 1.25 }}>
                       {PLAN.finalWish}
                     </span>
-                    <Underline show delay={0.9 + PLAN.ours.length * 0.28 + 0.8} />
+                    <Underline delay={0.5 + PLAN.ours.length * 0.26 + 0.45} />
                   </span>
-                  <motion.p
-                    className="script mt-3"
-                    style={{ fontSize: 18, color: 'var(--accent)' }}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.9 + PLAN.ours.length * 0.28 + 1.2, duration: 0.7 }}
-                  >
-                    {PLAN.finalNote}
-                  </motion.p>
                 </div>
+                <Rule />
               </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </button>
+
+      {/* her line while the pen is still wet, then the note under the list */}
+      <div className="mt-5 text-center" style={{ minHeight: 76 }}>
+        <AnimatePresence mode="wait">
+          {phase === 'list' && (
+            <motion.p
+              key="cue"
+              className="script"
+              style={{ fontSize: 17, color: 'var(--accent)' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, y: [0, -3, 0] }}
+              exit={{ opacity: 0, transition: { duration: 0.3 } }}
+              transition={{ y: { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }, opacity: { duration: 0.3 } }}
+            >
+              {PLAN.cue}
+            </motion.p>
+          )}
+          {given && (
+            <motion.p
+              key="note"
+              className="script"
+              style={{ fontSize: 20, lineHeight: 1.3, color: 'var(--accent)' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 + PLAN.ours.length * 0.26 + 0.9, duration: 0.7 }}
+            >
+              {PLAN.finalNote}
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   )
 }
