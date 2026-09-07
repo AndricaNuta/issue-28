@@ -16,8 +16,6 @@ export const CONFIG = {
   edition: 'Special edition',
   // Printed down the left of the cover, magazine style.
   coverLines: ["What's in her bag?", 'The 28-day plan', 'Your year ahead'],
-  // Captions under the two feature photographs.
-  groupCaption: 'The editorial team, in full. Masthead, page 14.',
   // For her access pass on the entry page. Keep it short and funny.
   occupation: 'Birthday girl',   // TODO
   // The line under the pass. Say what this is, plainly.
@@ -39,10 +37,6 @@ export const CONFIG = {
     baby: 'photos/baby.jpg',
     // The real one, underneath the glossy cover shot. Crocs and all.
     herReal: 'photos/her-real.jpg',
-    // Opens the contents page: all of us, in one frame.
-    group: 'photos/group.jpg',
-    // Opens the wellness feature. Ideally her enjoying herself.
-    plan: 'photos/plan.jpg',
   },
 
   // Where the mouth of the open bag sits, as percentages of that photo.
@@ -125,7 +119,6 @@ export const PLAN = {
   kicker: 'Wellness',
   title: 'The 28-Day Plan',
   standfirst: 'You said you wanted your life in order this year.',
-  caption: 'The wellness programme, in action. Photographed on location.',
   // Struck out, one after another.
   items: [
     'Wake at 5am, radiant, unprompted',

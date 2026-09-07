@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
 import { PLAN } from '../config.js'
-import { CONFIG } from '../config.js'
-import { Kicker, Photo, Rule } from '../components/Paper.jsx'
+import { Kicker, Rule } from '../components/Paper.jsx'
 
 // Her wish, printed as the programme she asked for, then struck out with a red
 // pen. One tap does the whole page. It used to be six checkboxes followed by a
@@ -74,21 +73,6 @@ export default function Plan() {
       <p className="serif-it mt-3" style={{ fontSize: 16.5, lineHeight: 1.45, color: 'var(--ink-60)' }}>
         {PLAN.standfirst}
       </p>
-
-      {/* the feature photograph */}
-      <div className="mt-5">
-        <Photo
-          src={CONFIG.photos.plan}
-          alt="On location"
-          placeholder="ON LOCATION"
-          objectPosition="center 30%"
-          className="w-full block"
-          style={{ aspectRatio: '4 / 3', borderRadius: 2 }}
-        />
-        <p className="mt-2" style={{ fontSize: 11.5, color: 'var(--ink-40)', lineHeight: 1.45 }}>
-          {PLAN.caption}
-        </p>
-      </div>
 
       {/* the programme. one tap strikes the lot. */}
       <button
