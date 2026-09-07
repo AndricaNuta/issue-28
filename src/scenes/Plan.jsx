@@ -160,18 +160,20 @@ export default function Plan() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.35 }}
           >
-            <motion.p
-              className="display"
-              style={{ fontSize: 25, lineHeight: 1.3 }}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45, duration: 0.8 }}
-            >
-              {PLAN.ourTitle}
-            </motion.p>
+            {PLAN.ours.length > 0 && (
+              <motion.p
+                className="display"
+                style={{ fontSize: 25, lineHeight: 1.3 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45, duration: 0.8 }}
+              >
+                {PLAN.ourTitle}
+              </motion.p>
+            )}
 
-            <div className="mt-6">
-              <Rule />
+            <div className={PLAN.ours.length ? 'mt-6' : ''}>
+              {PLAN.ours.length > 0 && <Rule />}
               {PLAN.ours.map((item, i) => (
                 <motion.div
                   key={i}

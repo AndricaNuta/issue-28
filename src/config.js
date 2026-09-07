@@ -173,12 +173,10 @@ export const PLAN = {
   // The turn, in her words, and then our list.
   claim: 'We would gift them to you if we could.',
   ourTitle: 'So here is the list we would write for you.',
-  ours: [
-    'Sleep in on a Tuesday and feel nothing about it',
-    'Eat the bread',
-    'Say no without writing a paragraph first',
-    'Be adored, loudly, by everyone in the room',
-  ],
+  // TODO YOURS. These lines are the gift on this page and they have to come
+  // from you: written by me they read as somebody impersonating your group.
+  // Any number of them works, and the page skips this block if it is empty.
+  ours: [],
   // The last line, given its own weight and underlined in red.
   finalWish: 'Be loved exactly as you are',
   finalNote: 'That one is already done.',
