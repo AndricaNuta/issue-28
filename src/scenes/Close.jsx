@@ -17,7 +17,7 @@ export default function Close() {
   // it falls back to muted and offers a button.
   // the cannons go off as the last page arrives
   useEffect(() => {
-    const t = setTimeout(() => cannons(4), 450)
+    const t = setTimeout(() => cannons(1.6), 450)
     return () => clearTimeout(t)
   }, [])
 
