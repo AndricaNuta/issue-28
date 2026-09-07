@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
 import { CONFIG } from '../config.js'
 import { frameDistance, usePointerDrag } from '../lib/drag.js'
+import { party } from '../lib/confetti.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
 import Action from '../components/Action.jsx'
 import Next from '../components/Next.jsx'
@@ -329,7 +330,14 @@ export default function Bag() {
           {/* the glossy version, painted on top to be rubbed away */}
           <AnimatePresence>
             {!wiped && (
-              <Wipe src={CONFIG.photos.her} focusY={0.3} onDone={() => setWiped(true)} />
+              <Wipe
+                src={CONFIG.photos.her}
+                focusY={0.3}
+                onDone={() => {
+                  setWiped(true)
+                  setTimeout(party, 260)
+                }}
+              />
             )}
           </AnimatePresence>
         </div>
@@ -345,7 +353,13 @@ export default function Bag() {
               >
                 {CONFIG.bag.oopsCue}
               </motion.p>
-              <button className="link" onClick={() => setWiped(true)}>
+              <button
+                className="link"
+                onClick={() => {
+                  setWiped(true)
+                  setTimeout(party, 260)
+                }}
+              >
                 or just take it off
               </button>
             </>

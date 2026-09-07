@@ -14,7 +14,7 @@ const FLICK = 70 // px of travel that counts as a flick rather than a tap
 const tiltFor = (i) => ((i * 37) % 15) - 7
 const offsetFor = (i) => ({ x: ((i * 53) % 17) - 8, y: ((i * 29) % 13) - 6 })
 
-function Polaroid({ memory, style, dragging }) {
+function Polaroid({ memory, style, dragging, playing = false }) {
   return (
     <div
       style={{
@@ -24,14 +24,30 @@ function Polaroid({ memory, style, dragging }) {
         ...style,
       }}
     >
-      <Photo
-        src={memory.photo}
-        alt={memory.caption || 'A photograph'}
-        placeholder="PHOTO"
-        objectPosition={memory.focus || 'center 35%'}
-        className="w-full block"
-        style={{ aspectRatio: '1 / 1' }}
-      />
+      {memory.video ? (
+        // Muted and looping, and only while it is the card on top: several
+        // clips decoding at once for the sake of the pile behind is waste.
+        <video
+          src={import.meta.env.BASE_URL + memory.video}
+          poster={import.meta.env.BASE_URL + memory.photo}
+          muted
+          loop
+          playsInline
+          autoPlay={playing}
+          preload={playing ? 'auto' : 'metadata'}
+          className="w-full block"
+          style={{ aspectRatio: '1 / 1', objectFit: 'cover', objectPosition: memory.focus || 'center 35%' }}
+        />
+      ) : (
+        <Photo
+          src={memory.photo}
+          alt={memory.caption || 'A photograph'}
+          placeholder="PHOTO"
+          objectPosition={memory.focus || 'center 35%'}
+          className="w-full block"
+          style={{ aspectRatio: '1 / 1' }}
+        />
+      )}
       {/* the white lip a polaroid has, carrying the occasion if there is one.
           No names: these are group shots, so one name on one of them only
           raises the question of which person it refers to. */}
@@ -229,7 +245,7 @@ export default function Pack() {
                   }
                   whileDrag={{ scale: 1.03 }}
                 >
-                  <Polaroid memory={p} dragging={isTop} />
+                  <Polaroid memory={p} dragging={isTop} playing={isTop} />
                 </motion.div>
               )
             })

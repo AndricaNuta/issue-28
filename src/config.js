@@ -126,6 +126,13 @@ export const CONFIG = {
 
   // --- Sign-off ---
   closing: 'Same time next issue.',
+  // 'Masthead' is magazine jargon for the page listing everyone who made the
+  // issue. Nobody reading this owes us that word, so both labels say it plainly.
+  closingKicker: 'Who made this',
+  creditsLabel: 'All of us',
+  // Plays on the last page, muted and looping.
+  closingVideo: 'video/closing.mp4',
+  closingPoster: 'video/closing.jpg',
 }
 
 // ============================================================
@@ -228,6 +235,13 @@ export const MEMORIES = [
   { photo: 'photos/people/03.jpg', focus: 'center 35%' },
   { photo: 'photos/people/04.jpg', focus: 'center 35%' },
   { photo: 'photos/people/05.jpg', focus: 'center 35%' },
+  { photo: 'photos/people/06.jpg', focus: 'center 35%' },
+  { photo: 'photos/people/07.jpg', focus: 'center 35%' },
+  { photo: 'photos/people/08.jpg', focus: 'center 35%' },
+  // A clip rather than a still: it plays while it is the card on top.
+  { photo: 'photos/people/09.jpg', video: 'video/memory-09.mp4', focus: 'center 35%' },
+  { photo: 'photos/people/10.jpg', focus: 'center 30%' },
+  { photo: 'photos/people/11.jpg', focus: 'center 30%' },
 ]
 
 export const PACK = {

@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
 import { CONFIG, PEOPLE } from '../config.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
+import { popper } from '../lib/confetti.js'
 import Next from '../components/Next.jsx'
 import Action from '../components/Action.jsx'
 
@@ -129,7 +130,10 @@ export default function Spa() {
   })
   const [revealed, setRevealed] = useState(false)
   const v = CONFIG.voucher
-  const finish = useCallback(() => setRevealed(true), [])
+  const finish = useCallback(() => {
+    setRevealed(true)
+    setTimeout(() => popper(), 220)
+  }, [])
 
   // ---------- 1 · why ----------
   if (step === 'note') {

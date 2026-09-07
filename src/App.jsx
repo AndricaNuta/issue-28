@@ -125,30 +125,6 @@ export default function App() {
             </div>
           )}
 
-          <AnimatePresence>
-            {cta && (
-              <motion.div
-                key={route}
-                className="fixed left-0 right-0 z-[60] flex justify-center pointer-events-none"
-                style={{ bottom: 'max(26px, env(safe-area-inset-bottom))' }}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 8 }}
-                transition={{ duration: 0.32 }}
-              >
-                <div className="pointer-events-auto">
-                  <Next
-                    onClick={cta.onClick}
-                    label={cta.label}
-                    tone={cta.tone}
-                    icon={cta.icon}
-                    ring={cta.ring !== false}
-                  />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
           <div className="absolute inset-0 z-10" style={{ perspective: 1500 }}>
             <AnimatePresence mode="wait" custom={dir}>
               <motion.section
@@ -168,10 +144,24 @@ export default function App() {
                 }}
               >
                 <div
-                  className="min-h-full flex items-center justify-center"
-                  style={{ padding: '78px 22px 124px' }}
+                  className="min-h-full flex flex-col"
+                  style={{ padding: '78px 22px max(30px, env(safe-area-inset-bottom))' }}
                 >
-                  <Active />
+                  <div className="flex-1 flex items-center justify-center">
+                    <Active />
+                  </div>
+
+                  {cta && (
+                    <div className="flex justify-center" style={{ paddingTop: 34 }}>
+                      <Next
+                        onClick={cta.onClick}
+                        label={cta.label}
+                        tone={cta.tone}
+                        icon={cta.icon}
+                        ring={cta.ring !== false}
+                      />
+                    </div>
+                  )}
                 </div>
               </motion.section>
             </AnimatePresence>
