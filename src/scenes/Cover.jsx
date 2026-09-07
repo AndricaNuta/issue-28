@@ -89,7 +89,7 @@ export default function Cover() {
         {/* ---------- cover lines, and the age ---------- */}
         <motion.div
           className="absolute left-4 right-4"
-          style={{ top: '30%' }}
+          style={{ top: '25%' }}
           variants={rise}
           initial="hidden"
           animate="show"
@@ -133,7 +133,7 @@ export default function Cover() {
         {/* ---------- her name ---------- */}
         <motion.div
           className="absolute left-4 right-4"
-          style={{ bottom: 14 }}
+          style={{ bottom: 6 }}
           variants={rise}
           initial="hidden"
           animate="show"

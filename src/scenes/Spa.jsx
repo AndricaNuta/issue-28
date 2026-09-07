@@ -1,25 +1,24 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
-import { CONFIG } from '../config.js'
+import { CONFIG, PEOPLE } from '../config.js'
 import { Barcode, Kicker, Photo, Rule } from '../components/Paper.jsx'
 
-// GIFT TWO, printed as the advertorial at the back, under a scratch panel.
+// GIFT TWO, in three beats. The scratch card used to arrive with no reason
+// behind it, which made an hour of massage look like a coupon. Now it is: why
+// we are giving it, a petition the sixteen of us signed, then the card.
 const W = 320
 const H = 150
 
-export default function Spa() {
-  const { next } = useExperience()
+function Scratch({ onDone }) {
   const canvasRef = useRef(null)
   const lastRef = useRef(null)
   const ticks = useRef(0)
-  const [revealed, setRevealed] = useState(false)
   const [scratching, setScratching] = useState(false)
-  const v = CONFIG.voucher
 
   useEffect(() => {
     const c = canvasRef.current
-    if (!c || revealed) return
+    if (!c) return
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     c.width = W * dpr
     c.height = H * dpr
@@ -46,13 +45,11 @@ export default function Spa() {
     ctx.fillText('S C R A T C H   H E R E', W / 2, H / 2 - 6)
     ctx.font = '400 11px "DM Sans", system-ui'
     ctx.fillText('use your finger', W / 2, H / 2 + 13)
-  }, [revealed])
-
-  const finish = useCallback(() => setRevealed(true), [])
+  }, [])
 
   const scratch = (e) => {
     const c = canvasRef.current
-    if (!c || revealed) return
+    if (!c) return
     const r = c.getBoundingClientRect()
     const x = ((e.clientX - r.left) / r.width) * W
     const y = ((e.clientY - r.top) / r.height) * H
@@ -74,8 +71,8 @@ export default function Spa() {
     ctx.fill()
     lastRef.current = { x, y }
 
-    // Sampling every frame would be wasteful; check the cleared share
-    // every dozen moves instead.
+    // Sampling every frame would be wasteful; check the cleared share every
+    // dozen moves instead.
     ticks.current += 1
     if (ticks.current % 12 !== 0) return
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -86,15 +83,180 @@ export default function Spa() {
       total += 1
       if (data[i] < 40) clear += 1
     }
-    if (clear / total > 0.5) finish()
+    if (clear / total > 0.5) onDone()
   }
 
+  return (
+    <motion.canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full"
+      style={{ borderRadius: 3, touchAction: 'none', cursor: 'grab' }}
+      exit={{ opacity: 0, scale: 1.03 }}
+      transition={{ duration: 0.5 }}
+      onPointerDown={(e) => {
+        try {
+          e.currentTarget.setPointerCapture(e.pointerId)
+        } catch {
+          // fine without it
+        }
+        setScratching(true)
+        lastRef.current = null
+        scratch(e)
+      }}
+      onPointerMove={(e) => scratching && scratch(e)}
+      onPointerUp={() => {
+        setScratching(false)
+        lastRef.current = null
+      }}
+      onPointerCancel={() => {
+        setScratching(false)
+        lastRef.current = null
+      }}
+    />
+  )
+}
+
+export default function Spa() {
+  const { next } = useExperience()
+  const [step, setStep] = useState(() => {
+    if (import.meta.env.DEV) {
+      const q = new URLSearchParams(window.location.search).get('step')
+      if (q === 'petition' || q === 'card') return q
+    }
+    return 'note'
+  })
+  const [revealed, setRevealed] = useState(false)
+  const v = CONFIG.voucher
+  const finish = useCallback(() => setRevealed(true), [])
+
+  // ---------- 1 · why ----------
+  if (step === 'note') {
+    return (
+      <div className="w-full max-w-[380px] mx-auto">
+        <Kicker>{v.noteKicker}</Kicker>
+        <h1 className="display mt-2" style={{ fontSize: 42, lineHeight: 1 }}>
+          {v.noteTitle}
+        </h1>
+        <Rule style={{ marginTop: 16 }} />
+        <p className="mt-4" style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-60)' }}>
+          {v.noteBody}
+        </p>
+
+        <div className="mt-6">
+          <Photo
+            src={CONFIG.photos.mask}
+            alt="Mid-treatment"
+            placeholder="MASK PHOTO"
+            objectPosition="center 28%"
+            className="w-full block"
+            style={{ aspectRatio: '4 / 3', borderRadius: 2 }}
+          />
+          <p className="serif-it mt-2" style={{ fontSize: 14, color: 'var(--ink-40)', lineHeight: 1.45 }}>
+            {v.caption}
+          </p>
+        </div>
+
+        <div className="mt-7 flex justify-center">
+          <button className="btn" onClick={() => setStep('petition')}>
+            So we did something about it
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // ---------- 2 · the petition ----------
+  if (step === 'petition') {
+    return (
+      <div className="w-full max-w-[380px] mx-auto">
+        <motion.div
+          className="relative"
+          style={{ background: 'var(--paper-card)', padding: '26px 22px 22px', borderRadius: 2, boxShadow: '0 14px 34px rgba(28,25,23,0.14)' }}
+          initial={{ opacity: 0, y: 18, rotate: -0.8 }}
+          animate={{ opacity: 1, y: 0, rotate: -0.4 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className="kicker text-center" style={{ color: 'var(--ink-40)', fontSize: 8.5 }}>
+            To whom it may concern
+          </p>
+          <h1 className="script text-center mt-1" style={{ fontSize: 46, lineHeight: 1 }}>
+            {v.petitionTitle}
+          </h1>
+
+          <Rule style={{ marginTop: 16, marginBottom: 16 }} />
+
+          <p style={{ fontSize: 15.5, lineHeight: 1.7 }}>
+            We, the undersigned, having watched {CONFIG.name} work herself into the ground
+            for one entire year, formally demand that she{' '}
+            <b style={{ color: 'var(--accent)' }}>{v.petitionDemand}</b>.
+          </p>
+
+          {/* sixteen signatures */}
+          <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-6">
+            {PEOPLE.map((p, i) => (
+              <motion.span
+                key={i}
+                className="script"
+                style={{
+                  fontSize: 22,
+                  color: 'var(--ink)',
+                  transform: `rotate(${(i % 4) - 1.5}deg)`,
+                  opacity: 0.85,
+                }}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 0.85, y: 0 }}
+                transition={{ delay: 0.25 + i * 0.055, duration: 0.35 }}
+              >
+                {p.name}
+              </motion.span>
+            ))}
+          </div>
+
+          <Rule style={{ marginTop: 18, marginBottom: 14 }} />
+
+          <div className="flex items-end justify-between gap-3">
+            <p className="serif-it" style={{ fontSize: 13.5, color: 'var(--ink-40)', maxWidth: '14em', lineHeight: 1.45 }}>
+              {v.petitionNote}
+            </p>
+            <motion.span
+              className="kicker shrink-0"
+              style={{
+                color: 'var(--accent)',
+                border: '2px solid var(--accent)',
+                borderRadius: 3,
+                padding: '7px 11px',
+                fontSize: 11,
+              }}
+              initial={{ opacity: 0, scale: 1.7, rotate: -18 }}
+              animate={{ opacity: 0.9, scale: 1, rotate: -7 }}
+              transition={{ delay: 1.3, type: 'spring', stiffness: 170, damping: 12 }}
+            >
+              {v.petitionStamp}
+            </motion.span>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="mt-7 flex justify-center"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.6 }}
+        >
+          <button className="btn btn-accent" onClick={() => setStep('card')}>
+            Claim it
+          </button>
+        </motion.div>
+      </div>
+    )
+  }
+
+  // ---------- 3 · the card ----------
   return (
     <div className="w-full max-w-[380px] mx-auto">
       <div className="flex items-baseline justify-between">
         <Kicker>Gift two of two</Kicker>
         <span className="kicker" style={{ color: 'var(--ink-40)' }}>
-          Advertorial
+          Prescribed
         </span>
       </div>
 
@@ -107,22 +269,7 @@ export default function Spa() {
         {v.note}
       </p>
 
-      {/* the advertorial photograph */}
-      <div className="mt-5">
-        <Photo
-          src={CONFIG.photos.mask}
-          alt="Mid-treatment"
-          placeholder="MASK PHOTO"
-          objectPosition="center 30%"
-          className="w-full block"
-          style={{ aspectRatio: '4 / 3', borderRadius: 2 }}
-        />
-        <p className="mt-2" style={{ fontSize: 11.5, color: 'var(--ink-40)', lineHeight: 1.45 }}>
-          {v.caption}
-        </p>
-      </div>
-
-      <Rule style={{ marginTop: 18, marginBottom: 18 }} />
+      <Rule style={{ marginTop: 20, marginBottom: 18 }} />
 
       <div className="relative w-full" style={{ aspectRatio: `${W} / ${H}` }}>
         <div
@@ -150,36 +297,7 @@ export default function Spa() {
           </div>
         </div>
 
-        <AnimatePresence>
-          {!revealed && (
-            <motion.canvas
-              ref={canvasRef}
-              className="absolute inset-0 w-full h-full"
-              style={{ borderRadius: 3, touchAction: 'none', cursor: 'grab' }}
-              exit={{ opacity: 0, scale: 1.03 }}
-              transition={{ duration: 0.5 }}
-              onPointerDown={(e) => {
-                try {
-                  e.currentTarget.setPointerCapture(e.pointerId)
-                } catch {
-                  // fine without it
-                }
-                setScratching(true)
-                lastRef.current = null
-                scratch(e)
-              }}
-              onPointerMove={(e) => scratching && scratch(e)}
-              onPointerUp={() => {
-                setScratching(false)
-                lastRef.current = null
-              }}
-              onPointerCancel={() => {
-                setScratching(false)
-                lastRef.current = null
-              }}
-            />
-          )}
-        </AnimatePresence>
+        <AnimatePresence>{!revealed && <Scratch onDone={finish} />}</AnimatePresence>
       </div>
 
       <div className="flex items-end justify-between mt-5">
@@ -195,10 +313,11 @@ export default function Spa() {
         {revealed && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
             <p className="mt-5" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
-              Book it. Actually book it, do not save it for a better week. The gym can wait an hour.
+              Book it. Actually book it, do not save it for a better week. There is never a
+              better week.
             </p>
             <div className="mt-6 flex justify-center">
-              <button className="btn" onClick={() => next()}>
+              <button className="btn" onClick={next}>
                 Last page
               </button>
             </div>

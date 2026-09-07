@@ -67,8 +67,21 @@ export const CONFIG = {
     validUntil: '',                 // TODO e.g. '31 March 2027'. '' hides it.
     code: '',                       // TODO voucher code. '' hides it.
     note: 'The only part of the wellness plan that is compulsory.',
+
+    // --- Why this gift, before the reveal. Edit freely, this is the sincere bit. ---
+    noteKicker: 'Health & wellbeing',
+    noteTitle: 'You work too hard.',
+    noteBody:
+      'We have watched you go all year. You answer at midnight, you show up when you have nothing left, you carry everyone. We would like to see you horizontal for once, doing nothing, on purpose.',
     // Printed under the photograph, in the voice of a real advertorial.
-    caption: 'Our model, mid-treatment. Results as pictured.',
+    caption: 'Exhibit A. The only hour we have seen you lie still all year.',
+
+    // --- The petition. Sixteen signatures, then a stamp. ---
+    petitionTitle: 'A petition',
+    petitionDemand:
+      'lie down for sixty consecutive minutes, phone in another room, answering to nobody',
+    petitionStamp: 'Granted',
+    petitionNote: 'Signed by all sixteen of us, and non-negotiable.',
   },
 
   // --- Sign-off ---
@@ -103,26 +116,28 @@ export const PLAN = {
 
 // ============================================================
 //  THE SIXTEEN
-//  A polaroid each. `photo` is a file in public/photos/people/,
-//  `wish` is what they wish her for the year, shown when she drops
-//  their polaroid into the bag.
-//  Drop the photos into ~/Downloads/people/ and run:
+//  A polaroid each. `photo` is a file in public/photos/people/.
+//  Drop the photos into a folder and run:
 //      python3 scripts/people.py ~/Downloads/people
-//  which squares, shrinks and numbers them into public/photos/people/.
-//  TODO replace all sixteen names and wishes.
+//  which shrinks and numbers them into public/photos/people/.
+//  `name` is written along the bottom of the polaroid. Set it to ''
+//  for a photograph with no caption.
+//  TODO replace all sixteen names.
 // ============================================================
-export const WISHES = Array.from({ length: 16 }, (_, i) => ({
+export const PEOPLE = Array.from({ length: 16 }, (_, i) => ({
   name: `Person ${i + 1}`,
-  wish: 'Their wish for her goes here.',
   photo: `photos/people/${String(i + 1).padStart(2, '0')}.jpg`,
+  // Which part of the photo the square polaroid window shows. Handy for group
+  // shots: 'center 20%' pulls it up, 'left center' pulls it left.
+  focus: 'center 35%',
 }))
 
 export const PACK = {
-  title: 'Now fill it',
-  standfirst:
-    'Sixteen of us, and a wish each. Put us in the bag. None of it takes up any room.',
-  done: 'The bag is full.',
-  doneBody: 'Sixteen of us in there, no receipts. You can carry all of it at once.',
+  title: 'What goes in it',
+  standfirst: 'A year of us, in a pile. Flick through.',
+  done: 'All of it goes in the bag.',
+  doneBody:
+    'Sixteen of us, and none of it takes up any room. You can carry the whole lot at once.',
 }
 
 // ============================================================

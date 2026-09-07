@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
-import { CONFIG, WISHES } from '../config.js'
+import { CONFIG, PEOPLE } from '../config.js'
 import { Barcode, Kicker, Rule } from '../components/Paper.jsx'
 
 // The masthead page: everyone who chipped in, printed as staff.
@@ -28,7 +28,7 @@ export default function Close() {
       </p>
 
       <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-4 text-left">
-        {WISHES.map((p, i) => (
+        {PEOPLE.map((p, i) => (
           <motion.span
             key={i}
             style={{ fontSize: 13.5, color: 'var(--ink-60)' }}

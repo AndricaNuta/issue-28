@@ -34,13 +34,10 @@ def main():
     for i, f in enumerate(files, start=1):
         im = Image.open(os.path.join(src, f))
         im = ImageOps.exif_transpose(im).convert('RGB')
-        # Square from the centre, biased slightly up: faces sit high in a photo.
-        w, h = im.size
-        side = min(w, h)
-        left = (w - side) // 2
-        top = int((h - side) * 0.35)
-        im = im.crop((left, top, left + side, top + side))
-        im.thumbnail((520, 520), Image.LANCZOS)
+        # Keep the original shape. Cropping to a square here would cut half the
+        # group out of a group shot; the polaroid window crops in CSS instead,
+        # using the `focus` value in config.js, which can be tuned per photo.
+        im.thumbnail((760, 760), Image.LANCZOS)
         dst = os.path.join(OUT, f'{i:02d}.jpg')
         im.save(dst, quality=86, optimize=True)
         print(f'{f}  ->  {dst}  {im.size}  {os.path.getsize(dst) // 1024} KB')
