@@ -125,7 +125,6 @@ export const CONFIG = {
   },
 
   // --- Sign-off ---
-  closing: 'Same time next issue.',
   // 'Masthead' is magazine jargon for the page listing everyone who made the
   // issue. Nobody reading this owes us that word, so both labels say it plainly.
   closingKicker: 'Who made this',

@@ -130,13 +130,10 @@ export default function Close() {
       <Rule style={{ marginTop: 22, marginBottom: 18 }} />
 
       <p style={{ fontSize: 14.5, lineHeight: 1.65, color: 'var(--ink-60)' }}>
-        Two gifts, one very good year ahead. Whatever you tick off, we are coming with
-        you.
+        From all of us, with lots and lots of love
       </p>
 
-      <div className="mt-7 flex flex-col items-center gap-3">
-        <Barcode width={80} height={22} seed={CONFIG.age + 11} label="ONE OF ONE" />
-      </div>
+     
     </div>
   )
 }

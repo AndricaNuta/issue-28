@@ -151,17 +151,26 @@ export default function App() {
                     <Active />
                   </div>
 
-                  {cta && (
-                    <div className="flex justify-center" style={{ paddingTop: 34 }}>
-                      <Next
-                        onClick={cta.onClick}
-                        label={cta.label}
-                        tone={cta.tone}
-                        icon={cta.icon}
-                        ring={cta.ring !== false}
-                      />
-                    </div>
-                  )}
+                  <div
+                    className="flex justify-center items-start"
+                    style={{ paddingTop: 34, height: 34 + 62 + 11 + 8, flexShrink: 0 }}
+                  >
+                    <motion.div
+                      animate={{ opacity: cta ? 1 : 0 }}
+                      transition={{ duration: 0.3 }}
+                      style={{ pointerEvents: cta ? 'auto' : 'none' }}
+                    >
+                      {cta && (
+                        <Next
+                          onClick={cta.onClick}
+                          label={cta.label}
+                          tone={cta.tone}
+                          icon={cta.icon}
+                          ring={cta.ring !== false}
+                        />
+                      )}
+                    </motion.div>
+                  </div>
                 </div>
               </motion.section>
             </AnimatePresence>

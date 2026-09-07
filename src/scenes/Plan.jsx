@@ -113,22 +113,22 @@ export default function Plan() {
           </div>
         ))}
 
-        {/* added to the foot of the same list, once the rest is crossed off */}
-        <AnimatePresence>
-          {given && (
-            <motion.div
-              key="given"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            >
+        {/* Added to the foot of the same list once the rest is crossed off.
+            Mounted from the start and revealed by opacity: animating its
+            height instead grew the page, and a vertically centred page
+            re-centres, which slid the whole list upwards. */}
+        <motion.div
+          animate={{ opacity: given ? 1 : 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          style={{ pointerEvents: given ? 'auto' : 'none' }}
+        >
+          <div>
               {/* whatever the sixteen decide to add goes in here first */}
-              {PLAN.ours.map((line, i) => (
+            {PLAN.ours.map((line, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5 + i * 0.26, duration: 0.55 }}
+                  animate={{ opacity: given ? 1 : 0, x: given ? 0 : -12 }}
+                  transition={{ delay: given ? i * 0.26 : 0, duration: 0.55 }}
                 >
                   <div className="flex items-baseline gap-3" style={{ padding: '15px 2px' }}>
                     <span className="numeral shrink-0" style={{ fontSize: 15, color: 'var(--accent)', width: 16 }}>
@@ -140,24 +140,17 @@ export default function Plan() {
                 </motion.div>
               ))}
 
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + PLAN.ours.length * 0.26, duration: 0.7 }}
-              >
-                <div style={{ padding: '18px 2px 14px' }}>
-                  <span className="relative inline-block">
-                    <span className="display block" style={{ fontSize: 22, lineHeight: 1.25 }}>
-                      {PLAN.finalWish}
-                    </span>
-                    <Underline delay={0.5 + PLAN.ours.length * 0.26 + 0.45} />
-                  </span>
-                </div>
-                <Rule />
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            <div style={{ padding: '18px 2px 14px' }}>
+              <span className="relative inline-block">
+                <span className="display block" style={{ fontSize: 22, lineHeight: 1.25 }}>
+                  {PLAN.finalWish}
+                </span>
+                {given && <Underline delay={0.45} />}
+              </span>
+            </div>
+            <Rule />
+          </div>
+        </motion.div>
       </button>
 
       {/* her line while the pen is still wet, then the note under the list */}
