@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion'
-import { useExperience } from '../experience.js'
+import { useExperience, useCta } from '../experience.js'
 import { CONFIG } from '../config.js'
 import { Photo } from '../components/Paper.jsx'
-import Next from '../components/Next.jsx'
 
 // A laminated all-access pass, issued rather than earned. This page used to be
 // a four digit code, which was neither a puzzle nor a joke: she knows her own
@@ -30,6 +29,7 @@ function Field({ label, value, script }) {
 
 export default function Pass() {
   const { next } = useExperience()
+  useCta({ onClick: next, label: 'Enter the issue' }, [next])
 
   return (
     <div className="w-full max-w-[330px] mx-auto">
@@ -131,7 +131,7 @@ export default function Pass() {
         <p className="serif-it text-center" style={{ fontSize: 16, color: 'var(--ink-60)', maxWidth: '20em' }}>
           {CONFIG.passNote}
         </p>
-        <Next onClick={next} label="Enter the issue" delay={0.6} />
+
       </motion.div>
     </div>
   )

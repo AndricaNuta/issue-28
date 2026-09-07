@@ -3,8 +3,10 @@ import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
 import { ExperienceContext, PAGES, ROUTES, bgFor } from './experience.js'
 import { CONFIG } from './config.js'
 
+import Next from './components/Next.jsx'
 import Cover from './scenes/Cover.jsx'
 import Pass from './scenes/Pass.jsx'
+import Divider from './scenes/Divider.jsx'
 import Pack from './scenes/Pack.jsx'
 import Plan from './scenes/Plan.jsx'
 import Year from './scenes/Year.jsx'
@@ -12,7 +14,7 @@ import Bag from './scenes/Bag.jsx'
 import Spa from './scenes/Spa.jsx'
 import Close from './scenes/Close.jsx'
 
-const SCENES = { cover: Cover, pass: Pass, plan: Plan, year: Year, bag: Bag, pack: Pack, spa: Spa, close: Close }
+const SCENES = { cover: Cover, pass: Pass, plan: Plan, year: Year, gift1: Divider, bag: Bag, pack: Pack, gift2: Divider, spa: Spa, close: Close }
 
 // Pages turn about the spine: forward, the outgoing page swings away to the
 // left around its own left edge; backward, it mirrors.
@@ -50,7 +52,10 @@ export default function App() {
     }
   }, [route])
 
-  const ctx = useMemo(() => ({ route, go, next }), [route, go, next])
+  // The current page's forward action. Held here so the arrow can be pinned
+  // to one place on screen rather than trailing each page's content.
+  const [cta, setCta] = useState(null)
+  const ctx = useMemo(() => ({ route, go, next, setCta }), [route, go, next])
 
   const Active = SCENES[route]
   const showChrome = route !== 'cover'
@@ -94,6 +99,30 @@ export default function App() {
             </div>
           )}
 
+          <AnimatePresence>
+            {cta && (
+              <motion.div
+                key={route}
+                className="fixed left-0 right-0 z-[60] flex justify-center pointer-events-none"
+                style={{ bottom: 'max(26px, env(safe-area-inset-bottom))' }}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: 0.32 }}
+              >
+                <div className="pointer-events-auto">
+                  <Next
+                    onClick={cta.onClick}
+                    label={cta.label}
+                    tone={cta.tone}
+                    icon={cta.icon}
+                    ring={cta.ring !== false}
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <div className="absolute inset-0 z-10" style={{ perspective: 1500 }}>
             <AnimatePresence mode="wait" custom={dir}>
               <motion.section
@@ -114,7 +143,7 @@ export default function App() {
               >
                 <div
                   className="min-h-full flex items-center justify-center"
-                  style={{ padding: '68px 22px max(34px, env(safe-area-inset-bottom))' }}
+                  style={{ padding: '68px 22px 124px' }}
                 >
                   <Active />
                 </div>

@@ -1,234 +1,133 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useExperience } from '../experience.js'
+import { useCta, useExperience } from '../experience.js'
 import { PLAN } from '../config.js'
-import { Kicker, Photo, Rule } from '../components/Paper.jsx'
-import Next from '../components/Next.jsx'
+import { Kicker, Rule } from '../components/Paper.jsx'
 
-// She asked to get her life in order this year, so the page grants the wish
-// and produces the receipts. Each line taps to reveal the photographic proof
-// and gets struck off; the last line was never anybody's to do.
-
-// A hand-drawn strike, slightly off-level and bowed, so it reads as a pen.
-function Strike({ show, seed = 0 }) {
-  const dip = 2 + (seed % 3)
-  const lift = (seed % 2 ? 1 : -1) * 1.5
-  return (
-    <svg
-      className="absolute pointer-events-none"
-      style={{ left: -6, top: '50%', height: 16, width: 'calc(100% + 12px)', transform: 'translateY(-50%)' }}
-      viewBox="0 0 300 16"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <motion.path
-        d={`M2 ${8 + lift} Q150 ${8 + lift + dip} 298 ${8 - lift}`}
-        fill="none"
-        stroke="var(--accent)"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: show ? 1 : 0, opacity: show ? 1 : 0 }}
-        transition={{ duration: 0.34, ease: [0.4, 0, 0.3, 1] }}
-      />
-    </svg>
-  )
-}
-
-function Underline({ show }) {
-  return (
-    <svg
-      className="absolute pointer-events-none"
-      style={{ left: -4, bottom: -7, height: 12, width: 'calc(100% + 8px)' }}
-      viewBox="0 0 300 12"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <motion.path
-        d="M3 7 Q150 2 297 6"
-        fill="none"
-        stroke="var(--accent)"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: show ? 1 : 0, opacity: show ? 1 : 0 }}
-        transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-      />
-    </svg>
-  )
-}
+// One gesture, three beats: the programme is printed, it lifts off the page,
+// and her sentence is left alone on the empty space it leaves behind.
+//
+// Earlier versions of this page were a checklist with a paragraph explaining
+// the joke, then red pen scribbles, then a photograph per line. All of them
+// had furniture where the feeling should be.
 
 export default function Plan() {
   const { next } = useExperience()
-  const [struck, setStruck] = useState(() => new Set())
-  const [shown, setShown] = useState(null)
+  const [phase, setPhase] = useState('list') // list · clearing · claim · truth
+  const timers = useRef([])
 
-  const allStruck = struck.size === PLAN.items.length
-  const evidence = shown === null ? null : PLAN.items[shown]
+  useCta(phase === 'truth' ? { onClick: next } : null, [phase, next])
 
-  const tap = (i) => {
-    setStruck((prev) => new Set(prev).add(i))
-    setShown(i)
+  useEffect(() => () => timers.current.forEach(clearTimeout), [])
+
+  const clear = () => {
+    if (phase !== 'list') return
+    setPhase('clearing')
+    timers.current.push(setTimeout(() => setPhase('claim'), 1150))
+    timers.current.push(setTimeout(() => setPhase('truth'), 3500))
   }
 
+  const gone = phase !== 'list' && phase !== 'clearing'
+
+  // Her sentence, with the half that matters printed in red.
+  const [before, after] = PLAN.payoff.split(PLAN.payoffEmphasis)
+
   return (
-    <div className="w-full max-w-[390px] mx-auto">
-      <div className="flex items-baseline justify-between">
+    <div className="w-full max-w-[380px] mx-auto">
+      {/* the header steps back once the page starts clearing */}
+      <motion.div animate={{ opacity: gone ? 0.32 : 1 }} transition={{ duration: 0.9 }}>
         <Kicker>{PLAN.kicker}</Kicker>
-        <span className="kicker" style={{ color: 'var(--ink-40)' }}>
-          {struck.size} of {PLAN.items.length}
-        </span>
-      </div>
+        <h1 className="display mt-2" style={{ fontSize: 40, lineHeight: 1 }}>
+          {PLAN.title}
+        </h1>
+        <p className="mt-3" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
+          {PLAN.standfirst}
+        </p>
+      </motion.div>
 
-      <h1 className="display mt-2" style={{ fontSize: 40, lineHeight: 1 }}>
-        {PLAN.title}
-      </h1>
-      <p className="mt-3" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
-        {PLAN.standfirst}
-      </p>
-      <p className="script mt-3" style={{ fontSize: 32, lineHeight: 1.05, color: 'var(--accent)' }}>
-        {PLAN.claim}
-      </p>
-
-      {/* the programme, struck off one line at a time */}
-      <div className="mt-5">
-        <Rule />
-        {PLAN.items.map((item, i) => {
-          const off = struck.has(i)
-          return (
-            <div key={i}>
-              <button
-                onClick={() => tap(i)}
-                className="w-full text-left bg-transparent border-0 flex items-center gap-3"
-                style={{ padding: '15px 2px', cursor: 'pointer' }}
-              >
-                <span className="relative inline-block flex-1 min-w-0">
-                  <motion.span
-                    className="block"
-                    style={{ fontSize: 16.5, lineHeight: 1.35 }}
-                    animate={{ color: off ? 'var(--ink-40)' : 'var(--ink)' }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    {item.text}
-                  </motion.span>
-                  <Strike show={off} seed={i} />
-                </span>
-
-                {/* a thumbnail of the proof stays pinned to its line */}
-                <AnimatePresence>
-                  {off && (
-                    <motion.span
-                      className="shrink-0 block"
-                      style={{ width: 34, background: '#FFFDF9', padding: 2, boxShadow: '0 2px 6px rgba(28,25,23,0.2)' }}
-                      initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
-                      animate={{ opacity: 1, scale: 1, rotate: i % 2 ? 3 : -3 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    >
-                      <Photo
-                        src={item.photo}
-                        alt=""
-                        placeholder=""
-                        className="w-full block"
-                        style={{ aspectRatio: '1 / 1' }}
-                      />
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </button>
-              <Rule />
-            </div>
-          )
-        })}
-
-        {/* the line nobody had to do anything about */}
-        <div style={{ padding: '17px 2px 15px' }}>
-          <span className="relative inline-block">
-            <span className="display block" style={{ fontSize: 21, lineHeight: 1.2 }}>
-              {PLAN.keep}
-            </span>
-            <Underline show={allStruck} />
-          </span>
-          {allStruck && (
-            <motion.p
-              className="script mt-1.5"
-              style={{ fontSize: 24, color: 'var(--accent)' }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
+      {/* the stage: the list, then the claim, then the one line left */}
+      <div className="relative mt-6" style={{ minHeight: 328 }}>
+        <AnimatePresence>
+          {!gone && (
+            <motion.button
+              key="list"
+              onClick={clear}
+              className="absolute inset-x-0 top-0 w-full text-left bg-transparent border-0 p-0"
+              style={{ cursor: phase === 'list' ? 'pointer' : 'default' }}
+              aria-label="Lift the programme off the page"
+              exit={{ opacity: 0, transition: { duration: 0.4 } }}
             >
-              {PLAN.keepNote}
-            </motion.p>
-          )}
-        </div>
-        <Rule />
-      </div>
+              <Rule />
+              {PLAN.items.map((item, i) => (
+                <motion.div
+                  key={i}
+                  animate={
+                    phase === 'clearing'
+                      ? { opacity: 0, y: -34, filter: 'blur(3px)' }
+                      : { opacity: 1, y: 0, filter: 'blur(0px)' }
+                  }
+                  transition={{ duration: 0.7, delay: phase === 'clearing' ? i * 0.11 : 0, ease: [0.4, 0, 0.2, 1] }}
+                >
+                  <div style={{ padding: '15px 2px', fontSize: 16.5, lineHeight: 1.35 }}>{item}</div>
+                  <Rule />
+                </motion.div>
+              ))}
 
-      {/* the proof for whichever line she just tapped */}
-      <div style={{ minHeight: 150 }} className="mt-4">
-        <AnimatePresence mode="wait">
-          {evidence ? (
-            <motion.div
-              key={shown}
-              className="flex items-start gap-3.5"
+              {phase === 'list' && (
+                <motion.p
+                  className="script text-center mt-5"
+                  style={{ fontSize: 27, color: 'var(--accent)' }}
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  {PLAN.cue}
+                </motion.p>
+              )}
+            </motion.button>
+          )}
+        </AnimatePresence>
+
+        {/* the claim, in the space the list has just left */}
+        <AnimatePresence>
+          {phase === 'claim' && (
+            <motion.p
+              key="claim"
+              className="script absolute inset-x-0 text-center"
+              style={{ top: 52, fontSize: 40, lineHeight: 1.1, color: 'var(--accent)' }}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.35 }}
+              exit={{ opacity: 0, transition: { duration: 0.8 } }}
+              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div
-                className="shrink-0"
-                style={{ width: 128, background: '#FFFDF9', padding: 6, boxShadow: '0 6px 16px rgba(28,25,23,0.18)', transform: 'rotate(-1.5deg)' }}
-              >
-                <Photo
-                  src={evidence.photo}
-                  alt={evidence.text}
-                  placeholder="PROOF"
-                  className="w-full block"
-                  style={{ aspectRatio: '1 / 1' }}
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="kicker" style={{ color: 'var(--accent)', fontSize: 8.5 }}>
-                  Exhibit {String(shown + 1).padStart(2, '0')}
-                </p>
-                <p className="serif-it mt-1.5" style={{ fontSize: 16, lineHeight: 1.4 }}>
-                  {evidence.evidence}
-                </p>
-              </div>
-            </motion.div>
-          ) : (
+              {PLAN.claim}
+            </motion.p>
+          )}
+        </AnimatePresence>
+
+        {/* what is left */}
+        <AnimatePresence>
+          {phase === 'truth' && (
             <motion.p
-              key="cue"
-              className="script text-center"
-              style={{ fontSize: 26, color: 'var(--accent)' }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, y: [0, -3, 0] }}
-              exit={{ opacity: 0 }}
-              transition={{ y: { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }, opacity: { duration: 0.4 } }}
+              key="truth"
+              className="absolute inset-x-0 text-center"
+              style={{ top: 24, fontSize: 25, lineHeight: 1.45 }}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
             >
-              {PLAN.cue}
+              <span className="serif-it" style={{ color: 'var(--ink-60)' }}>
+                {before}
+              </span>
+              <span className="display" style={{ color: 'var(--accent)' }}>
+                {PLAN.payoffEmphasis}
+              </span>
+              <span className="serif-it" style={{ color: 'var(--ink-60)' }}>
+                {after}
+              </span>
             </motion.p>
           )}
         </AnimatePresence>
       </div>
-
-      <AnimatePresence>
-        {allStruck && (
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-          >
-            <Rule />
-            <p className="dropcap mt-4" style={{ fontSize: 16, lineHeight: 1.6, color: 'var(--ink-60)' }}>
-              {PLAN.payoff}
-            </p>
-            <div className="mt-6 flex justify-center">
-              <Next onClick={next} delay={1} />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }

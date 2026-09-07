@@ -1,9 +1,8 @@
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useExperience } from '../experience.js'
+import { useExperience, useCta } from '../experience.js'
 import { CONFIG, PACK, PEOPLE } from '../config.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
-import Next from '../components/Next.jsx'
 
 // A pile of photographs, the way they actually come out of a drawer: overlapping,
 // at angles, top one first. She flicks through. Dragging each one into the bag
@@ -48,6 +47,7 @@ export default function Pack() {
   const [i, setI] = useState(0)
   const all = useMemo(() => PEOPLE.map((p, idx) => ({ ...p, id: idx })), [])
   const done = i >= all.length
+  useCta(done ? { onClick: next, tone: 'accent' } : null, [done, next])
   const visible = all.slice(i, i + 4)
 
   const advance = () => setI((n) => Math.min(all.length, n + 1))
@@ -99,7 +99,6 @@ export default function Pack() {
         </div>
 
         <div className="mt-6 flex flex-col items-center gap-2">
-          <Next onClick={next} tone="accent" label="One more gift" />
           <button className="link" onClick={() => setI(0)}>
             look through them again
           </button>

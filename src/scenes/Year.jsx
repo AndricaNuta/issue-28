@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useExperience } from '../experience.js'
+import { useExperience, useCta } from '../experience.js'
 import { TAROT } from '../config.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
-import Next from '../components/Next.jsx'
 
 // A three card spread for the year, plus one the deck insisted on. This page
 // used to be three black boxes reading "Turn it over", which is a card trick
@@ -95,6 +94,7 @@ export default function Year() {
   const [bonusFlipped, setBonusFlipped] = useState(false)
 
   const allFlipped = flipped.size === TAROT.cards.length
+  useCta(bonusFlipped ? { onClick: next } : null, [bonusFlipped, next])
 
   const flip = (i) => {
     if (flipped.has(i)) {
@@ -221,16 +221,6 @@ export default function Year() {
               </div>
             </div>
 
-            {bonusFlipped && (
-              <motion.div
-                className="mt-7 flex justify-center"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
-              >
-                <Next onClick={next} delay={0.1} />
-              </motion.div>
-            )}
           </motion.div>
         )}
       </AnimatePresence>

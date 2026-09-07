@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion'
-import { useExperience } from '../experience.js'
+import { useExperience, useCta } from '../experience.js'
 import { CONFIG, PEOPLE } from '../config.js'
 import { Barcode, Kicker, Rule } from '../components/Paper.jsx'
 
 // The masthead page: everyone who chipped in, printed as staff.
 export default function Close() {
   const { go } = useExperience()
+  useCta({ onClick: () => go('cover'), label: 'Back to the cover', ring: false }, [go])
 
   return (
     <div className="w-full max-w-[400px] mx-auto text-center">
