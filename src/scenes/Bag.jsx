@@ -4,6 +4,7 @@ import { useExperience } from '../experience.js'
 import { CONFIG } from '../config.js'
 import { frameDistance, usePointerDrag } from '../lib/drag.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
+import Next from '../components/Next.jsx'
 
 // GIFT ONE, in four beats: why, the drag onto her shoulder in the glossy shot,
 // then "too much" and she rubs that version off to find the real photograph
@@ -232,46 +233,22 @@ export default function Bag() {
           </div>
         )}
 
-        {/* the listing */}
-        <h1 className="display mt-5" style={{ fontSize: 30, lineHeight: 1.05 }}>
+        {/* the listing, kept to the name and one line */}
+        <h1 className="display mt-6" style={{ fontSize: 31, lineHeight: 1.05 }}>
           {CONFIG.bag.name}
         </h1>
 
-        <div className="flex items-baseline gap-2 mt-2">
-          <span className="display" style={{ fontSize: 20, color: 'var(--accent)' }}>
-            {CONFIG.bag.price}
-          </span>
-          <span className="serif-it" style={{ fontSize: 15, color: 'var(--ink-40)' }}>
-            {CONFIG.bag.priceNote}
-          </span>
-        </div>
+        <Rule style={{ marginTop: 16, marginBottom: 16 }} />
 
-        <Rule style={{ marginTop: 14, marginBottom: 12 }} />
-
-        <ul className="flex flex-col gap-1.5">
-          {CONFIG.bag.specs.map((sp, i) => (
-            <li key={i} className="flex items-baseline gap-2" style={{ fontSize: 14, color: 'var(--ink-60)' }}>
-              <span style={{ color: 'var(--accent)' }} aria-hidden="true">
-                &middot;
-              </span>
-              {sp}
-            </li>
-          ))}
-        </ul>
-
-        <Rule style={{ marginTop: 14, marginBottom: 14 }} />
-
-        <h2 className="display" style={{ fontSize: 26 }}>
+        <h2 className="script" style={{ fontSize: 42, lineHeight: 1 }}>
           {CONFIG.bag.introTitle}
         </h2>
-        <p className="dropcap mt-2" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
+        <p className="mt-3" style={{ fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-60)' }}>
           {CONFIG.bag.introBody}
         </p>
 
-        <div className="mt-6 flex justify-center">
-          <button className="btn btn-accent" onClick={() => setStep('drag')}>
-            {CONFIG.bag.task}
-          </button>
+        <div className="mt-7 flex justify-center">
+          <Next onClick={() => setStep('drag')} tone="accent" icon="hand" label={CONFIG.bag.task} />
         </div>
       </div>
     )
@@ -361,11 +338,9 @@ export default function Bag() {
               </button>
             </>
           ) : (
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
-              <button className="btn" onClick={() => setStep('done')}>
-                Now open it
-              </button>
-            </motion.div>
+            <div className="flex justify-center">
+              <Next onClick={() => setStep('done')} delay={0.5} />
+            </div>
           )}
         </div>
       </div>
@@ -415,9 +390,7 @@ export default function Bag() {
           </p>
 
           <div className="mt-7 flex justify-center">
-            <button className="btn" onClick={next}>
-              Now open it
-            </button>
+            <Next onClick={next} tone="accent" label="Open it" />
           </div>
         </motion.div>
       </div>

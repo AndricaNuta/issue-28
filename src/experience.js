@@ -14,7 +14,7 @@ export const PAGES = {
   plan: { no: 4, title: 'The 28-Day Plan', note: 'The programme you asked for.' },
   year: { no: 6, title: 'The Reading', note: 'Three cards for the year ahead.' },
   bag: { no: 8, title: 'The Bag', note: 'Bring your shoulder.', redacted: true },
-  pack: { no: 10, title: 'Sixteen of Us', note: 'A year of us, in a pile.' },
+  pack: { no: 10, title: 'Our Memories', note: 'Everything we have done together.' },
   spa: { no: 12, title: 'Advertorial', note: 'Sixty compulsory minutes.', redacted: true },
   close: { no: 14 },
 }

@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
 import { CONFIG, PACK, PEOPLE } from '../config.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
+import Next from '../components/Next.jsx'
 
 // A pile of photographs, the way they actually come out of a drawer: overlapping,
 // at angles, top one first. She flicks through. Dragging each one into the bag
@@ -98,9 +99,7 @@ export default function Pack() {
         </div>
 
         <div className="mt-6 flex flex-col items-center gap-2">
-          <button className="btn" onClick={next}>
-            There is a second gift
-          </button>
+          <Next onClick={next} tone="accent" label="One more gift" />
           <button className="link" onClick={() => setI(0)}>
             look through them again
           </button>

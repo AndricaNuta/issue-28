@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
 import { TAROT } from '../config.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
+import Next from '../components/Next.jsx'
 
 // A three card spread for the year, plus one the deck insisted on. This page
 // used to be three black boxes reading "Turn it over", which is a card trick
@@ -227,9 +228,7 @@ export default function Year() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
               >
-                <button className="btn" onClick={next}>
-                  Keep reading
-                </button>
+                <Next onClick={next} delay={0.1} />
               </motion.div>
             )}
           </motion.div>

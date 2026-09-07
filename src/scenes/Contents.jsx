@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { CONTENTS, PAGES, useExperience } from '../experience.js'
 import { CONFIG } from '../config.js'
 import { Kicker, Rule } from '../components/Paper.jsx'
+import Next from '../components/Next.jsx'
 
 // A real contents page. It exists so she can see what the issue holds and how
 // far in the gifts are, without any of it being a chore to come back to: she
@@ -82,9 +83,7 @@ export default function Contents() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
       >
-        <button className="btn" onClick={next}>
-          Turn to page {PAGES.plan.no}
-        </button>
+        <Next onClick={next} label={`Page ${PAGES.plan.no}`} delay={0.8} />
       </motion.div>
 
       <p className="kicker text-center mt-7" style={{ color: 'var(--ink-40)', fontSize: 8.5 }}>

@@ -69,18 +69,12 @@ export const CONFIG = {
 
   // --- Gift one: the bag ---
   bag: {
-    // The product page. Copied off the real listing, because that is the joke:
-    // it is presented like something she is browsing, and then it is hers.
+    // Presented like the listing she was looking at, and then it is hers.
     brand: 'Aest Studios',
     name: 'Capture Medium Sling Bag',
-    specs: ['Crinkled patent leather', 'Detachable shoulder strap', 'Silver hardware', 'One of one, for you'],
-    // Where the price would be.
-    price: 'Paid for',
-    priceNote: 'by sixteen people',
 
     introTitle: 'This one.',
-    introBody:
-      'You have looked at it more than once. Sixteen of us clubbed together, so it is not a browser tab any more.',
+    introBody: 'The one you kept going back to look at. It is not a browser tab any more.',
     task: 'Put it on her shoulder',
 
     // After it lands on the glossy shot: the joke, and the wipe.
@@ -89,7 +83,7 @@ export const CONFIG = {
     oopsCue: 'wipe it',
 
     title: 'There she is.',
-    body: 'All sixteen of us went in on it. Crocs optional, bag compulsory. Go be insufferable about it.',
+    body: 'Crocs optional, bag compulsory. Go and be insufferable about it.',
   },
 
   // --- Gift two: the massage voucher (scratch to reveal) ---
@@ -167,11 +161,10 @@ export const PEOPLE = Array.from({ length: 16 }, (_, i) => ({
 }))
 
 export const PACK = {
-  title: 'What goes in it',
-  standfirst: 'A year of us, in a pile. Flick through.',
+  title: 'Our memories, in the bag',
+  standfirst: 'Everything we have done together goes in with it. Flick through.',
   done: 'All of it goes in the bag.',
-  doneBody:
-    'Sixteen of us, and none of it takes up any room. You can carry the whole lot at once.',
+  doneBody: 'Every one of these comes with you, and none of it takes up any room.',
 }
 
 // ============================================================

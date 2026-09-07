@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
 import { CONFIG, PEOPLE } from '../config.js'
 import { Barcode, Kicker, Photo, Rule } from '../components/Paper.jsx'
+import Next from '../components/Next.jsx'
 
 // GIFT TWO, in three beats. The scratch card used to arrive with no reason
 // behind it, which made an hour of massage look like a coupon. Now it is: why
@@ -157,9 +158,7 @@ export default function Spa() {
         </div>
 
         <div className="mt-7 flex justify-center">
-          <button className="btn" onClick={() => setStep('petition')}>
-            So we did something about it
-          </button>
+          <Next onClick={() => setStep('petition')} label="So we did something" />
         </div>
       </div>
     )
@@ -242,9 +241,7 @@ export default function Spa() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.6 }}
         >
-          <button className="btn btn-accent" onClick={() => setStep('card')}>
-            Claim it
-          </button>
+          <Next onClick={() => setStep('card')} tone="accent" label="Claim it" />
         </motion.div>
       </div>
     )
@@ -317,9 +314,7 @@ export default function Spa() {
               better week.
             </p>
             <div className="mt-6 flex justify-center">
-              <button className="btn" onClick={next}>
-                Last page
-              </button>
+              <Next onClick={next} label="Last page" />
             </div>
           </motion.div>
         )}

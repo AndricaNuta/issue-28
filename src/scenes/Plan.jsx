@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
 import { PLAN } from '../config.js'
 import { Kicker, Rule } from '../components/Paper.jsx'
+import Next from '../components/Next.jsx'
 
 // Her wish, printed as the programme she asked for, then struck out with a red
 // pen. One tap does the whole page. It used to be six checkboxes followed by a
@@ -170,9 +171,7 @@ export default function Plan() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: lastDelay + 0.9 }}
           >
-            <button className="btn" onClick={next}>
-              Keep reading
-            </button>
+            <Next onClick={next} delay={0.1} />
           </motion.div>
         )}
       </AnimatePresence>
