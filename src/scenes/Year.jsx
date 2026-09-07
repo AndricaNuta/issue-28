@@ -109,7 +109,6 @@ export default function Year() {
 
   return (
     <div className="w-full max-w-[390px] mx-auto">
-      <Kicker>{TAROT.kicker}</Kicker>
       <h1 className="display mt-2" style={{ fontSize: 40, lineHeight: 1 }}>
         {TAROT.title}
       </h1>

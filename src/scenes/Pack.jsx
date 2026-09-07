@@ -200,7 +200,6 @@ export default function Pack() {
   return (
     <div className="w-full max-w-[380px] mx-auto">
       <div className="flex items-baseline justify-between">
-        <Kicker>Our memories</Kicker>
         <span className="kicker" style={{ color: 'var(--ink-40)' }}>
           {i + 1} / {all.length}
         </span>

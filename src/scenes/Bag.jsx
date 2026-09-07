@@ -273,13 +273,34 @@ export default function Bag() {
     const tr = CONFIG.bagTargetReal
     return (
       <div className="w-full max-w-[380px] mx-auto">
-        <Kicker>{wiped ? 'Yours' : 'Second thoughts'}</Kicker>
-        <h1 className="display mt-2" style={{ fontSize: 36, lineHeight: 1.02 }}>
-          {wiped ? CONFIG.bag.title : CONFIG.bag.oopsTitle}
-        </h1>
-        <p className="mt-2.5" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
-          {wiped ? CONFIG.bag.body : CONFIG.bag.oopsBody}
-        </p>
+        {/* Both versions of the copy sit in the same grid cell, so the block
+            is always as tall as the taller of the two and the photograph below
+            cannot move when the text swaps. Toggling the text in place looked
+            fine at one width and shifted at others, where one of the lines
+            wraps and the other does not. */}
+        <div className="grid mt-2">
+          {[
+            { key: 'oops', title: CONFIG.bag.oopsTitle, body: CONFIG.bag.oopsBody, on: !wiped },
+            { key: 'done', title: CONFIG.bag.title, body: CONFIG.bag.body, on: wiped },
+          ].map((v) => (
+            <motion.div
+              key={v.key}
+              style={{ gridArea: '1 / 1' }}
+              animate={{ opacity: v.on ? 1 : 0 }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              aria-hidden={!v.on}
+            >
+              <h1 className="display" style={{ fontSize: 36, lineHeight: 1.02 }}>
+                {v.title}
+              </h1>
+              {v.body && (
+                <p className="mt-2.5" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
+                  {v.body}
+                </p>
+              )}
+            </motion.div>
+          ))}
+        </div>
 
         <div
           className="relative w-full mt-5"
@@ -367,7 +388,6 @@ export default function Bag() {
   return (
     <div className="w-full max-w-[380px] mx-auto">
       <div className="flex items-baseline justify-between">
-        <Kicker>Try it on</Kicker>
         <span className="kicker" style={{ color: 'var(--ink-40)' }}>
           {placed ? 'On her' : 'Not on her yet'}
         </span>

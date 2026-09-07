@@ -63,14 +63,14 @@ npm run build
 # then copy dist/ onto the gh-pages branch and push it
 ```
 
-Two things that branch must never carry:
+### About the voucher
 
-- **`voucher.pdf`**. Vite copies everything in `public/` into `dist/`
-  regardless of gitignore, so it has to be deleted from the build output
-  before publishing. The gift code is live and the certificate is
-  transferable, and the repo is public.
-- Anything else with the full code in it. The page shows `47C39` and five
-  dots on purpose; the real code stays on the card.
+`public/voucher.pdf` is the real gift card and it ships with the site, so the
+page can offer it as a download. The code is printed in full on the page too.
+
+That is a deliberate trade: the repo is public, public repos are indexable,
+and the certificate says it is transferable, so anyone who finds the URL could
+in principle redeem it. It was weighed and accepted rather than overlooked.
 
 `vite.config.js` sets the base path to `/issue-28/`, so if the repo is renamed,
 change it there too.

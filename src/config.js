@@ -96,20 +96,16 @@ export const CONFIG = {
     treatment: 'Gift card',
     duration: '320 lei',
     validUntil: '6 March 2027',
-    // Masked on purpose: the repo is public, and the certificate is
-    // transferable, so the full code stays off the site. Enough of it shows
-    // for her to recognise the card you send her.
-    code: '47C39-\u2022\u2022\u2022\u2022\u2022',
-    codeNote: 'Full code on the card itself.',
-    // The PDF is kept out of the repo for the same reason. Set this to
-    // 'voucher.pdf' only if you ever make the repo private.
-    pdf: '',
+    // The card itself is downloadable from the page, so the code is shown in
+    // full: masking it while the file that contains it is one tap away would
+    // only look like security. The repo is public and the certificate is
+    // transferable, and that trade was made deliberately.
+    code: '47C39-43CD2',
+    pdf: 'voucher.pdf',
     site: 'thaicospa.ro',
     openLabel: 'Open the voucher',
-    note: 'The only part of the wellness plan that is compulsory.',
 
     // --- Why this gift, before the reveal. Edit freely, this is the sincere bit. ---
-    noteKicker: 'Health & wellbeing',
     noteTitle: 'You work too hard.',
     noteBody:
       'We have watched you go all year. You answer at midnight, you show up when you have nothing left, you carry everyone. We would like to see you horizontal for once, doing nothing, on purpose.',
@@ -128,7 +124,6 @@ export const CONFIG = {
   // 'Masthead' is magazine jargon for the page listing everyone who made the
   // issue. Nobody reading this owes us that word, so both labels say it plainly.
   closingKicker: 'Who made this',
-  creditsLabel: 'All of us',
   // Plays on the last page, muted and looping.
   closingVideo: 'video/closing.mp4',
   closingPoster: 'video/closing.jpg',
@@ -265,7 +260,6 @@ export const PACK = {
 //  Card art lives in public/photos/tarot/.
 // ============================================================
 export const TAROT = {
-  kicker: 'The reading',
   title: 'Your Year Ahead',
   standfirst:
     'We know we are not a witch in the Amazonian forest, but we think we can see the future pretty clearly.',

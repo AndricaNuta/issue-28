@@ -139,7 +139,6 @@ export default function Spa() {
   if (step === 'note') {
     return (
       <div className="w-full max-w-[380px] mx-auto">
-        <Kicker>{v.noteKicker}</Kicker>
         <h1 className="display mt-2" style={{ fontSize: 42, lineHeight: 1 }}>
           {v.noteTitle}
         </h1>
@@ -255,17 +254,11 @@ export default function Spa() {
   // ---------- 3 · the card ----------
   return (
     <div className="w-full max-w-[380px] mx-auto">
-      <Kicker>Gift two of two</Kicker>
-
       <h1 className="display mt-2" style={{ fontSize: 34, lineHeight: 1.08 }}>
         One hour of
         <br />
         <em>doing nothing.</em>
       </h1>
-      <p className="mt-3" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
-        {v.note}
-      </p>
-
       <Rule style={{ marginTop: 20, marginBottom: 18 }} />
 
       <div className="relative w-full" style={{ aspectRatio: `${W} / ${H}` }}>

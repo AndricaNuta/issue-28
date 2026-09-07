@@ -95,9 +95,7 @@ export default function Close() {
         </motion.div>
       )}
 
-      <Kicker>{CONFIG.closingKicker}</Kicker>
-
-      <h1 className="display mt-3" style={{ fontSize: 44 }}>
+      <h1 className="display" style={{ fontSize: 44 }}>
         Happy {CONFIG.age}th,
         <br />
         <em>{CONFIG.name}.</em>
@@ -109,9 +107,7 @@ export default function Close() {
 
       <Rule style={{ marginTop: 24, marginBottom: 16 }} />
 
-      <p className="kicker" style={{ color: 'var(--ink-40)', fontSize: 9 }}>
-        {CONFIG.creditsLabel}
-      </p>
+      <Kicker color="var(--ink-40)">{CONFIG.closingKicker}</Kicker>
 
       <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-4 text-left">
         {PEOPLE.map((name, i) => (
