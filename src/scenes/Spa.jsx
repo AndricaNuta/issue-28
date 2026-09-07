@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
 import { CONFIG, PEOPLE } from '../config.js'
-import { Barcode, Kicker, Photo, Rule } from '../components/Paper.jsx'
+import { Kicker, Photo, Rule } from '../components/Paper.jsx'
 import Next from '../components/Next.jsx'
 import Action from '../components/Action.jsx'
 
@@ -251,19 +251,14 @@ export default function Spa() {
   // ---------- 3 · the card ----------
   return (
     <div className="w-full max-w-[380px] mx-auto">
-      <div className="flex items-baseline justify-between">
-        <Kicker>Gift two of two</Kicker>
-        <span className="kicker" style={{ color: 'var(--ink-40)' }}>
-          Prescribed
-        </span>
-      </div>
+      <Kicker>Gift two of two</Kicker>
 
-      <h1 className="display mt-2" style={{ fontSize: 38 }}>
+      <h1 className="display mt-2" style={{ fontSize: 34, lineHeight: 1.08 }}>
         One hour of
         <br />
         <em>doing nothing.</em>
       </h1>
-      <p className="serif-it mt-3" style={{ fontSize: 16, lineHeight: 1.5, color: 'var(--ink-60)' }}>
+      <p className="mt-3" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
         {v.note}
       </p>
 
@@ -275,25 +270,23 @@ export default function Spa() {
           style={{ borderRadius: 3, background: 'var(--paper-card)', boxShadow: 'inset 0 0 0 1px var(--hair)' }}
         >
           <div>
-            <p className="kicker" style={{ fontSize: 9, color: 'var(--accent)' }}>
-              Redeemable at
-            </p>
-            <p className="display" style={{ fontSize: 26, marginTop: 4 }}>
+            <Kicker>Redeemable at</Kicker>
+            <p className="display" style={{ fontSize: 24, marginTop: 5 }}>
               {v.place}
             </p>
-            <p style={{ fontSize: 14, marginTop: 5, color: 'var(--ink-60)' }}>
+            <p style={{ fontSize: 15, marginTop: 5, color: 'var(--ink-60)' }}>
               {v.treatment}
               {v.duration ? ` · ${v.duration}` : ''}
             </p>
             {(v.validUntil || v.code) && (
-              <p className="kicker" style={{ fontSize: 8.5, color: 'var(--ink-40)', marginTop: 8 }}>
+              <p className="kicker" style={{ fontSize: 9.5, color: 'var(--ink-60)', marginTop: 9 }}>
                 {v.validUntil ? `Valid until ${v.validUntil}` : ''}
                 {v.validUntil && v.code ? ' · ' : ''}
                 {v.code ? `Code ${v.code}` : ''}
               </p>
             )}
             {v.codeNote && (
-              <p className="serif-it" style={{ fontSize: 12.5, color: 'var(--ink-40)', marginTop: 4 }}>
+              <p style={{ fontSize: 12, color: 'var(--ink-60)', marginTop: 5 }}>
                 {v.codeNote}
               </p>
             )}
@@ -303,14 +296,13 @@ export default function Spa() {
         <AnimatePresence>{!revealed && <Scratch onDone={finish} />}</AnimatePresence>
       </div>
 
-      <div className="flex items-end justify-between mt-5">
-        <Barcode width={72} height={20} seed={91} label={`ONE VOUCHER · ${v.site || ''}`} />
-        {!revealed && (
+      {!revealed && (
+        <div className="flex justify-center mt-5">
           <button className="link" onClick={finish}>
             just reveal it
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       <AnimatePresence>
         {revealed && (

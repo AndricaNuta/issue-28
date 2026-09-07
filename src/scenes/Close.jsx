@@ -50,7 +50,7 @@ export default function Close() {
       </p>
 
       <div className="mt-7 flex flex-col items-center gap-3">
-        <Barcode width={80} height={22} seed={CONFIG.age + 11} label={`${CONFIG.issueLabel} · ONE OF ONE`} />
+        <Barcode width={80} height={22} seed={CONFIG.age + 11} label="ONE OF ONE" />
       </div>
     </div>
   )

@@ -76,11 +76,15 @@ export default function Next({
         </motion.button>
       </div>
 
-      {label && (
-        <span className="kicker" style={{ fontSize: 8, color: 'var(--ink-40)' }}>
-          {label}
-        </span>
-      )}
+      {/* The caption slot is always present, empty or not. Rendering it only
+          when there is a label made this bottom-anchored stack taller on some
+          pages, which moved the circle up by the height of the caption. */}
+      <span
+        className="kicker"
+        style={{ fontSize: 8, color: 'var(--ink-40)', height: 11, lineHeight: '11px' }}
+      >
+        {label || '\u00A0'}
+      </span>
     </motion.div>
   )
 }

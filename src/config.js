@@ -173,7 +173,6 @@ export const PLAN = {
   ],
   cue: 'tap the list',
 
-  ourTitle: 'So here is the list we would write for you.',
   // TODO YOURS. These lines are the gift on this page and they have to come
   // from you: written by me they read as somebody impersonating your group.
   // Any number of them works, and the page skips this block if it is empty.
@@ -255,6 +254,8 @@ export const TAROT = {
   standfirst:
     'We know we are not a witch in the Amazonian forest, but we think we can see the future pretty clearly.',
   cue: 'turn them over',
+  // Spares, already prepared: photos/tarot/star.jpg and world.jpg. Swap either
+  // in by changing a card's name, image and reading below.
   cards: [
     {
       position: 'Where you are',

@@ -113,7 +113,7 @@ export default function App() {
                   className="kicker truncate"
                   style={{ color: 'var(--ink-40)', fontSize: 9.5, letterSpacing: '0.2em' }}
                 >
-                  {CONFIG.magazineName} · {CONFIG.issueLabel}
+                  {CONFIG.magazineName}
                 </span>
                 <span
                   className="kicker shrink-0"
