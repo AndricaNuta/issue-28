@@ -251,11 +251,14 @@ export default function Bag() {
 
         <Rule style={{ marginTop: 16, marginBottom: 16 }} />
 
-        <h2 className="script" style={{ fontSize: 42, lineHeight: 1 }}>
+        <h2 className="script" style={{ fontSize: 29, lineHeight: 1.1 }}>
           {CONFIG.bag.introTitle}
         </h2>
         <p className="mt-3" style={{ fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-60)' }}>
           {CONFIG.bag.introBody}
+        </p>
+        <p className="script mt-2" style={{ fontSize: 17, color: 'var(--accent)' }}>
+          ({CONFIG.bag.status})
         </p>
 
         <div className="mt-7 flex justify-center">

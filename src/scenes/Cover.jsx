@@ -54,7 +54,7 @@ export default function Cover() {
         <div className="absolute left-0 right-0 top-0 px-4 pt-3">
           <motion.p
             className="script"
-            style={{ fontSize: 30, color: CREAM, marginBottom: -14, marginLeft: 3 }}
+            style={{ fontSize: 15, color: CREAM, marginBottom: 2, letterSpacing: '0.04em', marginLeft: 3 }}
             variants={rise}
             initial="hidden"
             animate="show"
@@ -76,7 +76,7 @@ export default function Cover() {
 
           <motion.p
             className="script text-right"
-            style={{ fontSize: 25, color: CREAM, marginTop: -12, marginRight: 2 }}
+            style={{ fontSize: 14, color: CREAM, marginTop: 2, letterSpacing: '0.04em', marginRight: 2 }}
             variants={rise}
             initial="hidden"
             animate="show"
@@ -104,7 +104,7 @@ export default function Cover() {
                 {CONFIG.edition}
               </p>
 
-              <p className="script mt-3" style={{ fontSize: 19, color: CREAM }}>
+              <p className="script mt-3" style={{ fontSize: 13, color: CREAM }}>
                 Inside
               </p>
               <div className="mt-0.5 flex flex-col gap-1">
@@ -140,14 +140,14 @@ export default function Cover() {
           custom={4}
         >
           {CONFIG.coverKicker && (
-            <p className="script" style={{ fontSize: 21, color: 'rgba(246,241,232,0.75)', marginBottom: -10 }}>
+            <p className="script" style={{ fontSize: 13, color: 'rgba(246,241,232,0.75)', marginBottom: 1 }}>
               {CONFIG.coverKicker}
             </p>
           )}
           <p
             className="script"
             style={{
-              fontSize: 'clamp(58px, 19vw, 76px)',
+              fontSize: 'clamp(40px, 13vw, 54px)',
               color: CREAM,
               textShadow: '0 2px 20px rgba(20,16,15,0.6)',
               lineHeight: 1,
@@ -201,7 +201,7 @@ export default function Cover() {
 
       <motion.p
         className="script text-center mt-4"
-        style={{ fontSize: 20, color: 'var(--ink-40)' }}
+        style={{ fontSize: 14, color: 'var(--ink-40)' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.7 }}

@@ -101,7 +101,7 @@ export default function Plan() {
                   <motion.p
                     key="cue"
                     className="script"
-                    style={{ fontSize: 27, color: 'var(--accent)' }}
+                    style={{ fontSize: 17, color: 'var(--accent)' }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1, y: [0, -3, 0] }}
                     exit={{ opacity: 0, transition: { duration: 0.3 } }}
@@ -113,7 +113,7 @@ export default function Plan() {
                   <motion.p
                     key="claim"
                     className="script"
-                    style={{ fontSize: 34, lineHeight: 1.15, color: 'var(--accent)' }}
+                    style={{ fontSize: 23, lineHeight: 1.3, color: 'var(--accent)' }}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.1, duration: 0.9 }}

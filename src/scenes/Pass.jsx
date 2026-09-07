@@ -18,7 +18,7 @@ function Field({ label, value, script }) {
       >
         <span
           className={script ? 'script' : 'display'}
-          style={{ fontSize: script ? 25 : 17, color: 'var(--ink)', display: 'block', lineHeight: 1.3, paddingLeft: 2 }}
+          style={{ fontSize: script ? 19 : 17, color: 'var(--ink)', display: 'block', lineHeight: 1.3, paddingLeft: 2 }}
         >
           {value}
         </span>

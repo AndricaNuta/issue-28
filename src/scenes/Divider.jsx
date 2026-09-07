@@ -39,7 +39,7 @@ export default function Divider() {
         transition={{ duration: 0.7, delay: 0.35 }}
       >
         <Rule style={{ marginTop: 18, marginBottom: 18 }} />
-        <h1 className="script" style={{ fontSize: 44, lineHeight: 1.05 }}>
+        <h1 className="script" style={{ fontSize: 30, lineHeight: 1.15 }}>
           {d.title}
         </h1>
         {d.note && (

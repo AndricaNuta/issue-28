@@ -59,7 +59,7 @@ export default function Pack() {
   if (step === 'empty') {
     return (
       <div className="w-full max-w-[380px] mx-auto text-center">
-        <h1 className="script" style={{ fontSize: 46, lineHeight: 1.05 }}>
+        <h1 className="script" style={{ fontSize: 30, lineHeight: 1.15 }}>
           {PACK.emptyTitle}
         </h1>
 
@@ -93,7 +93,7 @@ export default function Pack() {
     return (
       <div className="w-full max-w-[380px] mx-auto">
         <Kicker>{all.length} of {all.length}</Kicker>
-        <h1 className="script mt-1" style={{ fontSize: 44, lineHeight: 1.05 }}>
+        <h1 className="script mt-1" style={{ fontSize: 29, lineHeight: 1.15 }}>
           {PACK.done}
         </h1>
         <p className="mt-3" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
@@ -153,7 +153,7 @@ export default function Pack() {
         </span>
       </div>
 
-      <h1 className="script mt-1" style={{ fontSize: 36, lineHeight: 1.1 }}>
+      <h1 className="script mt-1" style={{ fontSize: 26, lineHeight: 1.2 }}>
         {PACK.title}
       </h1>
       <p className="kicker mt-2" style={{ color: 'var(--ink-40)' }}>

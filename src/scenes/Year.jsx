@@ -144,7 +144,7 @@ export default function Year() {
               transition={{ duration: 0.4 }}
             >
               <Rule />
-              <p className="script mt-3" style={{ fontSize: 32, lineHeight: 1, color: 'var(--accent)' }}>
+              <p className="script mt-3" style={{ fontSize: 22, lineHeight: 1.1, color: 'var(--accent)' }}>
                 {shown.name}
               </p>
               <p className="mt-2" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
@@ -155,7 +155,7 @@ export default function Year() {
             <motion.p
               key="cue"
               className="script text-center"
-              style={{ fontSize: 26, color: 'var(--accent)', marginTop: 18 }}
+              style={{ fontSize: 17, color: 'var(--accent)', marginTop: 18 }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, y: [0, -3, 0] }}
               exit={{ opacity: 0 }}
@@ -198,7 +198,7 @@ export default function Year() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.35, duration: 0.45 }}
                     >
-                      <p className="script" style={{ fontSize: 30, lineHeight: 1, color: 'var(--accent)' }}>
+                      <p className="script" style={{ fontSize: 21, lineHeight: 1.1, color: 'var(--accent)' }}>
                         {TAROT.bonus.name}
                       </p>
                       <p className="mt-2" style={{ fontSize: 14.5, lineHeight: 1.55, color: 'var(--ink-60)' }}>
@@ -209,7 +209,7 @@ export default function Year() {
                     <motion.p
                       key="cue"
                       className="script"
-                      style={{ fontSize: 24, color: 'var(--accent)' }}
+                      style={{ fontSize: 16, color: 'var(--accent)' }}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}

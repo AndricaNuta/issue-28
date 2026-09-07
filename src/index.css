@@ -21,7 +21,7 @@
   /* The type system: one grotesque doing all the work, and a script for the
      lines that should sound like a person. No serif anywhere. */
   --font-display: 'Instrument Sans', system-ui, sans-serif;
-  --font-script: 'Ms Madi', cursive;
+  --font-script: 'Instrument Sans', system-ui, sans-serif;
   --font-sans: 'Instrument Sans', system-ui, sans-serif;
   --display-weight: 600;
   --masthead-weight: 700;
@@ -75,7 +75,9 @@ body {
 .script {
   font-family: var(--font-script);
   font-weight: 400;
-  line-height: 1.15;
+  font-style: italic;
+  line-height: 1.14;
+  letter-spacing: -0.015em;
 }
 
 /* Caps serif, for cover lines. */

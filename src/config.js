@@ -75,6 +75,8 @@ export const CONFIG = {
 
     introTitle: 'This one.',
     introBody: 'The one you kept going back to look at. It is not a browser tab any more.',
+    // It has been ordered but has not landed yet, so the page says so.
+    status: "It's on its way",
     task: 'Put it on her shoulder',
 
     // After it lands on the glossy shot: the joke, and the wipe.

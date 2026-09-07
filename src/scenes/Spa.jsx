@@ -179,7 +179,7 @@ export default function Spa() {
           <p className="kicker text-center" style={{ color: 'var(--ink-40)', fontSize: 8.5 }}>
             To whom it may concern
           </p>
-          <h1 className="script text-center mt-1" style={{ fontSize: 46, lineHeight: 1 }}>
+          <h1 className="script text-center mt-1" style={{ fontSize: 31, lineHeight: 1.1 }}>
             {v.petitionTitle}
           </h1>
 
@@ -198,7 +198,7 @@ export default function Spa() {
                 key={i}
                 className="script"
                 style={{
-                  fontSize: 22,
+                  fontSize: 15,
                   color: 'var(--ink)',
                   transform: `rotate(${(i % 4) - 1.5}deg)`,
                   opacity: 0.85,
