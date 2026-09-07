@@ -55,6 +55,34 @@ Dev-only shortcuts, stripped from production builds:
 
 ## Deploying
 
-Push to `main`. The Actions workflow builds and publishes to GitHub Pages.
+The site is served from the `gh-pages` branch, which holds the built output
+only. To publish a change:
+
+```bash
+npm run build
+# then copy dist/ onto the gh-pages branch and push it
+```
+
+Two things that branch must never carry:
+
+- **`voucher.pdf`**. Vite copies everything in `public/` into `dist/`
+  regardless of gitignore, so it has to be deleted from the build output
+  before publishing. The gift code is live and the certificate is
+  transferable, and the repo is public.
+- Anything else with the full code in it. The page shows `47C39` and five
+  dots on purpose; the real code stays on the card.
+
 `vite.config.js` sets the base path to `/issue-28/`, so if the repo is renamed,
 change it there too.
+
+### Why not GitHub Actions
+
+There was a workflow for this, but pushing `.github/workflows/` needs a token
+with the `workflow` scope and this one does not have it. To switch over:
+
+```bash
+gh auth refresh -s workflow
+```
+
+Then the workflow can be restored (it is in this repo's history) and every
+push to `main` will build and deploy on its own.
