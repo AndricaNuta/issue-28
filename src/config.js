@@ -263,6 +263,7 @@ export const TAROT = {
   standfirst:
     'We know we are not a witch in the Amazonian forest, but we think we can see the future pretty clearly.',
   cue: 'turn it over',
+  drawCue: 'draw one',
   // Spares, already prepared: photos/tarot/star.jpg and world.jpg. Swap either
   // in by changing a card's name, image and reading below.
   cards: [

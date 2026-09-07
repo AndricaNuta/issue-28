@@ -283,7 +283,7 @@ export default function Bag() {
             cannot move when the text swaps. Toggling the text in place looked
             fine at one width and shifted at others, where one of the lines
             wraps and the other does not. */}
-        <div className="grid mt-2">
+        <div className="grid mt-2" style={{ minHeight: 108 }}>
           {[
             { key: 'oops', title: CONFIG.bag.oopsTitle, body: CONFIG.bag.oopsBody, on: !wiped },
             { key: 'done', title: CONFIG.bag.title, body: CONFIG.bag.body, on: wiped },
