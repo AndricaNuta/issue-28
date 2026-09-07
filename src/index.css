@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Warm kraft paper, a Didone masthead, script accents and one red.
+   The clean layout stays; the palette and type come from the
+   birthday-magazine references. Nothing competes with the photographs.
+   ------------------------------------------------------------------ */
+:root {
+  --paper: #F1EBE1;
+  --paper-card: #FBF7F1;
+  --ink: #1C1917;
+  --ink-60: rgba(28, 25, 23, 0.62);
+  --ink-40: rgba(28, 25, 23, 0.42);
+  --hair: rgba(28, 25, 23, 0.16);
+  --accent: #B5342A;
+  --accent-soft: #F2DED9;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { -webkit-tap-highlight-color: transparent; }
+
+html, body, #root { height: 100%; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ---------- Type ---------- */
+.display {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+.display em { font-style: italic; color: var(--accent); }
+
+.serif-it {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* The masthead voice: tight Didone caps. */
+.masthead {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.84;
+  letter-spacing: -0.01em;
+}
+
+/* Script, for the two or three places a magazine uses one. */
+.script {
+  font-family: 'Pinyon Script', 'Playfair Display', cursive;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+/* Caps serif, for cover lines. */
+.coverline {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.16;
+}
+
+.kicker {
+  font-size: 10.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.numeral {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  font-variant-numeric: lining-nums;
+}
+
+/* ---------- Surfaces ---------- */
+.card {
+  background: var(--paper-card);
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(26,20,24,0.04), 0 12px 30px rgba(26,20,24,0.07);
+}
+.hair { height: 1px; background: var(--hair); width: 100%; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 15px 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+  background: var(--ink);
+  transition: transform 0.18s var(--ease), opacity 0.18s var(--ease), background 0.2s;
+  touch-action: manipulation;
+  -webkit-user-select: none; user-select: none;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0.5px); }
+.btn-accent { background: var(--accent); }
+.btn-quiet {
+  background: transparent; color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--hair);
+}
+.btn:disabled { opacity: 0.28; cursor: default; transform: none; }
+
+.link {
+  background: none; border: none; cursor: pointer; color: var(--ink-60);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400;
+  padding: 8px; text-decoration: underline; text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+.link:hover { color: var(--ink); }
+
+/* ---------- Motion ---------- */
+/* Deliberately small and slow. The only large movement in the whole thing is
+   the page turn between scenes. */
+@keyframes floatSoft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+.anim-float { animation: floatSoft 4.5s ease-in-out infinite; }
+
+@keyframes ringOut {
+  0% { transform: scale(0.95); opacity: 0.6; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+.anim-ring { animation: ringOut 2s ease-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, .anim-float, .anim-ring {
+    animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;
+  }
+}

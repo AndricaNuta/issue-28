@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pick a direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Caveat:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#eceaea;font-family:'DM Sans',system-ui,sans-serif;padding:28px 20px 60px;color:#191419}
+  h1{font-size:22px;font-weight:700;margin-bottom:4px}
+  .sub{font-size:14px;opacity:.6;margin-bottom:26px}
+  .row{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+  .col{width:320px}
+  .tag{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+  .num{font-size:13px;font-weight:700;background:#191419;color:#fff;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto}
+  .name{font-size:16px;font-weight:700}
+  .why{font-size:12.5px;opacity:.65;margin:8px 0 0;line-height:1.45}
+  .cov{width:320px;height:427px;position:relative;overflow:hidden;border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,.18)}
+  .ph{position:absolute;inset:0;display:grid;place-items:center;font-size:11px;letter-spacing:.18em;color:rgba(0,0,0,.28)}
+
+  /* ---------- 1 · COQUETTE COLLAGE ---------- */
+  .c1{background:#FFF4EC}
+  .c1 .paper{position:absolute;inset:0;background-image:radial-gradient(rgba(0,0,0,.045) .7px,transparent .8px);background-size:12px 12px}
+  .c1 .check{position:absolute;top:0;left:0;right:0;height:16px;
+    background:repeating-linear-gradient(90deg,#E8355A 0 16px,#FFF4EC 16px 32px)}
+  .c1 .mast{position:absolute;top:26px;left:0;right:0;text-align:center;font-family:'Fraunces',serif;font-weight:700;font-size:44px;color:#E8355A;letter-spacing:-.02em}
+  .c1 .polar{position:absolute;top:88px;left:34px;width:250px;height:230px;background:#fff;padding:10px 10px 34px;transform:rotate(-3deg);box-shadow:0 8px 20px rgba(0,0,0,.18)}
+  .c1 .polar .in{width:100%;height:100%;background:repeating-linear-gradient(45deg,#F0E4DA 0 9px,#E7D8CC 9px 18px);display:grid;place-items:center;font-size:10px;letter-spacing:.16em;color:rgba(0,0,0,.3)}
+  .c1 .tape{position:absolute;width:78px;height:24px;background:rgba(232,53,90,.28);transform:rotate(-8deg);top:78px;left:120px;clip-path:polygon(0 8%,100% 0,100% 92%,0 100%)}
+  .c1 .nm{position:absolute;bottom:74px;left:0;right:0;text-align:center;font-family:'Caveat',cursive;font-weight:700;font-size:54px;color:#191419;line-height:.9}
+  .c1 .bow{position:absolute;font-size:26px}
+  .c1 .ln{position:absolute;bottom:40px;left:0;right:0;text-align:center;font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:#E8355A}
+  .c1 .pill{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:9.5px;letter-spacing:.22em;opacity:.5;text-transform:uppercase}
+
+  /* ---------- 2 · Y2K BRIGHT ---------- */
+  .c2{background:linear-gradient(150deg,#C6FF3D 0%,#7BE0FF 46%,#FF4FA3 100%)}
+  .c2 .blob{position:absolute;border-radius:50%;filter:blur(22px);opacity:.75}
+  .c2 .mast{position:absolute;top:22px;left:0;right:0;text-align:center;font-family:'Baloo 2',cursive;font-weight:800;font-size:46px;color:#fff;letter-spacing:-.01em;
+    -webkit-text-stroke:3px #191419;paint-order:stroke fill;text-shadow:0 5px 0 #191419}
+  .c2 .win{position:absolute;top:96px;left:26px;right:26px;height:214px;background:#fff;border:3px solid #191419;border-radius:14px;overflow:hidden;box-shadow:6px 6px 0 #191419}
+  .c2 .bar{height:24px;background:#FF4FA3;border-bottom:3px solid #191419;display:flex;align-items:center;gap:5px;padding:0 8px}
+  .c2 .dot{width:9px;height:9px;border-radius:50%;background:#191419}
+  .c2 .win .in{height:calc(100% - 24px);background:repeating-linear-gradient(45deg,#F3F3F3 0 9px,#E6E6E6 9px 18px);display:grid;place-items:center;font-size:10px;letter-spacing:.16em;color:rgba(0,0,0,.35)}
+  .c2 .nm{position:absolute;bottom:66px;left:0;right:0;text-align:center;font-family:'Baloo 2',cursive;font-weight:800;font-size:42px;color:#FFF23D;-webkit-text-stroke:3px #191419;paint-order:stroke fill;line-height:1}
+  .c2 .star{position:absolute;font-size:24px;filter:drop-shadow(0 2px 0 #191419)}
+  .c2 .stk{position:absolute;bottom:16px;left:50%;transform:translateX(-50%) rotate(-2deg);background:#191419;color:#C6FF3D;font-weight:700;font-size:10.5px;letter-spacing:.16em;padding:6px 14px;border-radius:999px;text-transform:uppercase}
+
+  /* ---------- 3 · CLEAN & EXPENSIVE ---------- */
+  .c3{background:#F7F3EF}
+  .c3 .mast{position:absolute;top:24px;left:24px;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;font-weight:700;color:#C2415C}
+  .c3 .no{position:absolute;top:24px;right:24px;font-size:10.5px;letter-spacing:.3em;font-weight:700;opacity:.4}
+  .c3 .img{position:absolute;top:58px;left:24px;right:24px;height:236px;background:repeating-linear-gradient(45deg,#EDE4DC 0 10px,#E4D9CF 10px 20px);border-radius:3px;display:grid;place-items:center;font-size:10px;letter-spacing:.18em;color:rgba(0,0,0,.3)}
+  .c3 .nm{position:absolute;top:312px;left:24px;right:24px;font-family:'Instrument Serif',serif;font-size:52px;line-height:.94;letter-spacing:-.02em}
+  .c3 .nm em{font-style:italic;color:#C2415C}
+  .c3 .ln{position:absolute;bottom:44px;left:24px;right:24px;font-size:13px;line-height:1.5;opacity:.62}
+  .c3 .cta{position:absolute;bottom:16px;left:24px;font-size:10px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:#C2415C}
+  .c3 .rule{position:absolute;bottom:34px;left:24px;right:24px;height:1px;background:rgba(0,0,0,.14)}
+</style>
+</head>
+<body>
+  <h1>Same cover, three directions</h1>
+  <p class="sub">Pick one and I rebuild every page in it. Grey stripes are where her photo goes.</p>
+
+  <div class="row">
+    <!-- 1 -->
+    <div class="col">
+      <div class="tag"><span class="num">1</span><span class="name">Coquette collage</span></div>
+      <div class="cov c1">
+        <div class="paper"></div>
+        <div class="check"></div>
+        <div class="mast">bestie</div>
+        <div class="tape"></div>
+        <div class="polar"><div class="in">HER PHOTO</div></div>
+        <div class="bow" style="top:80px;right:26px;transform:rotate(12deg)">🎀</div>
+        <div class="bow" style="top:300px;left:22px;font-size:20px;transform:rotate(-14deg)">🎀</div>
+        <div class="bow" style="bottom:104px;right:34px;font-size:18px">✿</div>
+        <div class="nm">Her Name</div>
+        <div class="ln">twenty-eight, and on the cover</div>
+        <div class="pill">issue 28 · one copy printed</div>
+      </div>
+      <p class="why">Cream paper, cherry red, bows, tape, handwriting. Scrapbook you'd save. Warm and soft rather than loud.</p>
+    </div>
+
+    <!-- 2 -->
+    <div class="col">
+      <div class="tag"><span class="num">2</span><span class="name">Y2K bright</span></div>
+      <div class="cov c2">
+        <div class="blob" style="width:170px;height:170px;background:#FFF23D;top:-40px;left:-30px"></div>
+        <div class="blob" style="width:150px;height:150px;background:#FF4FA3;bottom:-30px;right:-20px"></div>
+        <div class="mast">BESTIE</div>
+        <div class="win">
+          <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="in">HER PHOTO</div>
+        </div>
+        <div class="star" style="top:74px;right:18px">★</div>
+        <div class="star" style="top:320px;left:16px;font-size:18px">✦</div>
+        <div class="star" style="bottom:120px;right:22px;font-size:20px">✧</div>
+        <div class="nm">HER NAME</div>
+        <div class="stk">tap to open ★ issue 28</div>
+      </div>
+      <p class="why">Lime, hot pink, black outlines, chunky type, sticker energy. The loudest and most fun. Reads gen-z, not grown-up.</p>
+    </div>
+
+    <!-- 3 -->
+    <div class="col">
+      <div class="tag"><span class="num">3</span><span class="name">Clean &amp; expensive</span></div>
+      <div class="cov c3">
+        <div class="mast">Bestie · Issue 28</div>
+        <div class="no">No. 28</div>
+        <div class="img">HER PHOTO</div>
+        <div class="nm">Her<br><em>Name</em></div>
+        <div class="rule"></div>
+        <div class="ln">Twenty-eight. Two gifts. Sixteen of us.</div>
+        <div class="cta">Open →</div>
+      </div>
+      <p class="why">Off-white, one pink accent, lots of air, big serif name. Stylish and calm. Least busy, least playful.</p>
+    </div>
+  </div>
+</body>
+</html>
