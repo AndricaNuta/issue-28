@@ -80,7 +80,7 @@ export default function Pass() {
         <div style={{ background: 'var(--paper-card)', borderRadius: 3, padding: '38px 18px 20px' }}>
           <h1
             style={{
-              fontFamily: '"DM Sans", system-ui, sans-serif',
+              fontFamily: 'Figtree, system-ui, sans-serif',
               fontWeight: 700,
               fontSize: 27,
               lineHeight: 0.98,

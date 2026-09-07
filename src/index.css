@@ -26,7 +26,8 @@ html, body, #root { height: 100%; margin: 0; padding: 0; }
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: 'Figtree', system-ui, sans-serif;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
   overflow: hidden;
@@ -35,40 +36,43 @@ body {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ---------- Type ---------- */
+/* ---------- Type ----------
+   Fraunces for anything that speaks, Sacramento where it should sound like a
+   person, Figtree for everything functional. */
 .display {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 500;
-  line-height: 1.02;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  line-height: 1.04;
   letter-spacing: -0.015em;
+  font-variation-settings: 'SOFT' 40, 'WONK' 1;
 }
 .display em { font-style: italic; color: var(--accent); }
 
 .serif-it {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-style: italic;
   font-weight: 400;
 }
 
 /* The masthead voice: tight Didone caps. */
 .masthead {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 800;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 700;
   text-transform: uppercase;
-  line-height: 0.84;
-  letter-spacing: -0.01em;
+  line-height: 0.86;
+  letter-spacing: -0.02em;
 }
 
 /* Script, for the two or three places a magazine uses one. */
 .script {
-  font-family: 'Pinyon Script', 'Playfair Display', cursive;
+  font-family: 'Sacramento', cursive;
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 /* Caps serif, for cover lines. */
 .coverline {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -76,6 +80,7 @@ body {
 }
 
 .kicker {
+  font-family: 'Figtree', sans-serif;
   font-size: 10.5px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -83,7 +88,7 @@ body {
 }
 
 .numeral {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 400;
   letter-spacing: 0;
   font-variant-numeric: lining-nums;
@@ -92,8 +97,8 @@ body {
 /* A drop cap, the way a feature opens. Needs two or more lines under it. */
 .dropcap::first-letter {
   float: left;
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 500;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
   font-size: 3.3em;
   line-height: 0.78;
   margin: 0.06em 0.07em 0 0;
@@ -110,7 +115,7 @@ body {
 
 /* ---------- Buttons ---------- */
 .btn {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Figtree', sans-serif;
   font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.2em;
@@ -136,7 +141,7 @@ body {
 
 .link {
   background: none; border: none; cursor: pointer; color: var(--ink-60);
-  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400;
+  font-family: 'Figtree', sans-serif; font-size: 13px; font-weight: 400;
   padding: 8px; text-decoration: underline; text-underline-offset: 3px;
   transition: color 0.2s;
 }

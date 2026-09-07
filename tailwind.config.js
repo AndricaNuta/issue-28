@@ -9,9 +9,9 @@ export default {
         accent: { DEFAULT: '#B5342A', soft: '#F2DED9' },
       },
       fontFamily: {
-        display: ['"Playfair Display"', 'Georgia', 'serif'],
-        script: ['"Pinyon Script"', 'cursive'],
-        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+        display: ['Fraunces', 'Georgia', 'serif'],
+        script: ['Sacramento', 'cursive'],
+        sans: ['Figtree', 'system-ui', 'sans-serif'],
       },
     },
   },

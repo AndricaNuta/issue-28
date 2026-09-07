@@ -42,9 +42,9 @@ function Scratch({ onDone }) {
 
     ctx.fillStyle = 'rgba(28,25,23,0.45)'
     ctx.textAlign = 'center'
-    ctx.font = '700 10px "DM Sans", system-ui'
+    ctx.font = '700 10px "Figtree", system-ui'
     ctx.fillText('S C R A T C H   H E R E', W / 2, H / 2 - 6)
-    ctx.font = '400 11px "DM Sans", system-ui'
+    ctx.font = '400 11px "Figtree", system-ui'
     ctx.fillText('use your finger', W / 2, H / 2 + 13)
   }, [])
 

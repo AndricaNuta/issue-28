@@ -54,7 +54,7 @@ export default function Cover() {
         <div className="absolute left-0 right-0 top-0 px-4 pt-3">
           <motion.p
             className="script"
-            style={{ fontSize: 27, color: CREAM, marginBottom: -10, marginLeft: 3 }}
+            style={{ fontSize: 30, color: CREAM, marginBottom: -14, marginLeft: 3 }}
             variants={rise}
             initial="hidden"
             animate="show"
@@ -76,7 +76,7 @@ export default function Cover() {
 
           <motion.p
             className="script text-right"
-            style={{ fontSize: 21, color: CREAM, marginTop: -6, marginRight: 2 }}
+            style={{ fontSize: 25, color: CREAM, marginTop: -12, marginRight: 2 }}
             variants={rise}
             initial="hidden"
             animate="show"
@@ -89,7 +89,7 @@ export default function Cover() {
         {/* ---------- cover lines, and the age ---------- */}
         <motion.div
           className="absolute left-4 right-4"
-          style={{ top: '19%' }}
+          style={{ top: '21%' }}
           variants={rise}
           initial="hidden"
           animate="show"
@@ -109,7 +109,7 @@ export default function Cover() {
               </p>
               <div className="mt-0.5 flex flex-col gap-1">
                 {CONFIG.coverLines.map((l, i) => (
-                  <p key={i} className="coverline" style={{ fontSize: 12, color: CREAM, maxWidth: '11em' }}>
+                  <p key={i} className="coverline" style={{ fontSize: 11.5, color: CREAM, maxWidth: '15em' }}>
                     {l}
                   </p>
                 ))}
@@ -140,14 +140,14 @@ export default function Cover() {
           custom={4}
         >
           {CONFIG.coverKicker && (
-            <p className="script" style={{ fontSize: 18, color: 'rgba(246,241,232,0.75)', marginBottom: -6 }}>
+            <p className="script" style={{ fontSize: 21, color: 'rgba(246,241,232,0.75)', marginBottom: -10 }}>
               {CONFIG.coverKicker}
             </p>
           )}
           <p
             className="script"
             style={{
-              fontSize: 'clamp(52px, 17vw, 68px)',
+              fontSize: 'clamp(58px, 19vw, 76px)',
               color: CREAM,
               textShadow: '0 2px 20px rgba(20,16,15,0.6)',
               lineHeight: 1,
