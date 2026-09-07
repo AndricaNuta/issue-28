@@ -169,7 +169,7 @@ export default function Pack() {
 
       {/* the stack: four deep, scattered, top one live */}
       <div className="relative w-full mt-7" style={{ paddingBottom: '112%' }}>
-        <AnimatePresence initial={false}>
+        <AnimatePresence>
           {visible
             .map((p, depth) => {
               const isTop = depth === 0

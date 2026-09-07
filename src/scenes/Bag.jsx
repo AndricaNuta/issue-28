@@ -298,7 +298,13 @@ export default function Bag() {
               real one. It moves across when the glossy version comes off. */}
           <motion.div
             className="absolute"
-            style={{ width: `${wiped ? tr.size : t.size}%`, zIndex: 30 }}
+            style={{
+              width: `${wiped ? tr.size : t.size}%`,
+              left: `${t.x}%`,
+              top: `${t.y}%`,
+              zIndex: 30,
+            }}
+            initial={false}
             animate={{
               left: `${wiped ? tr.x : t.x}%`,
               top: `${wiped ? tr.y : t.y}%`,

@@ -107,7 +107,7 @@ export const CONFIG = {
     noteBody:
       'We have watched you go all year. You answer at midnight, you show up when you have nothing left, you carry everyone. We would like to see you horizontal for once, doing nothing, on purpose.',
     // Printed under the photograph, in the voice of a real advertorial.
-    caption: 'Exhibit A. The only hour we have seen you lie still all year.',
+    caption: 'Exhibit A.',
 
     // --- The petition. Sixteen signatures, then a stamp. ---
     petitionTitle: 'A petition',
