@@ -89,6 +89,17 @@ body {
   font-variant-numeric: lining-nums;
 }
 
+/* A drop cap, the way a feature opens. Needs two or more lines under it. */
+.dropcap::first-letter {
+  float: left;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 500;
+  font-size: 3.3em;
+  line-height: 0.78;
+  margin: 0.06em 0.07em 0 0;
+  color: var(--accent);
+}
+
 /* ---------- Surfaces ---------- */
 .card {
   background: var(--paper-card);

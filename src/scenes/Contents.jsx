@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { CONTENTS, PAGES, useExperience } from '../experience.js'
 import { CONFIG } from '../config.js'
-import { Kicker, Rule } from '../components/Paper.jsx'
+import { Kicker, Photo, Rule } from '../components/Paper.jsx'
 
 // A real contents page. It exists so she can see what the issue holds and how
 // far in the gifts are, without any of it being a chore to come back to: she
@@ -16,7 +16,27 @@ export default function Contents() {
         Contents
       </h1>
 
-      <Rule style={{ marginTop: 16, background: 'var(--ink)', height: 1.5 }} />
+      {/* a feature photograph, the way a contents page opens */}
+      <motion.div
+        className="mt-4"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <Photo
+          src={CONFIG.photos.group}
+          alt="All of us"
+          placeholder="ALL OF US"
+          objectPosition="center 40%"
+          className="w-full block"
+          style={{ aspectRatio: '4 / 3', borderRadius: 2 }}
+        />
+        <p className="mt-2" style={{ fontSize: 11.5, color: 'var(--ink-40)', lineHeight: 1.45 }}>
+          {CONFIG.groupCaption}
+        </p>
+      </motion.div>
+
+      <Rule style={{ marginTop: 18, background: 'var(--ink)', height: 1.5 }} />
 
       {CONTENTS.map((key, i) => {
         const page = PAGES[key]
@@ -67,8 +87,8 @@ export default function Contents() {
       })}
 
       <motion.p
-        className="serif-it mt-6"
-        style={{ fontSize: 16, lineHeight: 1.5, color: 'var(--ink-60)' }}
+        className="dropcap mt-6"
+        style={{ fontSize: 16, lineHeight: 1.6, color: 'var(--ink-60)' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7 }}
