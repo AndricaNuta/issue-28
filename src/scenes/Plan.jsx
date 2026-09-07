@@ -45,20 +45,23 @@ export default function Plan() {
   const cross = () => {
     if (phase !== 'list') return
     setPhase('struck')
-    timers.current.push(setTimeout(() => setPhase('truth'), 3600))
+    timers.current.push(setTimeout(() => setPhase('truth'), 4200))
   }
 
   const struck = phase !== 'list'
-  const lastStrike = (PLAN.items.length - 1) * 0.16 + 0.36
 
   // Her sentence, with the half that matters printed in red.
   const [before, after] = PLAN.payoff.split(PLAN.payoffEmphasis)
 
   return (
-    <div className="w-full max-w-[380px] mx-auto">
+    <div className="w-full max-w-[380px] mx-auto relative" style={{ minHeight: 560 }}>
       <AnimatePresence>
         {phase !== 'truth' && (
-          <motion.div key="programme" exit={{ opacity: 0, transition: { duration: 0.9 } }}>
+          <motion.div
+            key="programme"
+            className="absolute inset-x-0 top-0"
+            exit={{ opacity: 0, transition: { duration: 0.9 } }}
+          >
             {/* her sentence, as the opening */}
             <p className="display" style={{ fontSize: 24, lineHeight: 1.32, fontWeight: 400 }}>
               {PLAN.standfirst}
@@ -91,8 +94,8 @@ export default function Plan() {
               ))}
             </button>
 
-            {/* the cue, then the claim in its place */}
-            <div className="mt-5 text-center" style={{ minHeight: 78 }}>
+            {/* the cue, and then the wish in its place */}
+            <div className="mt-5 text-center" style={{ minHeight: 82 }}>
               <AnimatePresence mode="wait">
                 {phase === 'list' ? (
                   <motion.p
@@ -101,7 +104,7 @@ export default function Plan() {
                     style={{ fontSize: 27, color: 'var(--accent)' }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1, y: [0, -3, 0] }}
-                    exit={{ opacity: 0 }}
+                    exit={{ opacity: 0, transition: { duration: 0.3 } }}
                     transition={{ y: { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }, opacity: { duration: 0.3 } }}
                   >
                     {PLAN.cue}
@@ -110,10 +113,10 @@ export default function Plan() {
                   <motion.p
                     key="claim"
                     className="script"
-                    style={{ fontSize: 38, lineHeight: 1.12, color: 'var(--accent)' }}
+                    style={{ fontSize: 34, lineHeight: 1.15, color: 'var(--accent)' }}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: lastStrike + 0.3, duration: 0.9 }}
+                    transition={{ delay: 1.1, duration: 0.9 }}
                   >
                     {PLAN.claim}
                   </motion.p>
@@ -129,8 +132,8 @@ export default function Plan() {
         {phase === 'truth' && (
           <motion.p
             key="truth"
-            className="text-center"
-            style={{ fontSize: 25, lineHeight: 1.45, paddingTop: 90 }}
+            className="absolute inset-x-0 text-center"
+            style={{ fontSize: 25, lineHeight: 1.45, top: 150 }}
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}

@@ -154,7 +154,9 @@ export const PLAN = {
     '10,000 steps a day',
   ],
   cue: 'tap the list',
-  claim: 'So we completed them for you.',
+  // Shown once the programme has been crossed off. Crossing them out is a
+  // wish, not a claim, which is why 'we completed them for you' rang false.
+  claim: 'We would gift them to you if we could.',
   payoff: 'Just so you know, with or without these completed, you are loved exactly as you are.',
   // Printed in red inside the sentence above. Must appear in it word for word.
   payoffEmphasis: 'you are loved exactly as you are',
@@ -209,21 +211,21 @@ export const TAROT = {
       name: 'Strength',
       image: 'photos/tarot/strength.jpg',
       reading:
-        'You have been carrying everything, and doing it gently. The card is not about force. It says you may put some of it down.',
+        'Endless strength, and the year you stop apologising for taking up space. Certified bad bitch, filed under fact, not opinion.',
     },
     {
       position: 'What carries you',
       name: 'The Empress',
       image: 'photos/tarot/empress.jpg',
       reading:
-        'Everything around you grows because you tend it. Sixteen people are proof. Let some of that care point back at you this year.',
+        'Startup founder energy. Your name on the thing, your terms, your table. Sex and the City, except you own the apartment.',
     },
     {
       position: 'What is coming',
       name: 'The Sun',
       image: 'photos/tarot/sun.jpg',
       reading:
-        'It gets easier. Not all at once, and not because you earned it by being perfect. Twenty-eight is a warm one.',
+        'Adored, loudly, all year. Endless love, from us and from people who have not even met you yet.',
     },
   ],
   bonus: {
