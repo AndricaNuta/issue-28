@@ -106,18 +106,14 @@ export default function Year() {
       {/* The drawn card, big enough to read, with the pack beside it. The pack
           is the thing she taps: a text link asking her to draw was doing the
           job a deck should do. */}
-      <div className="flex items-start gap-3 mt-4">
+      <div className="flex items-start justify-center gap-3 mt-4">
         {/* where the drawn card lands */}
         <div className="relative" style={{ width: '50%', aspectRatio: '100 / 172' }}>
           {nothingDrawn ? (
             <div
-              className="absolute inset-0 grid place-items-center"
+              className="absolute inset-0"
               style={{ border: '1px dashed rgba(28,25,23,0.18)', borderRadius: 2 }}
-            >
-              <p className="kicker" style={{ color: 'var(--ink-40)', fontSize: 8 }}>
-                {TAROT.drawCue}
-              </p>
-            </div>
+            />
           ) : (
             <AnimatePresence mode="wait">
               <motion.div
@@ -202,12 +198,21 @@ export default function Year() {
               ))}
 
           {!shuffling && !packEmpty && (
-            <p
-              className="kicker absolute text-center"
-              style={{ top: '100%', left: 0, right: 0, marginTop: 8, color: 'var(--ink-40)', fontSize: 7.5 }}
-            >
-              {deck.length - drawn} left
-            </p>
+            <div className="absolute text-center" style={{ top: '100%', left: -20, right: -20, marginTop: 8 }}>
+              {nothingDrawn && (
+                <motion.p
+                  className="script"
+                  style={{ fontSize: 17, color: 'var(--accent)' }}
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  {TAROT.drawCue}
+                </motion.p>
+              )}
+              <p className="kicker" style={{ color: 'var(--ink-40)', fontSize: 7.5, marginTop: nothingDrawn ? 2 : 0 }}>
+                {deck.length - drawn} left
+              </p>
+            </div>
           )}
         </motion.div>
       </div>

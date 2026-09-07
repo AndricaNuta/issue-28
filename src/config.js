@@ -75,11 +75,10 @@ export const CONFIG = {
 
     // The intro page reads these. They had been removed when the divider page
     // took over the announcing; the page still asks for them, so here they are.
-    announceKicker: 'Presents · one of two',
     announceTitle: 'Your first present.',
     announceBody: 'There are two of them at the back of this issue. This is the one you can carry.',
 
-    introTitle: 'This one.',
+    //introTitle: 'This one.',
     introBody: 'The one you kept going back to look at. It is not a browser tab any more.',
     // It has been ordered but has not landed yet, so the page says so.
     status: "It's on its way",
