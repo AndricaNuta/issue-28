@@ -78,19 +78,33 @@ export default function Year() {
 
   return (
     <div className="w-full max-w-[380px] mx-auto">
-      <h1 className="display" style={{ fontSize: 32, lineHeight: 1.06 }}>
+      <motion.h1
+        className="display"
+        style={{ lineHeight: 1.06, overflow: 'hidden' }}
+        animate={{ fontSize: nothingDrawn ? 32 : 22, maxHeight: nothingDrawn ? 90 : 30 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      >
         {TAROT.title}
-      </h1>
-      <p className="serif-it mt-2" style={{ fontSize: 15, lineHeight: 1.5, color: 'var(--ink-60)' }}>
+      </motion.h1>
+      <motion.p
+        className="serif-it"
+        style={{ fontSize: 15, lineHeight: 1.5, color: 'var(--ink-60)', overflow: 'hidden' }}
+        animate={{
+          maxHeight: nothingDrawn ? 120 : 0,
+          opacity: nothingDrawn ? 1 : 0,
+          marginTop: nothingDrawn ? 8 : 0,
+        }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      >
         {TAROT.standfirst}
-      </p>
+      </motion.p>
 
       {/* The drawn card, big enough to read, with the pack beside it. The pack
           is the thing she taps: a text link asking her to draw was doing the
           job a deck should do. */}
       <div className="flex items-start gap-3 mt-5">
         {/* where the drawn card lands */}
-        <div className="relative" style={{ width: '64%', aspectRatio: '100 / 172' }}>
+        <div className="relative" style={{ width: '56%', aspectRatio: '100 / 172' }}>
           {nothingDrawn ? (
             <div
               className="absolute inset-0 grid place-items-center"
@@ -141,7 +155,7 @@ export default function Year() {
         {/* the pack */}
         <motion.div
           className="relative"
-          style={{ width: '30%', aspectRatio: '100 / 172', marginTop: 18 }}
+          style={{ width: '27%', aspectRatio: '100 / 172', marginTop: 16 }}
           animate={{ opacity: packEmpty ? 0 : 1 }}
           transition={{ duration: 0.5 }}
         >
@@ -194,8 +208,38 @@ export default function Year() {
         </motion.div>
       </div>
 
+      {/* the reading for whichever one she is looking at */}
+      <div style={{ minHeight: 112 }} className="mt-3">
+        <AnimatePresence mode="wait">
+          {shuffling || nothingDrawn ? null : (
+            <motion.div
+              key={`read-${selected}`}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, delay: 0.45 }}
+            >
+              <Rule />
+              <p className="script mt-3" style={{ fontSize: 22, lineHeight: 1.1, color: 'var(--accent)' }}>
+                {card.name}
+              </p>
+              <p className="mt-2" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
+                {card.reading}
+              </p>
+              {drawn === bonusIndex && (
+                <p className="serif-it mt-3" style={{ fontSize: 14.5, color: 'var(--ink-40)' }}>
+                  {TAROT.bonus.intro}
+                </p>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
       {/* the spread, and how she moves between them */}
-      <div className="grid gap-1.5 mt-4" style={{ gridTemplateColumns: `repeat(${deck.length}, 1fr)` }}>
+      <div
+        className="grid gap-1.5 mt-4 mx-auto"
+        style={{ gridTemplateColumns: `repeat(${deck.length}, 1fr)`, maxWidth: '74%' }}
+      >
         {deck.map((c, idx) => {
           const isDown = idx < drawn
           const isHere = idx === selected
@@ -239,33 +283,6 @@ export default function Year() {
         })}
       </div>
 
-      {/* the reading for whichever one she is looking at */}
-      <div style={{ minHeight: 150 }} className="mt-4">
-        <AnimatePresence mode="wait">
-          {shuffling || nothingDrawn ? null : (
-            <motion.div
-              key={`read-${selected}`}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, delay: 0.45 }}
-            >
-              <Rule />
-              <p className="script mt-3" style={{ fontSize: 22, lineHeight: 1.1, color: 'var(--accent)' }}>
-                {card.name}
-              </p>
-              <p className="mt-2" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
-                {card.reading}
-              </p>
-              {drawn === bonusIndex && (
-                <p className="serif-it mt-3" style={{ fontSize: 14.5, color: 'var(--ink-40)' }}>
-                  {TAROT.bonus.intro}
-                </p>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
     </div>
   )
 }
