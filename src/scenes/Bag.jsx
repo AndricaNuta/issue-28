@@ -347,7 +347,7 @@ export default function Bag() {
             <>
               <motion.p
                 className="script"
-                style={{ fontSize: 28, color: 'var(--accent)' }}
+                style={{ fontSize: 19, lineHeight: 1.35, color: 'var(--accent)' }}
                 animate={{ y: [0, -3, 0] }}
                 transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
               >

@@ -83,8 +83,8 @@ export const CONFIG = {
 
     // After it lands on the glossy shot: the joke, and the wipe.
     oopsTitle: 'Hm. Too much.',
-    oopsBody: 'Hold on, that is the version for the magazine. Wipe it off.',
-    oopsCue: 'wipe it',
+    oopsBody: 'Hold on, that is the version for the magazine.',
+    oopsCue: 'wipe it clear, closer to reality',
 
     title: 'There she is.',
     // TODO one line here if you want one, in your words. Empty hides it, and
