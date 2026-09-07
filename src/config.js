@@ -34,7 +34,7 @@ export const CONFIG = {
     // The product gallery on the reveal page: she should see it clearly.
     // Drop more shots into public/photos/bag/ and list them here, first one
     // is the one shown when the page opens.
-    bagShots: ['photos/bag.png', 'photos/bag-open.png', 'photos/bag-alt.jpg'],
+    bagShots: ['photos/bag.png', 'photos/bag/01.jpg', 'photos/bag/02.jpg', 'photos/bag-open.png'],
     // Her mid sheet-mask, for the spa advertorial. Funny on purpose.
     mask: 'photos/mask.jpg',
     // A childhood photograph, for the "this is who turns 28" pass.
@@ -179,8 +179,13 @@ export const PEOPLE = Array.from({ length: 16 }, (_, i) => ({
 }))
 
 export const PACK = {
+  // Step one: the bag, empty.
+  emptyTitle: 'It is empty.',
+  emptyCta: 'Fill the bag with us',
+  // Step two: the deck.
   title: 'Filling the bag with our memories together',
   standfirst: 'Flick through.',
+  // Step three: in it goes.
   done: 'All of it goes in the bag.',
   doneBody: 'Every one of these comes with you, and none of it takes up any room.',
 }

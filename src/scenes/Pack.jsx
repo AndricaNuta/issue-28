@@ -44,10 +44,46 @@ function Polaroid({ person, style, dragging }) {
 
 export default function Pack() {
   const { next } = useExperience()
+  const [step, setStep] = useState('empty') // empty · deck
   const [i, setI] = useState(0)
   const all = useMemo(() => PEOPLE.map((p, idx) => ({ ...p, id: idx })), [])
-  const done = i >= all.length
-  useCta(done ? { onClick: next, tone: 'accent' } : null, [done, next])
+  const done = step === 'deck' && i >= all.length
+  useCta(
+    step === 'empty'
+      ? { onClick: () => setStep('deck'), tone: 'accent', label: PACK.emptyCta, icon: 'hand' }
+      : done
+        ? { onClick: next, tone: 'accent' }
+        : null,
+    [step, done, next],
+  )
+
+  // ---------- the bag, empty ----------
+  // Arriving straight at a deck of photographs after the reveal was abrupt:
+  // this gives the bag a beat of its own, and something to be filled.
+  if (step === 'empty') {
+    return (
+      <div className="w-full max-w-[380px] mx-auto text-center">
+        <h1 className="script" style={{ fontSize: 46, lineHeight: 1.05 }}>
+          {PACK.emptyTitle}
+        </h1>
+
+        <motion.div
+          className="mt-4"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Photo
+            src={CONFIG.photos.bagOpen}
+            alt="The bag, open and empty"
+            placeholder="OPEN BAG PHOTO"
+            className="w-full anim-float"
+            style={{ aspectRatio: '779 / 900', objectFit: 'contain' }}
+          />
+        </motion.div>
+      </div>
+    )
+  }
   const visible = all.slice(i, i + 4)
 
   const advance = () => setI((n) => Math.min(all.length, n + 1))
