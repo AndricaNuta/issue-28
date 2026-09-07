@@ -13,9 +13,9 @@ export const CONFIG = {
   // A short script line above her name on the cover. '' hides it.
   coverKicker: 'cover star',
   issueDate: 'September 2026',
-  edition: 'One copy printed',
+  edition: 'Special birthday edition',
   // Printed down the left of the cover, magazine style.
-  coverLines: ["What's in her bag?", 'The 28-day plan', 'Your year ahead'],
+  coverLines: ['Our memories', 'The 28-day plan', 'Your year ahead'],
   // For her access pass on the entry page. Keep it short and funny.
   occupation: 'CEO',
   // Printed along the foot of the pass.
