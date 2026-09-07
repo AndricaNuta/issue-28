@@ -324,14 +324,6 @@ export default function Bag() {
               />
             </div>
 
-            {import.meta.env.DEV && wiped && (
-              <span
-                className="kicker absolute whitespace-nowrap"
-                style={{ top: '100%', left: '50%', transform: 'translateX(-50%)', fontSize: 9, color: 'var(--accent)' }}
-              >
-                real target · x {tr.x} · y {tr.y}
-              </span>
-            )}
           </motion.div>
 
           {/* the glossy version, painted on top to be rubbed away */}
@@ -448,7 +440,7 @@ export default function Bag() {
           </div>
 
           {/* dev helper: read the coordinates off the screen for config.js */}
-          {import.meta.env.DEV && !placed && (
+          {import.meta.env.DEV && dragging && (
             <span
               className="kicker absolute whitespace-nowrap"
               style={{ top: '100%', left: '50%', transform: 'translateX(-50%)', fontSize: 9, color: 'var(--accent)' }}

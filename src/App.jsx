@@ -84,18 +84,44 @@ export default function App() {
             aria-hidden="true"
           />
 
-          {/* running head: masthead left, progress right */}
+          {/* running head: masthead left, folio right, over a scrim that fades
+              out beneath it. Without the scrim the page scrolled under a
+              transparent fixed header and the type collided. */}
           {showChrome && (
-            <div
-              className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5"
-              style={{ paddingTop: 'max(16px, env(safe-area-inset-top))' }}
-            >
-              <span className="kicker" style={{ color: 'var(--ink-40)' }}>
-                {CONFIG.magazineName} · {CONFIG.issueLabel}
-              </span>
-              <span className="kicker" style={{ color: 'var(--ink-40)' }}>
-                Page {String(folio).padStart(2, '0')}
-              </span>
+            <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+              <div
+                className="absolute inset-x-0 top-0"
+                style={{
+                  height: 84,
+                  // Solid where the head's own type sits, fading out below it.
+                  // Every page's backdrop is within a few points of this cream,
+                  // so the seam is invisible; the blur covers the rest.
+                  background:
+                    'linear-gradient(180deg, rgb(243,237,228) 0%, rgb(243,237,228) 42%, rgba(243,237,228,0.72) 68%, rgba(243,237,228,0) 100%)',
+                  backdropFilter: 'blur(6px)',
+                  WebkitBackdropFilter: 'blur(6px)',
+                  maskImage: 'linear-gradient(180deg, #000 0%, #000 42%, rgba(0,0,0,0.7) 68%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(180deg, #000 0%, #000 42%, rgba(0,0,0,0.7) 68%, transparent 100%)',
+                }}
+                aria-hidden="true"
+              />
+              <div
+                className="relative flex items-baseline justify-between gap-3 px-5"
+                style={{ paddingTop: 'max(16px, env(safe-area-inset-top))' }}
+              >
+                <span
+                  className="kicker truncate"
+                  style={{ color: 'var(--ink-40)', fontSize: 9.5, letterSpacing: '0.2em' }}
+                >
+                  {CONFIG.magazineName} · {CONFIG.issueLabel}
+                </span>
+                <span
+                  className="kicker shrink-0"
+                  style={{ color: 'var(--ink-40)', fontSize: 9.5, letterSpacing: '0.2em' }}
+                >
+                  Page {String(folio).padStart(2, '0')}
+                </span>
+              </div>
             </div>
           )}
 
@@ -143,7 +169,7 @@ export default function App() {
               >
                 <div
                   className="min-h-full flex items-center justify-center"
-                  style={{ padding: '68px 22px 124px' }}
+                  style={{ padding: '78px 22px 124px' }}
                 >
                   <Active />
                 </div>
