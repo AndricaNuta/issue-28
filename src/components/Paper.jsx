@@ -27,7 +27,7 @@ export function Barcode({ width = 78, height = 22, seed = 7, label, color = 'var
     x += w + gap
   }
   return (
-    <div className="inline-flex flex-col items-start gap-1">
+    <div className="inline-flex flex-col items-center gap-1">
       <svg width={width} height={height} aria-hidden="true">
         {bars.map((b, i) => (
           <rect key={i} x={b.x} y={0} width={b.w} height={height} fill={color} />

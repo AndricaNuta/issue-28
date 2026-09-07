@@ -29,15 +29,15 @@ export default function Close() {
       </p>
 
       <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-4 text-left">
-        {PEOPLE.map((p, i) => (
+        {PEOPLE.map((name, i) => (
           <motion.span
-            key={i}
+            key={name}
             style={{ fontSize: 13.5, color: 'var(--ink-60)' }}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 + i * 0.04, duration: 0.4 }}
           >
-            {p.name}
+            {name}
           </motion.span>
         ))}
       </div>
@@ -51,9 +51,6 @@ export default function Close() {
 
       <div className="mt-7 flex flex-col items-center gap-3">
         <Barcode width={80} height={22} seed={CONFIG.age + 11} label={`${CONFIG.issueLabel} · ONE OF ONE`} />
-        <button className="link" onClick={() => go('cover')}>
-          back to the cover
-        </button>
       </div>
     </div>
   )

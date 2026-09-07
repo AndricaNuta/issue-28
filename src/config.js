@@ -12,8 +12,8 @@ export const CONFIG = {
   issueLabel: 'ISSUE 28',
   // A short script line above her name on the cover. '' hides it.
   coverKicker: 'cover star',
-  issueDate: 'Birthday issue 2026',
-  edition: 'Special edition',
+  issueDate: 'September 2026',
+  edition: 'One copy printed',
   // Printed down the left of the cover, magazine style.
   coverLines: ["What's in her bag?", 'The 28-day plan', 'Your year ahead'],
   // For her access pass on the entry page. Keep it short and funny.
@@ -125,7 +125,7 @@ export const CONFIG = {
   },
 
   // --- Sign-off ---
-  closing: 'Happy 28th. Same time next issue.',
+  closing: 'Same time next issue.',
 }
 
 // ============================================================

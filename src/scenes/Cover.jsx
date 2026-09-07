@@ -158,18 +158,15 @@ export default function Cover() {
 
         </motion.div>
 
-        {/* the foot of the cover, placed on its own so her name can sit low */}
+        {/* the foot of the cover: just the barcode */}
         <motion.div
-          className="absolute left-4 right-4 flex items-end justify-between gap-3"
+          className="absolute right-4 flex items-end"
           style={{ bottom: 15 }}
           variants={rise}
           initial="hidden"
           animate="show"
           custom={5}
         >
-          <p className="coverline" style={{ fontSize: 11, color: 'rgba(246,241,232,0.9)' }}>
-            It&rsquo;s her birthday
-          </p>
           <span style={{ filter: 'invert(1)', opacity: 0.9, marginRight: 26 }}>
             <Barcode width={52} height={18} seed={CONFIG.age} />
           </span>

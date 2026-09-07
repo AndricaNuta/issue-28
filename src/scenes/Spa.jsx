@@ -193,9 +193,9 @@ export default function Spa() {
 
           {/* sixteen signatures */}
           <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-6">
-            {PEOPLE.map((p, i) => (
+            {PEOPLE.map((name, i) => (
               <motion.span
-                key={i}
+                key={name}
                 className="script"
                 style={{
                   fontSize: 15,
@@ -207,7 +207,7 @@ export default function Spa() {
                 animate={{ opacity: 0.85, y: 0 }}
                 transition={{ delay: 0.25 + i * 0.055, duration: 0.35 }}
               >
-                {p.name}
+                {name}
               </motion.span>
             ))}
           </div>

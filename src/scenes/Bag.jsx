@@ -114,10 +114,10 @@ export default function Bag() {
   const [step, setStep] = useState(() => {
     if (import.meta.env.DEV) {
       const q = new URLSearchParams(window.location.search).get('step')
-      if (q === 'drag' || q === 'oops' || q === 'done') return q
+      if (q === 'drag' || q === 'oops') return q
     }
     return 'intro'
-  }) // intro · drag · oops · done
+  }) // intro · drag · oops
   const frameRef = useRef(null)
   const [attempts, setAttempts] = useState(0)
   const [msg, setMsg] = useState(null)
@@ -273,7 +273,7 @@ export default function Bag() {
     const tr = CONFIG.bagTargetReal
     return (
       <div className="w-full max-w-[380px] mx-auto">
-        <Kicker>{wiped ? 'Final' : 'Second thoughts'}</Kicker>
+        <Kicker>{wiped ? 'Yours' : 'Second thoughts'}</Kicker>
         <h1 className="display mt-2" style={{ fontSize: 36, lineHeight: 1.02 }}>
           {wiped ? CONFIG.bag.title : CONFIG.bag.oopsTitle}
         </h1>
@@ -359,62 +359,10 @@ export default function Bag() {
             </>
           ) : (
             <div className="flex justify-center">
-              <Next onClick={() => setStep('done')} delay={0.5} />
+              <Next onClick={next} delay={0.5} label="Look inside the bag" />
             </div>
           )}
         </div>
-      </div>
-    )
-  }
-
-  // ---------- the payoff ----------
-  if (step === 'done') {
-    const tr = CONFIG.bagTargetReal
-    return (
-      <div className="w-full max-w-[380px] mx-auto">
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <div className="relative w-full">
-            <Photo
-              src={CONFIG.photos.herReal}
-              alt={CONFIG.name}
-              placeholder="THE REAL PHOTO"
-              objectPosition="center center"
-              className="w-full"
-              style={{ aspectRatio: '4 / 5', borderRadius: 3 }}
-            />
-            <div
-              className="absolute"
-              style={{
-                left: `${tr.x}%`,
-                top: `${tr.y}%`,
-                width: `${tr.size}%`,
-                transform: `translate(-50%, -50%) rotate(${tr.rotation}deg)`,
-              }}
-            >
-              <Photo
-                src={CONFIG.photos.bag}
-                alt="The bag"
-                placeholder="BAG"
-                className="w-full"
-                style={{ aspectRatio: '1 / 1', objectFit: 'contain', filter: 'drop-shadow(0 8px 14px rgba(26,20,24,0.3))' }}
-              />
-            </div>
-          </div>
-
-          <Kicker className="mt-5">Yours</Kicker>
-          <h1 className="display mt-2" style={{ fontSize: 40 }}>
-            {CONFIG.bag.title}
-          </h1>
-          {CONFIG.bag.body && (
-            <p className="mt-3" style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-60)' }}>
-              {CONFIG.bag.body}
-            </p>
-          )}
-
-          <div className="mt-7 flex justify-center">
-            <Next onClick={next} tone="accent" label="Open it" />
-          </div>
-        </motion.div>
       </div>
     )
   }
