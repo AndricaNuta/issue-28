@@ -122,6 +122,7 @@ export default function Bag() {
   const [hint, setHint] = useState(false)
   const [placed, setPlaced] = useState(false)
   const [wiped, setWiped] = useState(false)
+  const [shot, setShot] = useState(0)
 
   const t = CONFIG.bagTarget
 
@@ -161,52 +162,115 @@ export default function Bag() {
     setTimeout(() => setStep('oops'), 1100)
   }
 
-  // ---------- the introduction ----------
+  // ---------- the product page ----------
+  // Framed as a listing rather than "finish the cover": that callback sat
+  // eight pages away from its setup, which is too far to remember, and she
+  // needs to see the thing clearly before it is handed over.
   if (step === 'intro') {
+    const shots = CONFIG.photos.bagShots || [CONFIG.photos.bag]
     return (
       <div className="w-full max-w-[380px] mx-auto">
-        <Kicker>Gift one of two</Kicker>
-        <h1 className="display mt-2" style={{ fontSize: 40 }}>
-          {CONFIG.bag.introTitle}
-        </h1>
-        <Rule style={{ marginTop: 18 }} />
-        <p className="mt-4" style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-60)' }}>
-          {CONFIG.bag.introBody}
-        </p>
-
-        {/* what she is about to be asked to do, shown rather than described */}
-        <div className="mt-6 flex items-center gap-4">
-          <div style={{ width: 92 }}>
-            <Photo
-              src={CONFIG.photos.bag}
-              alt="The bag"
-              placeholder="BAG"
-              className="w-full anim-float"
-              style={{ aspectRatio: '1 / 1', objectFit: 'contain' }}
-            />
-          </div>
-          <span className="display" style={{ fontSize: 26, color: 'var(--ink-40)' }}>
-            →
+        <div className="flex items-baseline justify-between">
+          <Kicker>Gift one of two</Kicker>
+          <span className="kicker" style={{ color: 'var(--ink-40)' }}>
+            {CONFIG.bag.brand}
           </span>
-          <div style={{ width: 78 }}>
-            <Photo
-              src={CONFIG.photos.her}
-              alt={CONFIG.name}
-              placeholder="HER"
-              objectPosition="center 25%"
-              className="w-full"
-              style={{ aspectRatio: '3 / 4', borderRadius: 2 }}
-            />
-          </div>
         </div>
 
-        <p className="kicker mt-5" style={{ color: 'var(--accent)' }}>
-          Your task · {CONFIG.bag.task}
+        {/* the main shot */}
+        <div
+          className="relative w-full mt-3 overflow-hidden"
+          style={{ background: '#EFECE7', borderRadius: 2, aspectRatio: '1 / 1' }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={shot}
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Photo
+                src={shots[shot]}
+                alt={CONFIG.bag.name}
+                placeholder="THE BAG"
+                className="w-full h-full"
+                style={{ objectFit: 'contain', padding: '8%' }}
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* thumbnails */}
+        {shots.length > 1 && (
+          <div className="flex gap-2 mt-2">
+            {shots.map((src, i) => (
+              <button
+                key={i}
+                onClick={() => setShot(i)}
+                className="border-0 p-0 overflow-hidden"
+                style={{
+                  width: 54,
+                  height: 54,
+                  background: '#EFECE7',
+                  borderRadius: 2,
+                  cursor: 'pointer',
+                  boxShadow: i === shot ? 'inset 0 0 0 1.5px var(--ink)' : 'inset 0 0 0 1px var(--hair)',
+                }}
+                aria-label={`View ${i + 1}`}
+              >
+                <Photo
+                  src={src}
+                  alt=""
+                  placeholder=""
+                  className="w-full h-full"
+                  style={{ objectFit: 'contain', padding: 5 }}
+                />
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* the listing */}
+        <h1 className="display mt-5" style={{ fontSize: 30, lineHeight: 1.05 }}>
+          {CONFIG.bag.name}
+        </h1>
+
+        <div className="flex items-baseline gap-2 mt-2">
+          <span className="display" style={{ fontSize: 20, color: 'var(--accent)' }}>
+            {CONFIG.bag.price}
+          </span>
+          <span className="serif-it" style={{ fontSize: 15, color: 'var(--ink-40)' }}>
+            {CONFIG.bag.priceNote}
+          </span>
+        </div>
+
+        <Rule style={{ marginTop: 14, marginBottom: 12 }} />
+
+        <ul className="flex flex-col gap-1.5">
+          {CONFIG.bag.specs.map((sp, i) => (
+            <li key={i} className="flex items-baseline gap-2" style={{ fontSize: 14, color: 'var(--ink-60)' }}>
+              <span style={{ color: 'var(--accent)' }} aria-hidden="true">
+                &middot;
+              </span>
+              {sp}
+            </li>
+          ))}
+        </ul>
+
+        <Rule style={{ marginTop: 14, marginBottom: 14 }} />
+
+        <h2 className="display" style={{ fontSize: 26 }}>
+          {CONFIG.bag.introTitle}
+        </h2>
+        <p className="dropcap mt-2" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
+          {CONFIG.bag.introBody}
         </p>
 
         <div className="mt-6 flex justify-center">
           <button className="btn btn-accent" onClick={() => setStep('drag')}>
-            Open the cover shoot
+            {CONFIG.bag.task}
           </button>
         </div>
       </div>
@@ -342,7 +406,7 @@ export default function Bag() {
             </div>
           </div>
 
-          <Kicker className="mt-5">Cover complete</Kicker>
+          <Kicker className="mt-5">Yours</Kicker>
           <h1 className="display mt-2" style={{ fontSize: 40 }}>
             {CONFIG.bag.title}
           </h1>
@@ -364,9 +428,9 @@ export default function Bag() {
   return (
     <div className="w-full max-w-[380px] mx-auto">
       <div className="flex items-baseline justify-between">
-        <Kicker>The cover shoot</Kicker>
+        <Kicker>Try it on</Kicker>
         <span className="kicker" style={{ color: 'var(--ink-40)' }}>
-          {placed ? 'Complete' : 'Incomplete'}
+          {placed ? 'On her' : 'Not on her yet'}
         </span>
       </div>
 
@@ -455,7 +519,7 @@ export default function Bag() {
       <div style={{ minHeight: 52 }} className="mt-3 text-center">
         {placed ? (
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="kicker">
-            That is the shot
+            That is the one
           </motion.p>
         ) : (
           <>

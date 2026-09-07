@@ -31,6 +31,10 @@ export const CONFIG = {
     bag: 'photos/bag.png',
     // The same bag open from above. This is what she packs the wishes into.
     bagOpen: 'photos/bag-open.png',
+    // The product gallery on the reveal page: she should see it clearly.
+    // Drop more shots into public/photos/bag/ and list them here, first one
+    // is the one shown when the page opens.
+    bagShots: ['photos/bag.png', 'photos/bag-open.png', 'photos/bag-alt.jpg'],
     // Her mid sheet-mask, for the spa advertorial. Funny on purpose.
     mask: 'photos/mask.jpg',
     // A childhood photograph, for the "this is who turns 28" pass.
@@ -65,10 +69,19 @@ export const CONFIG = {
 
   // --- Gift one: the bag ---
   bag: {
-    introTitle: 'The cover is not finished.',
+    // The product page. Copied off the real listing, because that is the joke:
+    // it is presented like something she is browsing, and then it is hers.
+    brand: 'Aest Studios',
+    name: 'Capture Medium Sling Bag',
+    specs: ['Crinkled patent leather', 'Detachable shoulder strap', 'Silver hardware', 'One of one, for you'],
+    // Where the price would be.
+    price: 'Paid for',
+    priceNote: 'by sixteen people',
+
+    introTitle: 'This one.',
     introBody:
-      'There is something missing from the shot. It belongs to you, and it belongs on your shoulder. Put it there and the cover is done.',
-    task: 'Drag the bag onto her shoulder',
+      'You have looked at it more than once. Sixteen of us clubbed together, so it is not a browser tab any more.',
+    task: 'Put it on her shoulder',
 
     // After it lands on the glossy shot: the joke, and the wipe.
     oopsTitle: 'Hm. Too much.',
