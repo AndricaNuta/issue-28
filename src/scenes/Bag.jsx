@@ -186,7 +186,7 @@ export default function Bag() {
 
         <div className="flex items-baseline justify-between mt-6">
           <span className="kicker" style={{ color: 'var(--ink-40)' }}>
-            The one
+             
           </span>
           <span className="kicker" style={{ color: 'var(--ink-40)' }}>
             {CONFIG.bag.brand}
