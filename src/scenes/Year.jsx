@@ -7,7 +7,7 @@ import { Kicker, Rule } from '../components/Paper.jsx'
 // Three cards to turn over. Predictions about the year rather than claims
 // about her, so there is nothing here that can land wrong.
 export default function Year() {
-  const { complete, go } = useExperience()
+  const { next } = useExperience()
   const [turned, setTurned] = useState(() => new Set())
   const all = turned.size === YEAR.cards.length
 
@@ -79,13 +79,9 @@ export default function Year() {
       <Rule style={{ marginTop: 26 }} />
 
       <div className="mt-6 flex flex-col items-center gap-1">
-        {all ? (
-          <button className="btn" onClick={() => complete('year')}>
-            Back to the list
-          </button>
-        ) : (
-          <button className="link" onClick={() => go('hub')}>
-            back to the list
+        {all && (
+          <button className="btn" onClick={next}>
+            Keep reading
           </button>
         )}
       </div>

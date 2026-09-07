@@ -9,7 +9,7 @@ const W = 320
 const H = 150
 
 export default function Spa() {
-  const { go } = useExperience()
+  const { next } = useExperience()
   const canvasRef = useRef(null)
   const lastRef = useRef(null)
   const ticks = useRef(0)
@@ -198,7 +198,7 @@ export default function Spa() {
               Book it. Actually book it, do not save it for a better week. The gym can wait an hour.
             </p>
             <div className="mt-6 flex justify-center">
-              <button className="btn" onClick={() => go('close')}>
+              <button className="btn" onClick={() => next()}>
                 Last page
               </button>
             </div>

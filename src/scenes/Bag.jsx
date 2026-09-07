@@ -11,8 +11,14 @@ import { Kicker, Photo, Rule } from '../components/Paper.jsx'
 const TRAY = { x: 22, y: 84 } // where the bag waits, clear of her and of the type
 
 export default function Bag() {
-  const { go } = useExperience()
-  const [step, setStep] = useState('intro') // intro · drag · done
+  const { next } = useExperience()
+  const [step, setStep] = useState(() => {
+    if (import.meta.env.DEV) {
+      const q = new URLSearchParams(window.location.search).get('step')
+      if (q === 'drag' || q === 'done') return q
+    }
+    return 'intro'
+  }) // intro · drag · done
   const frameRef = useRef(null)
   const [attempts, setAttempts] = useState(0)
   const [msg, setMsg] = useState(null)
@@ -151,8 +157,8 @@ export default function Bag() {
           </p>
 
           <div className="mt-7 flex justify-center">
-            <button className="btn" onClick={() => go('spa')}>
-              There is a second gift
+            <button className="btn" onClick={next}>
+              Now open it
             </button>
           </div>
         </motion.div>

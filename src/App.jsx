@@ -1,11 +1,11 @@
 import { useCallback, useMemo, useState } from 'react'
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
-import { ExperienceContext, ROUTES, TASKS, bgFor } from './experience.js'
+import { ExperienceContext, PAGES, ROUTES, bgFor } from './experience.js'
 import { CONFIG } from './config.js'
 
 import Cover from './scenes/Cover.jsx'
 import Pass from './scenes/Pass.jsx'
-import Hub from './scenes/Hub.jsx'
+import Contents from './scenes/Contents.jsx'
 import Pack from './scenes/Pack.jsx'
 import Plan from './scenes/Plan.jsx'
 import Year from './scenes/Year.jsx'
@@ -13,7 +13,7 @@ import Bag from './scenes/Bag.jsx'
 import Spa from './scenes/Spa.jsx'
 import Close from './scenes/Close.jsx'
 
-const SCENES = { cover: Cover, pass: Pass, hub: Hub, pack: Pack, plan: Plan, year: Year, bag: Bag, spa: Spa, close: Close }
+const SCENES = { cover: Cover, pass: Pass, contents: Contents, plan: Plan, year: Year, bag: Bag, pack: Pack, spa: Spa, close: Close }
 
 // Pages turn about the spine: forward, the outgoing page swings away to the
 // left around its own left edge; backward, it mirrors.
@@ -32,9 +32,6 @@ export default function App() {
     const p = params?.get('p')
     return p && SCENES[p] ? p : 'cover'
   })
-  const [done, setDone] = useState(() =>
-    params?.get('done') === '1' ? new Set(TASKS.map((t) => t.id)) : new Set(),
-  )
   const [dir, setDir] = useState(1)
 
   const go = useCallback(
@@ -46,23 +43,19 @@ export default function App() {
     [route],
   )
 
-  // Finishing a task ticks it off and returns her to the checklist, so progress
-  // is always shown where the remaining work is listed.
-  const complete = useCallback((id) => {
-    setDone((prev) => {
-      const n = new Set(prev)
-      n.add(id)
-      return n
-    })
-    setDir(-1)
-    setRoute('hub')
-  }, [])
+  const next = useCallback(() => {
+    const i = ROUTES.indexOf(route)
+    if (i < ROUTES.length - 1) {
+      setDir(1)
+      setRoute(ROUTES[i + 1])
+    }
+  }, [route])
 
-  const allDone = TASKS.every((t) => done.has(t.id))
-  const ctx = useMemo(() => ({ route, done, allDone, go, complete }), [route, done, allDone, go, complete])
+  const ctx = useMemo(() => ({ route, go, next }), [route, go, next])
 
   const Active = SCENES[route]
   const showChrome = route !== 'cover'
+  const folio = PAGES[route]?.no
 
   return (
     <MotionConfig reducedMotion="user">
@@ -96,8 +89,8 @@ export default function App() {
               <span className="kicker" style={{ color: 'var(--ink-40)' }}>
                 {CONFIG.magazineName} · {CONFIG.issueLabel}
               </span>
-              <span className="kicker" style={{ color: allDone ? 'var(--accent)' : 'var(--ink-40)' }}>
-                {done.size}/{TASKS.length} done
+              <span className="kicker" style={{ color: 'var(--ink-40)' }}>
+                Page {String(folio).padStart(2, '0')}
               </span>
             </div>
           )}

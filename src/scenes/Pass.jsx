@@ -28,7 +28,7 @@ function Field({ label, value, script }) {
 }
 
 export default function Pass() {
-  const { go } = useExperience()
+  const { next } = useExperience()
 
   return (
     <div className="w-full max-w-[330px] mx-auto">
@@ -130,7 +130,7 @@ export default function Pass() {
         <p className="serif-it text-center" style={{ fontSize: 16, color: 'var(--ink-60)', maxWidth: '20em' }}>
           Wear it at all times. There are three things to do and two things to keep.
         </p>
-        <button className="btn" onClick={() => go('hub')}>
+        <button className="btn" onClick={() => next()}>
           Enter the issue
         </button>
       </motion.div>

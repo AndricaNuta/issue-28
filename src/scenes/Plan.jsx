@@ -25,7 +25,7 @@ function Tick({ show }) {
 }
 
 export default function Plan() {
-  const { complete, go } = useExperience()
+  const { next } = useExperience()
 
   const lockedIdx = useMemo(
     () => PLAN.items.map((it, i) => (it.locked ? i : -1)).filter((i) => i >= 0),
@@ -161,18 +161,13 @@ export default function Plan() {
 
       <div className="mt-7 flex flex-col items-center gap-1">
         {allDone ? (
-          <button className="btn" onClick={() => complete('plan')}>
-            Back to the list
+          <button className="btn" onClick={next}>
+            Keep reading
           </button>
         ) : (
-          <>
-            <p className="serif-it text-center" style={{ fontSize: 14.5, color: 'var(--ink-40)' }}>
-              Tick everything you are willing to commit to.
-            </p>
-            <button className="link" onClick={() => go('hub')}>
-              back to the list
-            </button>
-          </>
+          <p className="serif-it text-center" style={{ fontSize: 14.5, color: 'var(--ink-40)' }}>
+            Tick everything you are willing to commit to.
+          </p>
         )}
       </div>
     </div>

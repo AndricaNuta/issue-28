@@ -5,11 +5,12 @@
 
 export const CONFIG = {
   // --- Her ---
-  name: 'NAME HERE',        // TODO shown large on the cover
+  name: 'Ana',
   age: 28,
   magazineName: 'BESTIE',   // TODO the title on the cover
   issueLabel: 'ISSUE 28',
-  coverLine: 'Twenty-eight. Two gifts. Sixteen of us.',  // TODO one line under her name
+  // A short script line above her name on the cover. '' hides it.
+  coverKicker: 'cover star',
   issueDate: 'Birthday issue 2026',
   edition: 'Special edition',
   // Printed down the left of the cover, magazine style.
@@ -39,8 +40,8 @@ export const CONFIG = {
   // Percentages of the photo frame. Open the page with `npm run dev` and drag
   // the bag around: a readout under it prints the coordinates. Copy them here.
   bagTarget: {
-    x: 62,          // TODO % from left
-    y: 40,          // TODO % from top
+    x: 25,          // % from left · her raised forearm
+    y: 58,          // % from top
     size: 30,       // bag width as % of frame width
     tolerance: 15,  // how close counts (% of frame width). Bigger is kinder.
     rotation: -6,   // resting tilt in degrees
@@ -99,38 +100,27 @@ export const PLAN = {
 }
 
 // ============================================================
-//  THE SIXTEEN WISHES
-//  This is the heart of it, and the only part I cannot write for you.
-//  One line per person: what they wish for her twenty-eighth year.
-//  She drags each one into the bag, so keep them short, a sentence or
-//  two, the length you would actually say out loud.
-//  TODO replace all sixteen.
+//  THE SIXTEEN
+//  A polaroid each. `photo` is a file in public/photos/people/,
+//  `wish` is what they wish her for the year, shown when she drops
+//  their polaroid into the bag.
+//  Drop the photos into ~/Downloads/people/ and run:
+//      python3 scripts/people.py ~/Downloads/people
+//  which squares, shrinks and numbers them into public/photos/people/.
+//  TODO replace all sixteen names and wishes.
 // ============================================================
-export const WISHES = [
-  { name: 'Person 1', wish: 'Their wish for her goes here.' },
-  { name: 'Person 2', wish: 'Their wish for her goes here.' },
-  { name: 'Person 3', wish: 'Their wish for her goes here.' },
-  { name: 'Person 4', wish: 'Their wish for her goes here.' },
-  { name: 'Person 5', wish: 'Their wish for her goes here.' },
-  { name: 'Person 6', wish: 'Their wish for her goes here.' },
-  { name: 'Person 7', wish: 'Their wish for her goes here.' },
-  { name: 'Person 8', wish: 'Their wish for her goes here.' },
-  { name: 'Person 9', wish: 'Their wish for her goes here.' },
-  { name: 'Person 10', wish: 'Their wish for her goes here.' },
-  { name: 'Person 11', wish: 'Their wish for her goes here.' },
-  { name: 'Person 12', wish: 'Their wish for her goes here.' },
-  { name: 'Person 13', wish: 'Their wish for her goes here.' },
-  { name: 'Person 14', wish: 'Their wish for her goes here.' },
-  { name: 'Person 15', wish: 'Their wish for her goes here.' },
-  { name: 'Person 16', wish: 'Their wish for her goes here.' },
-]
+export const WISHES = Array.from({ length: 16 }, (_, i) => ({
+  name: `Person ${i + 1}`,
+  wish: 'Their wish for her goes here.',
+  photo: `photos/people/${String(i + 1).padStart(2, '0')}.jpg`,
+}))
 
 export const PACK = {
-  title: 'What we are putting in your bag',
+  title: 'Now fill it',
   standfirst:
-    'Sixteen of us wrote you one. Drag each one into the bag. Nothing in here takes up any room.',
+    'Sixteen of us, and a wish each. Put us in the bag. None of it takes up any room.',
   done: 'The bag is full.',
-  doneBody: 'Sixteen wishes, no receipts. You can carry all of it at once.',
+  doneBody: 'Sixteen of us in there, no receipts. You can carry all of it at once.',
 }
 
 // ============================================================

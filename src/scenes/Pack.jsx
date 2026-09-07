@@ -4,14 +4,44 @@ import { useExperience } from '../experience.js'
 import { CONFIG, PACK, WISHES } from '../config.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
 
-// Her real bag, open from above, and sixteen wishes to put in it. Four wait
-// around it at a time and the slots refill, so the page never becomes a wall
-// of sixteen cards. Dragging is the intended gesture but a plain tap also
-// works: sixteen forced drags would be a chore, not a gift.
+// She has the bag by now, so this page is what goes in it: a polaroid of each
+// of the sixteen, dragged into the open bag. Dropping one prints their wish.
+// A plain tap works too, because sixteen forced drags would be a chore.
 const TAP_SLOP = 9 // px of movement below which a drag counts as a tap
+const TILTS = [-2.5, 1.8, -1.2, 2.6]
+
+function Polaroid({ person, tilt = 0, width, dragging }) {
+  return (
+    <div
+      style={{
+        background: '#FFFDF9',
+        padding: '7px 7px 0',
+        width,
+        transform: `rotate(${tilt}deg)`,
+        boxShadow: dragging
+          ? '0 18px 34px rgba(28,25,23,0.3)'
+          : '0 5px 14px rgba(28,25,23,0.16)',
+      }}
+    >
+      <Photo
+        src={person.photo}
+        alt={person.name}
+        placeholder="PHOTO"
+        className="w-full block"
+        style={{ aspectRatio: '1 / 1' }}
+      />
+      <p
+        className="script text-center"
+        style={{ fontSize: 21, lineHeight: 1.5, color: 'var(--ink)', padding: '2px 0 4px' }}
+      >
+        {person.name}
+      </p>
+    </div>
+  )
+}
 
 export default function Pack() {
-  const { complete, go } = useExperience()
+  const { next } = useExperience()
   const bagRef = useRef(null)
   const [packed, setPacked] = useState(() => new Set())
   const [drag, setDrag] = useState(null)
@@ -23,9 +53,9 @@ export default function Pack() {
   const slots = waiting.slice(0, 4)
   const full = packed.size === all.length
 
-  const accept = (wish) => {
-    setPacked((prev) => new Set(prev).add(wish.id))
-    setLast(wish)
+  const accept = (person) => {
+    setPacked((prev) => new Set(prev).add(person.id))
+    setLast(person)
     setMissed(false)
   }
 
@@ -36,13 +66,12 @@ export default function Pack() {
     const m = CONFIG.bagMouth
     const cx = r.left + (r.width * m.x) / 100
     const cy = r.top + (r.height * m.y) / 100
-    // An ellipse roughly the shape of the opening, sized generously.
     const rx = (r.width * m.r) / 100
     const ry = rx * 0.95
     return ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1
   }
 
-  const onDown = (wish, e) => {
+  const onDown = (person, e) => {
     const r = e.currentTarget.getBoundingClientRect()
     try {
       e.currentTarget.setPointerCapture(e.pointerId)
@@ -50,7 +79,7 @@ export default function Pack() {
       // fine without it
     }
     setDrag({
-      wish,
+      person,
       x: e.clientX,
       y: e.clientY,
       sx: e.clientX,
@@ -58,7 +87,6 @@ export default function Pack() {
       ox: e.clientX - r.left,
       oy: e.clientY - r.top,
       w: r.width,
-      h: r.height,
     })
   }
 
@@ -70,8 +98,7 @@ export default function Pack() {
   const onUp = (e) => {
     if (!drag) return
     const moved = Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy)
-    const tapped = moved < TAP_SLOP
-    if (tapped || overMouth(e.clientX, e.clientY)) accept(drag.wish)
+    if (moved < TAP_SLOP || overMouth(e.clientX, e.clientY)) accept(drag.person)
     else setMissed(true)
     setDrag(null)
   }
@@ -80,25 +107,30 @@ export default function Pack() {
   if (full) {
     return (
       <div className="w-full max-w-[400px] mx-auto">
-        <Kicker>{packed.size} of {all.length}</Kicker>
-        <h1 className="display mt-2" style={{ fontSize: 40 }}>
+        <Kicker>{all.length} of {all.length}</Kicker>
+        <h1 className="script mt-1" style={{ fontSize: 48, lineHeight: 1 }}>
           {PACK.done}
         </h1>
-        <p className="mt-3" style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--ink-60)' }}>
+        <p className="mt-3" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
           {PACK.doneBody}
         </p>
 
-        <div className="mt-6">
+        <div className="mt-7">
           <Rule />
           {all.map((w) => (
             <div key={w.id}>
-              <div style={{ padding: '14px 2px' }}>
-                <p className="serif-it" style={{ fontSize: 16, lineHeight: 1.45 }}>
-                  {w.wish}
-                </p>
-                <p className="kicker mt-1.5" style={{ color: 'var(--accent)', fontSize: 9.5 }}>
-                  {w.name}
-                </p>
+              <div className="flex items-start gap-3.5" style={{ padding: '14px 2px' }}>
+                <div className="shrink-0" style={{ width: 52 }}>
+                  <Polaroid person={w} width={52} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="serif-it" style={{ fontSize: 16, lineHeight: 1.45 }}>
+                    {w.wish}
+                  </p>
+                  <p className="kicker mt-1.5" style={{ color: 'var(--accent)', fontSize: 9 }}>
+                    {w.name}
+                  </p>
+                </div>
               </div>
               <Rule />
             </div>
@@ -106,8 +138,8 @@ export default function Pack() {
         </div>
 
         <div className="mt-7 flex justify-center">
-          <button className="btn" onClick={() => complete('pack')}>
-            Back to the list
+          <button className="btn" onClick={next}>
+            There is a second gift
           </button>
         </div>
       </div>
@@ -116,49 +148,41 @@ export default function Pack() {
 
   // ---------- packing ----------
   return (
-    <div className="w-full max-w-[400px] mx-auto" onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}>
+    <div
+      className="w-full max-w-[400px] mx-auto"
+      onPointerMove={onMove}
+      onPointerUp={onUp}
+      onPointerCancel={onUp}
+    >
       <div className="flex items-baseline justify-between">
-        <Kicker>Fill the bag</Kicker>
+        <Kicker>Sixteen wishes</Kicker>
         <span className="kicker" style={{ color: 'var(--ink-40)' }}>
           {packed.size} of {all.length} in
         </span>
       </div>
 
-      <h1 className="display mt-2" style={{ fontSize: 31, maxWidth: '13em' }}>
+      <h1 className="script mt-1" style={{ fontSize: 46, lineHeight: 1 }}>
         {PACK.title}
       </h1>
-      <p className="mt-2.5" style={{ fontSize: 14, lineHeight: 1.55, color: 'var(--ink-60)' }}>
+      <p className="mt-2" style={{ fontSize: 14.5, lineHeight: 1.55, color: 'var(--ink-60)' }}>
         {PACK.standfirst}
       </p>
 
-      {/* the four waiting wishes */}
-      <div className="grid grid-cols-2 gap-2.5 mt-5">
+      {/* the polaroids waiting to go in */}
+      <div className="grid grid-cols-2 gap-3 mt-5 justify-items-center">
         <AnimatePresence initial={false}>
-          {slots.map((w) => (
+          {slots.map((w, i) => (
             <motion.button
               key={w.id}
               onPointerDown={(e) => onDown(w, e)}
-              className="text-left cursor-grab"
-              style={{
-                background: 'var(--paper-card)',
-                borderRadius: 3,
-                padding: '12px 13px',
-                boxShadow: 'inset 0 0 0 1px var(--hair)',
-                border: 'none',
-                touchAction: 'none',
-                opacity: drag?.wish.id === w.id ? 0.25 : 1,
-              }}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: drag?.wish.id === w.id ? 0.25 : 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+              className="border-0 p-0 bg-transparent cursor-grab"
+              style={{ touchAction: 'none', width: '100%' }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: drag?.person.id === w.id ? 0.2 : 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.86, transition: { duration: 0.22 } }}
               transition={{ duration: 0.35 }}
             >
-              <span className="kicker block" style={{ fontSize: 9, color: 'var(--ink-40)' }}>
-                A wish from
-              </span>
-              <span className="display block" style={{ fontSize: 19, marginTop: 3 }}>
-                {w.name}
-              </span>
+              <Polaroid person={w} tilt={TILTS[i % TILTS.length]} width="100%" />
             </motion.button>
           ))}
         </AnimatePresence>
@@ -166,22 +190,21 @@ export default function Pack() {
 
       <p
         className="text-center kicker"
-        style={{ color: missed ? 'var(--accent)' : 'var(--ink-40)', fontSize: 9, margin: '14px 0 4px' }}
+        style={{ color: missed ? 'var(--accent)' : 'var(--ink-40)', fontSize: 9, margin: '18px 0 6px' }}
       >
-        {missed ? 'Not in the bag. Try again, or just tap one.' : 'Drag one into the bag · or tap it'}
+        {missed ? 'Not in the bag. Try again, or just tap one.' : 'Drag us into the bag · or tap'}
       </p>
 
-      {/* the bag itself */}
+      {/* the bag */}
       <div ref={bagRef} className="relative w-full">
         <Photo
           src={CONFIG.photos.bagOpen}
           alt="The bag, open"
           placeholder="OPEN BAG PHOTO"
-          className="w-full anim-float"
+          className="w-full"
           style={{ aspectRatio: '779 / 900', objectFit: 'contain' }}
         />
 
-        {/* a soft ring showing where things go, only while she is dragging */}
         <AnimatePresence>
           {drag && (
             <motion.span
@@ -193,8 +216,8 @@ export default function Pack() {
                 aspectRatio: '1 / 1',
                 transform: 'translate(-50%, -50%)',
                 borderRadius: '50%',
-                boxShadow: 'inset 0 0 0 1.5px rgba(255,255,255,0.8)',
-                background: 'rgba(255,255,255,0.1)',
+                boxShadow: 'inset 0 0 0 1.5px rgba(246,241,232,0.85)',
+                background: 'rgba(246,241,232,0.12)',
               }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -204,8 +227,8 @@ export default function Pack() {
         </AnimatePresence>
       </div>
 
-      {/* the last wish that went in */}
-      <div style={{ minHeight: 86 }} className="mt-2">
+      {/* the wish that just went in */}
+      <div style={{ minHeight: 88 }} className="mt-1">
         <AnimatePresence mode="wait">
           {last && (
             <motion.div
@@ -219,7 +242,7 @@ export default function Pack() {
               <p className="serif-it mt-3" style={{ fontSize: 17, lineHeight: 1.45 }}>
                 {last.wish}
               </p>
-              <p className="kicker mt-1.5" style={{ color: 'var(--accent)', fontSize: 9.5 }}>
+              <p className="kicker mt-1.5" style={{ color: 'var(--accent)', fontSize: 9 }}>
                 {last.name}
               </p>
             </motion.div>
@@ -227,33 +250,13 @@ export default function Pack() {
         </AnimatePresence>
       </div>
 
-      <div className="mt-3 flex justify-center">
-        <button className="link" onClick={() => go('hub')}>
-          back to the list
-        </button>
-      </div>
-
-      {/* the card that follows her finger */}
+      {/* the polaroid that follows her finger */}
       {drag && (
         <div
           className="fixed pointer-events-none z-[70]"
-          style={{
-            left: drag.x - drag.ox,
-            top: drag.y - drag.oy,
-            width: drag.w,
-            background: 'var(--paper-card)',
-            borderRadius: 3,
-            padding: '12px 13px',
-            boxShadow: '0 14px 30px rgba(26,20,24,0.22)',
-            transform: 'rotate(-2deg) scale(1.04)',
-          }}
+          style={{ left: drag.x - drag.ox, top: drag.y - drag.oy, width: drag.w }}
         >
-          <span className="kicker block" style={{ fontSize: 9, color: 'var(--ink-40)' }}>
-            A wish from
-          </span>
-          <span className="display block" style={{ fontSize: 19, marginTop: 3 }}>
-            {drag.wish.name}
-          </span>
+          <Polaroid person={drag.person} tilt={-3} width="100%" dragging />
         </div>
       )}
     </div>

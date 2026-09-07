@@ -46,6 +46,18 @@ def cutout(src, dst, thresh=30):
         if im.getpixel(s) != MAGIC:
             ImageDraw.floodfill(im, s, MAGIC, thresh=thresh)
 
+    # Flooding in from the edges cannot reach a hole that is fully enclosed by
+    # the object, such as the gap inside a bag's shoulder strap. Sweep a grid
+    # and flood any pure-white pocket that is still left. The threshold is
+    # strict (248+) so silver hardware and zip teeth, which sit far below that,
+    # are never touched.
+    px = im.load()
+    for y in range(0, h, 6):
+        for x in range(0, w, 6):
+            r, g, b = px[x, y]
+            if (r, g, b) != MAGIC and r >= 248 and g >= 248 and b >= 248:
+                ImageDraw.floodfill(im, (x, y), MAGIC, thresh=18)
+
     px = im.load()
     alpha = Image.new('L', (w, h), 255)
     ap = alpha.load()
