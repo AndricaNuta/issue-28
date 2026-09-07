@@ -166,9 +166,6 @@ export default function Pack() {
       <h1 className="script mt-1" style={{ fontSize: 26, lineHeight: 1.2 }}>
         {PACK.title}
       </h1>
-      <p className="kicker mt-2" style={{ color: 'var(--ink-40)' }}>
-        {PACK.standfirst}
-      </p>
 
       {/* the stack: four deep, scattered, top one live */}
       <div className="relative w-full mt-7" style={{ paddingBottom: '112%' }}>

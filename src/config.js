@@ -192,7 +192,6 @@ export const PACK = {
   emptyCta: 'Fill the bag with us',
   // Step two: the deck.
   title: 'Filling the bag with our memories together',
-  standfirst: 'Flick through.',
   // Step three: in it goes.
   done: 'All of it goes in the bag.',
   doneBody: 'Every one of these comes with you, and none of it takes up any room.',
