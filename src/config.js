@@ -242,6 +242,9 @@ export const MEMORIES = [
   { photo: 'photos/people/09.jpg', video: 'video/memory-09.mp4', focus: 'center 35%' },
   { photo: 'photos/people/10.jpg', focus: 'center 30%' },
   { photo: 'photos/people/11.jpg', focus: 'center 30%' },
+  { photo: 'photos/people/12.jpg', focus: 'center 40%' },
+  { photo: 'photos/people/13.jpg', focus: 'center 35%' },
+  { photo: 'photos/people/14.jpg', focus: 'center 35%' },
 ]
 
 export const PACK = {
