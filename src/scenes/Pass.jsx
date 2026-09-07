@@ -128,7 +128,7 @@ export default function Pass() {
         transition={{ delay: 0.5, duration: 0.6 }}
       >
         <p className="serif-it text-center" style={{ fontSize: 16, color: 'var(--ink-60)', maxWidth: '20em' }}>
-          Wear it at all times. Read to the back, where two of the pages are yours to keep.
+          {CONFIG.passNote}
         </p>
         <button className="btn" onClick={() => next()}>
           Enter the issue

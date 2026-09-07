@@ -89,7 +89,7 @@ export default function Cover() {
         {/* ---------- cover lines, and the age ---------- */}
         <motion.div
           className="absolute left-4 right-4"
-          style={{ top: '25%' }}
+          style={{ top: '19%' }}
           variants={rise}
           initial="hidden"
           animate="show"
@@ -133,7 +133,7 @@ export default function Cover() {
         {/* ---------- her name ---------- */}
         <motion.div
           className="absolute left-4 right-4"
-          style={{ bottom: 6 }}
+          style={{ bottom: 25 }}
           variants={rise}
           initial="hidden"
           animate="show"
@@ -156,14 +156,23 @@ export default function Cover() {
             {CONFIG.name}
           </p>
 
-          <div className="flex items-end justify-between gap-3 mt-1.5">
-            <p className="coverline" style={{ fontSize: 11, color: 'rgba(246,241,232,0.9)' }}>
-              It&rsquo;s her birthday
-            </p>
-            <span style={{ filter: 'invert(1)', opacity: 0.9, marginRight: 26 }}>
-              <Barcode width={52} height={18} seed={CONFIG.age} />
-            </span>
-          </div>
+        </motion.div>
+
+        {/* the foot of the cover, placed on its own so her name can sit low */}
+        <motion.div
+          className="absolute left-4 right-4 flex items-end justify-between gap-3"
+          style={{ bottom: 15 }}
+          variants={rise}
+          initial="hidden"
+          animate="show"
+          custom={5}
+        >
+          <p className="coverline" style={{ fontSize: 11, color: 'rgba(246,241,232,0.9)' }}>
+            It&rsquo;s her birthday
+          </p>
+          <span style={{ filter: 'invert(1)', opacity: 0.9, marginRight: 26 }}>
+            <Barcode width={52} height={18} seed={CONFIG.age} />
+          </span>
         </motion.div>
 
         {/* ---------- the curled corner: this is the "open me" ---------- */}

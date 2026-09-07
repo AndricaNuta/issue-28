@@ -17,6 +17,8 @@ export const CONFIG = {
   coverLines: ["What's in her bag?", 'The 28-day plan', 'Your year ahead'],
   // For her access pass on the entry page. Keep it short and funny.
   occupation: 'Birthday girl',   // TODO
+  // The line under the pass. Say what this is, plainly.
+  passNote: 'One issue, printed once, about you. Two of the pages at the back are gifts.',
 
   // --- Photos: drop files in public/photos/ and list them here ---
   // Paths are relative (NO leading slash) so they work on GitHub Pages.
