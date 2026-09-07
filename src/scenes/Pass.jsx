@@ -113,7 +113,7 @@ export default function Pass() {
 
           <div className="flex items-center justify-between mt-5">
             <span className="kicker" style={{ fontSize: 8, color: 'var(--accent)' }}>
-              All areas · all night
+              {CONFIG.passStatus}
             </span>
             <span className="kicker" style={{ fontSize: 8, color: 'var(--ink-40)' }}>
               {CONFIG.issueLabel}
@@ -128,10 +128,6 @@ export default function Pass() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
       >
-        <p className="serif-it text-center" style={{ fontSize: 16, color: 'var(--ink-60)', maxWidth: '20em' }}>
-          {CONFIG.passNote}
-        </p>
-
       </motion.div>
     </div>
   )

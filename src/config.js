@@ -18,8 +18,8 @@ export const CONFIG = {
   coverLines: ["What's in her bag?", 'The 28-day plan', 'Your year ahead'],
   // For her access pass on the entry page. Keep it short and funny.
   occupation: 'Birthday girl',   // TODO
-  // Why there is a laminated badge on page two of a magazine.
-  passNote: 'Every cover star gets one of these. Yours came stapled inside.',
+  // Printed along the foot of the pass.
+  passStatus: 'Trial adulting',
 
   // --- Photos: drop files in public/photos/ and list them here ---
   // Paths are relative (NO leading slash) so they work on GitHub Pages.
@@ -143,8 +143,7 @@ export const DIVIDERS = {
 //  All four pieces of copy below are hers.
 // ============================================================
 export const PLAN = {
-  kicker: 'Wellness',
-  title: 'The 28-Day Plan',
+  // Her sentence opens the page: there is no kicker and no title above it.
   standfirst:
     'We know all you wanted for your birthday this year was to get fit, put your life in order and other Virgo-like wishes.',
   items: [

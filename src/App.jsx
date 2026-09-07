@@ -4,6 +4,7 @@ import { ExperienceContext, PAGES, ROUTES, bgFor } from './experience.js'
 import { CONFIG } from './config.js'
 
 import Next from './components/Next.jsx'
+import TypeSwitch from './components/TypeSwitch.jsx'
 import Cover from './scenes/Cover.jsx'
 import Pass from './scenes/Pass.jsx'
 import Divider from './scenes/Divider.jsx'
@@ -122,6 +123,8 @@ export default function App() {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {import.meta.env.DEV && <TypeSwitch />}
 
           <div className="absolute inset-0 z-10" style={{ perspective: 1500 }}>
             <AnimatePresence mode="wait" custom={dir}>
