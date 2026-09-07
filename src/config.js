@@ -94,13 +94,12 @@ export const CONFIG = {
   voucher: {
     place: 'THAIco SPA',
     treatment: 'Gift card',
-    duration: '320 lei',
     validUntil: '6 March 2027',
     // The card itself is downloadable from the page, so the code is shown in
     // full: masking it while the file that contains it is one tap away would
     // only look like security. The repo is public and the certificate is
     // transferable, and that trade was made deliberately.
-    code: '47C39-43CD2',
+    //code: '47C39-43CD2',
     pdf: 'voucher.pdf',
     site: 'thaicospa.ro',
     openLabel: 'Open the voucher',
@@ -263,7 +262,7 @@ export const TAROT = {
   title: 'Your Year Ahead',
   standfirst:
     'We know we are not a witch in the Amazonian forest, but we think we can see the future pretty clearly.',
-  cue: 'turn them over',
+  cue: 'turn it over',
   // Spares, already prepared: photos/tarot/star.jpg and world.jpg. Swap either
   // in by changing a card's name, image and reading below.
   cards: [

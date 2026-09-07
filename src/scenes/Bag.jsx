@@ -22,7 +22,7 @@ function drawCover(ctx, img, W, H, focusY = 0.3) {
   ctx.drawImage(img, (W - dw) / 2, (H - dh) * focusY, dw, dh)
 }
 
-function Wipe({ src, focusY, onDone }) {
+function Wipe({ src, focusY, onDone, onReady }) {
   const canvasRef = useRef(null)
   const lastRef = useRef(null)
   const ticks = useRef(0)
@@ -39,8 +39,12 @@ function Wipe({ src, focusY, onDone }) {
     ctx.scale(dpr, dpr)
 
     const img = new Image()
-    img.onload = () => drawCover(ctx, img, rect.width, rect.height, focusY)
+    img.onload = () => {
+      drawCover(ctx, img, rect.width, rect.height, focusY)
+      onReady?.()
+    }
     img.src = import.meta.env.BASE_URL + src
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src, focusY])
 
   const rub = (e) => {
@@ -124,6 +128,7 @@ export default function Bag() {
   const [hint, setHint] = useState(false)
   const [placed, setPlaced] = useState(false)
   const [wiped, setWiped] = useState(false)
+  const [wipeReady, setWipeReady] = useState(false)
   const [shot, setShot] = useState(0)
 
   const t = CONFIG.bagTarget
@@ -286,6 +291,7 @@ export default function Bag() {
             <motion.div
               key={v.key}
               style={{ gridArea: '1 / 1' }}
+              initial={{ opacity: v.on ? 1 : 0 }}
               animate={{ opacity: v.on ? 1 : 0 }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
               aria-hidden={!v.on}
@@ -354,9 +360,21 @@ export default function Bag() {
                 src={CONFIG.photos.her}
                 focusY={0.3}
                 onDone={() => setWiped(true)}
+                onReady={() => setWipeReady(true)}
               />
             )}
           </AnimatePresence>
+
+          {/* stands in for the canvas until it has drawn itself */}
+          {!wiped && !wipeReady && (
+            <img
+              src={import.meta.env.BASE_URL + CONFIG.photos.her}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full"
+              style={{ objectFit: 'cover', objectPosition: 'center 30%', zIndex: 25 }}
+            />
+          )}
         </div>
 
         <div style={{ minHeight: 58 }} className="mt-4 text-center">
