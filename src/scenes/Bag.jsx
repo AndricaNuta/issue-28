@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useExperience } from '../experience.js'
+import { useCta, useExperience } from '../experience.js'
 import { CONFIG } from '../config.js'
 import { frameDistance, usePointerDrag } from '../lib/drag.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
@@ -118,10 +118,10 @@ export default function Bag() {
   const [step, setStep] = useState(() => {
     if (import.meta.env.DEV) {
       const q = new URLSearchParams(window.location.search).get('step')
-      if (q === 'drag' || q === 'oops') return q
+      if (q === 'drag' || q === 'oops' || q === 'shoot') return 'shoot'
     }
     return 'intro'
-  }) // intro · drag · oops
+  }) // intro · shoot
   const frameRef = useRef(null)
   const [attempts, setAttempts] = useState(0)
   const [msg, setMsg] = useState(null)
@@ -132,6 +132,7 @@ export default function Bag() {
   const [shot, setShot] = useState(0)
 
   const t = CONFIG.bagTarget
+  useCta(wiped ? { onClick: next, label: 'Look inside the bag' } : null, [wiped, next])
 
   const onDrop = (p) => {
     const r = frameRef.current.getBoundingClientRect()
@@ -141,8 +142,7 @@ export default function Bag() {
       setPos({ x: t.x, y: t.y })
       setPlaced(true)
       setMsg(null)
-      setTimeout(() => setStep('oops'), 1100)
-      return
+        return
     }
 
     setAttempts((a) => a + 1)
@@ -154,7 +154,7 @@ export default function Bag() {
 
   // Nobody should be stuck on their own birthday.
   useEffect(() => {
-    if (placed || step !== 'drag') return
+    if (placed || step !== 'shoot') return
     const timer = setTimeout(() => setHint(true), 18000)
     return () => clearTimeout(timer)
   }, [placed, step])
@@ -166,7 +166,6 @@ export default function Bag() {
     setPos({ x: t.x, y: t.y })
     setPlaced(true)
     setMsg(null)
-    setTimeout(() => setStep('oops'), 1100)
   }
 
   // ---------- the product page ----------
@@ -267,165 +266,93 @@ export default function Bag() {
         </p>
 
         <div className="mt-7 flex justify-center">
-          <Action onClick={() => setStep('drag')} label={CONFIG.bag.task} icon="hand" delay={0.2} />
+          <Action onClick={() => setStep('shoot')} label={CONFIG.bag.task} icon="hand" delay={0.2} />
         </div>
       </div>
     )
   }
+  // ---------- the shoot: drag, then wipe, in one view ----------
+  // These used to be two steps that swapped, which unmounted the frame, the
+  // photograph and the bag and put them straight back: a cut, not a change.
+  // Nothing unmounts now, so the copy crossfades and the picture stays put.
+  const tr = CONFIG.bagTargetReal
+  const copies = [
+    { key: 'try', title: `${CONFIG.bag.task}.`, body: `${CONFIG.bag.dragHint}.`, on: !placed },
+    { key: 'oops', title: CONFIG.bag.oopsTitle, body: CONFIG.bag.oopsBody, on: placed && !wiped },
+    { key: 'done', title: CONFIG.bag.title, body: CONFIG.bag.body, on: wiped },
+  ]
 
-  // ---------- "too much": rub the glossy version off ----------
-  if (step === 'oops') {
-    const tr = CONFIG.bagTargetReal
-    return (
-      <div className="w-full max-w-[380px] mx-auto">
-        {/* Both versions of the copy sit in the same grid cell, so the block
-            is always as tall as the taller of the two and the photograph below
-            cannot move when the text swaps. Toggling the text in place looked
-            fine at one width and shifted at others, where one of the lines
-            wraps and the other does not. */}
-        <div className="grid mt-2" style={{ minHeight: 108 }}>
-          {[
-            { key: 'oops', title: CONFIG.bag.oopsTitle, body: CONFIG.bag.oopsBody, on: !wiped },
-            { key: 'done', title: CONFIG.bag.title, body: CONFIG.bag.body, on: wiped },
-          ].map((v) => (
-            <motion.div
-              key={v.key}
-              style={{ gridArea: '1 / 1' }}
-              initial={{ opacity: v.on ? 1 : 0 }}
-              animate={{ opacity: v.on ? 1 : 0 }}
-              transition={{ duration: 0.5, ease: 'easeInOut' }}
-              aria-hidden={!v.on}
-            >
-              <h1 className="display" style={{ fontSize: 36, lineHeight: 1.02 }}>
-                {v.title}
-              </h1>
-              {v.body && (
-                <p className="mt-2.5" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
-                  {v.body}
-                </p>
-              )}
-            </motion.div>
-          ))}
-        </div>
-
-        <div
-          className="relative w-full mt-5"
-          style={{ borderRadius: 3, overflow: 'hidden', aspectRatio: '4 / 5' }}
-        >
-          {/* the real photograph, waiting underneath */}
-          <Photo
-            src={CONFIG.photos.herReal}
-            alt={CONFIG.name}
-            placeholder="THE REAL PHOTO"
-            objectPosition="center center"
-            className="absolute inset-0 w-full h-full"
-          />
-
-          {/* the bag: on her shoulder in the glossy shot, on her hand in the
-              real one. It moves across when the glossy version comes off. */}
-          <motion.div
-            className="absolute"
-            style={{
-              width: `${wiped ? tr.size : t.size}%`,
-              left: `${t.x}%`,
-              top: `${t.y}%`,
-              zIndex: 30,
-            }}
-            initial={false}
-            animate={{
-              left: `${wiped ? tr.x : t.x}%`,
-              top: `${wiped ? tr.y : t.y}%`,
-              rotate: wiped ? tr.rotation : t.rotation,
-              x: '-50%',
-              y: '-50%',
-            }}
-            transition={{ type: 'spring', stiffness: 120, damping: 16, delay: wiped ? 0.15 : 0 }}
-          >
-            <div style={{ filter: 'drop-shadow(0 8px 14px rgba(28,25,23,0.32))' }}>
-              <Photo
-                src={CONFIG.photos.bag}
-                alt="The bag"
-                placeholder="BAG"
-                className="w-full"
-                style={{ aspectRatio: '1 / 1', objectFit: 'contain' }}
-              />
-            </div>
-
-          </motion.div>
-
-          {/* the glossy version, painted on top to be rubbed away */}
-          <AnimatePresence>
-            {!wiped && (
-              <Wipe
-                src={CONFIG.photos.her}
-                focusY={0.3}
-                onDone={() => setWiped(true)}
-                onReady={() => setWipeReady(true)}
-              />
-            )}
-          </AnimatePresence>
-
-          {/* stands in for the canvas until it has drawn itself */}
-          {!wiped && !wipeReady && (
-            <img
-              src={import.meta.env.BASE_URL + CONFIG.photos.her}
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 w-full h-full"
-              style={{ objectFit: 'cover', objectPosition: 'center 30%', zIndex: 25 }}
-            />
-          )}
-        </div>
-
-        <div style={{ minHeight: 58 }} className="mt-4 text-center">
-          {!wiped ? (
-            <>
-              <motion.p
-                className="script"
-                style={{ fontSize: 19, lineHeight: 1.35, color: 'var(--accent)' }}
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                {CONFIG.bag.oopsCue}
-              </motion.p>
-              <button className="link" onClick={() => setWiped(true)}>
-                or just take it off
-              </button>
-            </>
-          ) : (
-            <div className="flex justify-center">
-              <Next onClick={next} delay={0.5} label="Look inside the bag" />
-            </div>
-          )}
-        </div>
-      </div>
-    )
-  }
-
-  // ---------- the drag ----------
   return (
     <div className="w-full max-w-[380px] mx-auto">
-      <div className="flex items-baseline justify-between">
-        <span className="kicker" style={{ color: 'var(--ink-40)' }}>
-          {placed ? 'On her' : 'Not on her yet'}
-        </span>
+      {/* all three lines share one grid cell: the block is as tall as the
+          tallest of them, so the photograph below never moves */}
+      <div className="grid mt-2">
+        {copies.map((c) => (
+          <motion.div
+            key={c.key}
+            style={{ gridArea: '1 / 1' }}
+            initial={{ opacity: c.on ? 1 : 0 }}
+            animate={{ opacity: c.on ? 1 : 0 }}
+            transition={{ duration: 0.55, ease: 'easeInOut' }}
+            aria-hidden={!c.on}
+          >
+            <h1 className="display" style={{ fontSize: 36, lineHeight: 1.02 }}>
+              {c.title}
+            </h1>
+            {c.body && (
+              <p className="mt-2.5" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
+                {c.body}
+              </p>
+            )}
+          </motion.div>
+        ))}
       </div>
 
-      <p className="mt-2" style={{ fontSize: 14, lineHeight: 1.5, color: 'var(--ink-60)' }}>
-        {CONFIG.bag.dragHint}.
-      </p>
-
-      <div ref={frameRef} className="relative w-full mt-4" style={{ borderRadius: 3, overflow: 'hidden' }}>
+      <div
+        ref={frameRef}
+        className="relative w-full mt-4"
+        style={{ borderRadius: 3, overflow: 'hidden', aspectRatio: '4 / 5' }}
+      >
+        {/* the daylight photograph, underneath the whole time */}
         <Photo
-          src={CONFIG.photos.her}
+          src={CONFIG.photos.herReal}
           alt={CONFIG.name}
-          placeholder="HER PHOTO"
-          objectPosition="center 30%"
-          className="w-full"
-          style={{ aspectRatio: '4 / 5' }}
+          placeholder="THE REAL PHOTO"
+          objectPosition="center center"
+          className="absolute inset-0 w-full h-full"
         />
 
-        {/* where it goes, shown only once she has been hunting a while */}
+        {/* the glossy one: an image while she drags, and a canvas to rub once
+            the bag is on her. The image stays until the canvas has painted,
+            or the daylight photo would flash through for a frame or two. */}
+        {!wiped && (
+          <img
+            src={import.meta.env.BASE_URL + CONFIG.photos.her}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full"
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center 30%',
+              zIndex: 18,
+              opacity: placed && wipeReady ? 0 : 1,
+              transition: 'opacity 0.25s',
+            }}
+          />
+        )}
+
+        <AnimatePresence>
+          {placed && !wiped && (
+            <Wipe
+              src={CONFIG.photos.her}
+              focusY={0.3}
+              onDone={() => setWiped(true)}
+              onReady={() => setWipeReady(true)}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* where it goes, once she has been hunting a while */}
         <AnimatePresence>
           {!placed && hint && (
             <motion.span
@@ -439,6 +366,7 @@ export default function Bag() {
                 marginTop: -32,
                 borderRadius: '50%',
                 border: '1.5px solid rgba(255,255,255,0.95)',
+                zIndex: 25,
               }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -447,22 +375,27 @@ export default function Bag() {
           )}
         </AnimatePresence>
 
-        {/* the bag */}
+        {/* the bag: her finger while she drags, then the shoulder, then her
+            hand in the daylight photograph */}
         <motion.div
-          {...handlers}
+          {...(placed ? {} : handlers)}
           className="absolute"
           style={{
-            left: `${pos.x}%`,
-            top: `${pos.y}%`,
-            width: `${t.size}%`,
+            width: `${wiped ? tr.size : t.size}%`,
             translateX: '-50%',
             translateY: '-50%',
             touchAction: 'none',
             cursor: placed ? 'default' : dragging ? 'grabbing' : 'grab',
             zIndex: 30,
           }}
-          animate={{ scale: dragging ? 1.08 : 1, rotate: placed ? t.rotation : 0 }}
-          transition={{ type: 'spring', stiffness: 320, damping: 24 }}
+          initial={false}
+          animate={{
+            left: `${placed ? (wiped ? tr.x : t.x) : pos.x}%`,
+            top: `${placed ? (wiped ? tr.y : t.y) : pos.y}%`,
+            rotate: wiped ? tr.rotation : placed ? t.rotation : 0,
+            scale: dragging ? 1.08 : 1,
+          }}
+          transition={placed ? { type: 'spring', stiffness: 120, damping: 16 } : { duration: 0 }}
         >
           <div
             className={!dragging && !placed ? 'anim-float' : ''}
@@ -481,7 +414,7 @@ export default function Bag() {
             />
           </div>
 
-          {/* dev helper: read the coordinates off the screen for config.js */}
+          {/* dev helper: the coordinates to paste into config */}
           {import.meta.env.DEV && dragging && (
             <span
               className="kicker absolute whitespace-nowrap"
@@ -493,23 +426,34 @@ export default function Bag() {
         </motion.div>
       </div>
 
-      <div style={{ minHeight: 52 }} className="mt-3 text-center">
-        {placed ? (
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="kicker">
-            That is the one
-          </motion.p>
-        ) : (
-          <>
-            <p style={{ fontSize: 14, color: msg ? 'var(--accent)' : 'var(--ink-40)' }}>
-              {msg || `${CONFIG.bag.dragHint}.`}
-            </p>
-            {attempts >= 3 && (
-              <button className="link" onClick={placeForHer}>
-                do it for me
+      {/* what to do, or what just went wrong */}
+      <div style={{ minHeight: 78 }} className="mt-3 text-center">
+        <AnimatePresence mode="wait">
+          {!placed ? (
+            <motion.div key="drag" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.2 } }}>
+              <p style={{ fontSize: 14, color: 'var(--accent)', minHeight: 21 }}>{msg || '\u00A0'}</p>
+              {attempts >= 3 && (
+                <button className="link" onClick={placeForHer}>
+                  do it for me
+                </button>
+              )}
+            </motion.div>
+          ) : !wiped ? (
+            <motion.div key="wipe" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.2 } }}>
+              <motion.p
+                className="script"
+                style={{ fontSize: 19, lineHeight: 1.35, color: 'var(--accent)' }}
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                {CONFIG.bag.oopsCue}
+              </motion.p>
+              <button className="link" onClick={() => setWiped(true)}>
+                or just show me
               </button>
-            )}
-          </>
-        )}
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
       </div>
     </div>
   )
