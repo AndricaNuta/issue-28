@@ -7,7 +7,8 @@ export const CONFIG = {
   // --- Her ---
   name: 'Ana',
   age: 28,
-  magazineName: 'BESTIE',   // TODO the title on the cover
+  // Printed in the running head at the top of every page.
+  magazineName: 'The Birthday Girl',
   issueLabel: 'ISSUE 28',
   // A short script line above her name on the cover. '' hides it.
   coverKicker: 'cover star',
@@ -34,6 +35,8 @@ export const CONFIG = {
     mask: 'photos/mask.jpg',
     // A childhood photograph, for the "this is who turns 28" pass.
     baby: 'photos/baby.jpg',
+    // The real one, underneath the glossy cover shot. Crocs and all.
+    herReal: 'photos/her-real.jpg',
   },
 
   // Where the mouth of the open bag sits, as percentages of that photo.
@@ -51,14 +54,29 @@ export const CONFIG = {
     rotation: -6,   // resting tilt in degrees
   },
 
+  // Where the bag lands on the REAL photograph, once she has wiped the
+  // glossy one away. Same percentages as bagTarget, different picture.
+  bagTargetReal: {
+    x: 65,
+    y: 55,
+    size: 26,
+    rotation: 5,
+  },
+
   // --- Gift one: the bag ---
   bag: {
     introTitle: 'The cover is not finished.',
     introBody:
       'There is something missing from the shot. It belongs to you, and it belongs on your shoulder. Put it there and the cover is done.',
     task: 'Drag the bag onto her shoulder',
-    title: 'It is yours.',
-    body: 'All sixteen of us went in on it. Put it on a real shoulder and go be insufferable about it.',
+
+    // After it lands on the glossy shot: the joke, and the wipe.
+    oopsTitle: 'Hm. Too much.',
+    oopsBody: 'Hold on, that is the version for the magazine. Wipe it off.',
+    oopsCue: 'wipe it',
+
+    title: 'There she is.',
+    body: 'All sixteen of us went in on it. Crocs optional, bag compulsory. Go be insufferable about it.',
   },
 
   // --- Gift two: the massage voucher (scratch to reveal) ---
