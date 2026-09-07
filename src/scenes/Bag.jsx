@@ -171,8 +171,18 @@ export default function Bag() {
     const shots = CONFIG.photos.bagShots || [CONFIG.photos.bag]
     return (
       <div className="w-full max-w-[380px] mx-auto">
-        <div className="flex items-baseline justify-between">
-          <Kicker>Gift one of two</Kicker>
+        <Kicker>{CONFIG.bag.announceKicker}</Kicker>
+        <h1 className="display mt-2" style={{ fontSize: 40, lineHeight: 1 }}>
+          {CONFIG.bag.announceTitle}
+        </h1>
+        <p className="mt-3" style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--ink-60)' }}>
+          {CONFIG.bag.announceBody}
+        </p>
+
+        <div className="flex items-baseline justify-between mt-6">
+          <span className="kicker" style={{ color: 'var(--ink-40)' }}>
+            The one
+          </span>
           <span className="kicker" style={{ color: 'var(--ink-40)' }}>
             {CONFIG.bag.brand}
           </span>
@@ -234,9 +244,9 @@ export default function Bag() {
         )}
 
         {/* the listing, kept to the name and one line */}
-        <h1 className="display mt-6" style={{ fontSize: 31, lineHeight: 1.05 }}>
+        <h2 className="display mt-5" style={{ fontSize: 27, lineHeight: 1.05 }}>
           {CONFIG.bag.name}
-        </h1>
+        </h2>
 
         <Rule style={{ marginTop: 16, marginBottom: 16 }} />
 

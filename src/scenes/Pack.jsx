@@ -118,10 +118,10 @@ export default function Pack() {
         </span>
       </div>
 
-      <h1 className="script mt-1" style={{ fontSize: 44, lineHeight: 1.05 }}>
+      <h1 className="script mt-1" style={{ fontSize: 36, lineHeight: 1.1 }}>
         {PACK.title}
       </h1>
-      <p className="mt-2" style={{ fontSize: 14.5, lineHeight: 1.55, color: 'var(--ink-60)' }}>
+      <p className="kicker mt-2" style={{ color: 'var(--ink-40)' }}>
         {PACK.standfirst}
       </p>
 

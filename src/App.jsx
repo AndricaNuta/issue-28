@@ -5,7 +5,6 @@ import { CONFIG } from './config.js'
 
 import Cover from './scenes/Cover.jsx'
 import Pass from './scenes/Pass.jsx'
-import Contents from './scenes/Contents.jsx'
 import Pack from './scenes/Pack.jsx'
 import Plan from './scenes/Plan.jsx'
 import Year from './scenes/Year.jsx'
@@ -13,7 +12,7 @@ import Bag from './scenes/Bag.jsx'
 import Spa from './scenes/Spa.jsx'
 import Close from './scenes/Close.jsx'
 
-const SCENES = { cover: Cover, pass: Pass, contents: Contents, plan: Plan, year: Year, bag: Bag, pack: Pack, spa: Spa, close: Close }
+const SCENES = { cover: Cover, pass: Pass, plan: Plan, year: Year, bag: Bag, pack: Pack, spa: Spa, close: Close }
 
 // Pages turn about the spine: forward, the outgoing page swings away to the
 // left around its own left edge; backward, it mirrors.

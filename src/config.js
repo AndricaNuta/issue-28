@@ -18,8 +18,8 @@ export const CONFIG = {
   coverLines: ["What's in her bag?", 'The 28-day plan', 'Your year ahead'],
   // For her access pass on the entry page. Keep it short and funny.
   occupation: 'Birthday girl',   // TODO
-  // The line under the pass. Say what this is, plainly.
-  passNote: 'One issue, printed once, about you. Two of the pages at the back are gifts.',
+  // Why there is a laminated badge on page two of a magazine.
+  passNote: 'Every cover star gets one of these. Yours came stapled inside.',
 
   // --- Photos: drop files in public/photos/ and list them here ---
   // Paths are relative (NO leading slash) so they work on GitHub Pages.
@@ -73,6 +73,13 @@ export const CONFIG = {
     brand: 'Aest Studios',
     name: 'Capture Medium Sling Bag',
 
+    // The announcement, before she sees anything. It arrived too suddenly
+    // before: a bag appeared with no indication it was the first gift.
+    announceKicker: 'Presents · one of two',
+    announceTitle: 'Your first present.',
+    announceBody:
+      'There are two of them at the back of this issue. This is the one you can carry.',
+
     introTitle: 'This one.',
     introBody: 'The one you kept going back to look at. It is not a browser tab any more.',
     task: 'Put it on her shoulder',
@@ -117,29 +124,54 @@ export const CONFIG = {
 
 // ============================================================
 //  THE 28-DAY PLAN
-//  Her wish this year was to get her life in order: clean eating,
-//  the gym, the CEO morning. So the programme is printed, and then
-//  struck out with a red pen, all but the last line.
-//  Keep the lines short: they have to fit on one row each.
+//  Her wish this year was to get fit and put her life in order, so
+//  we did it for her. Each line, when she taps it, produces the
+//  photographic proof and gets struck off.
+//
+//  IMAGES: drop one per line into public/photos/plan/ as 01.jpg,
+//  02.jpg and so on, matching the order below. Badly cut out is
+//  funnier than seamless, so do not be careful with them. Any line
+//  with no image still works: it strikes off, with the note only.
 // ============================================================
 export const PLAN = {
   kicker: 'Wellness',
   title: 'The 28-Day Plan',
-  standfirst: 'You said you wanted your life in order this year.',
-  // Struck out, one after another.
+  standfirst:
+    'We know all you wanted for your birthday this year was to get fit, put your life in order and other Virgo-like wishes.',
+  claim: 'So we completed them for you.',
+  cue: 'tap each one',
   items: [
-    'Wake at 5am, radiant, unprompted',
-    'Gym six times a week',
-    'Eat exclusively green things',
-    'Build the CEO mindset',
-    '10,000 steps a day',
+    {
+      text: 'Wake at 5am, radiant, unprompted',
+      photo: 'photos/plan/01.jpg',
+      evidence: 'Completed. Radiance still pending.',
+    },
+    {
+      text: 'Gym six times a week',
+      photo: 'photos/plan/02.jpg',
+      evidence: 'Completed. Six times, one week, someone else\u2019s body.',
+    },
+    {
+      text: 'Eat exclusively green things',
+      photo: 'photos/plan/03.jpg',
+      evidence: 'Completed. Pistachio counts, we checked.',
+    },
+    {
+      text: 'Build the CEO mindset',
+      photo: 'photos/plan/04.jpg',
+      evidence: 'Completed. You have been promoted, effective immediately.',
+    },
+    {
+      text: '10,000 steps a day',
+      photo: 'photos/plan/05.jpg',
+      evidence: 'Completed. Mostly around a shop.',
+    },
   ],
-  // The line that survives the pen.
+  // The line nobody had to do anything about.
   keep: 'Be loved exactly as you are',
-  cue: 'tap it',
-  // Written in the margin in red, after the striking.
-  mark: 'not required',
-  signoff: 'Nothing on that list is the price of anything.',
+  keepNote: 'This one was already done.',
+  payoff:
+    'Just so you know, with or without these completed, you are loved exactly as you are.',
 }
 
 // ============================================================
@@ -161,8 +193,8 @@ export const PEOPLE = Array.from({ length: 16 }, (_, i) => ({
 }))
 
 export const PACK = {
-  title: 'Our memories, in the bag',
-  standfirst: 'Everything we have done together goes in with it. Flick through.',
+  title: 'Filling the bag with our memories together',
+  standfirst: 'Flick through.',
   done: 'All of it goes in the bag.',
   doneBody: 'Every one of these comes with you, and none of it takes up any room.',
 }
@@ -177,7 +209,8 @@ export const PACK = {
 export const TAROT = {
   kicker: 'The reading',
   title: 'Your Year Ahead',
-  standfirst: 'Three cards, drawn for you. Turn them over.',
+  standfirst:
+    'We know we are not a witch in the Amazonian forest, but we think we can see the future pretty clearly.',
   cue: 'turn them over',
   cards: [
     {
