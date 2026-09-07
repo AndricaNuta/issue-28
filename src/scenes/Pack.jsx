@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience, useCta } from '../experience.js'
-import { CONFIG, PACK, PEOPLE } from '../config.js'
+import { CONFIG, MEMORIES, PACK } from '../config.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
 import Action from '../components/Action.jsx'
 
@@ -14,7 +14,7 @@ const FLICK = 70 // px of travel that counts as a flick rather than a tap
 const tiltFor = (i) => ((i * 37) % 15) - 7
 const offsetFor = (i) => ({ x: ((i * 53) % 17) - 8, y: ((i * 29) % 13) - 6 })
 
-function Polaroid({ person, style, dragging }) {
+function Polaroid({ memory, style, dragging }) {
   return (
     <div
       style={{
@@ -25,17 +25,20 @@ function Polaroid({ person, style, dragging }) {
       }}
     >
       <Photo
-        src={person.photo}
-        alt={person.name || 'A photograph'}
+        src={memory.photo}
+        alt={memory.caption || 'A photograph'}
         placeholder="PHOTO"
-        objectPosition={person.focus || 'center 35%'}
+        objectPosition={memory.focus || 'center 35%'}
         className="w-full block"
         style={{ aspectRatio: '1 / 1' }}
       />
-      <div className="grid place-items-center" style={{ height: 44 }}>
-        {person.name && (
-          <p className="script text-center" style={{ fontSize: 22, lineHeight: 1, color: 'var(--ink)' }}>
-            {person.name}
+      {/* the white lip a polaroid has, carrying the occasion if there is one.
+          No names: these are group shots, so one name on one of them only
+          raises the question of which person it refers to. */}
+      <div className="grid place-items-center" style={{ height: memory.caption ? 40 : 26 }}>
+        {memory.caption && (
+          <p className="script text-center" style={{ fontSize: 15, lineHeight: 1.4, color: 'var(--ink)' }}>
+            {memory.caption}
           </p>
         )}
       </div>
@@ -51,7 +54,7 @@ export default function Pack() {
   // up out of the bag instead of simply being there. Refills after that use
   // the ordinary settle.
   const [emerging, setEmerging] = useState(false)
-  const all = useMemo(() => PEOPLE.map((p, idx) => ({ ...p, id: idx })), [])
+  const all = useMemo(() => MEMORIES.map((m, idx) => ({ ...m, id: idx })), [])
   const done = step === 'deck' && i >= all.length
   // Only the page turn goes in the navigation slot; filling the bag is an
   // action and gets a labelled button of its own, next to the bag.
@@ -139,7 +142,7 @@ export default function Pack() {
               }}
               transition={{ delay: 0.35 + n * 0.11, type: 'spring', stiffness: 130, damping: 15 }}
             >
-              <Polaroid person={p} />
+              <Polaroid memory={p} />
             </motion.div>
           ))}
         </div>
@@ -226,7 +229,7 @@ export default function Pack() {
                   }
                   whileDrag={{ scale: 1.03 }}
                 >
-                  <Polaroid person={p} dragging={isTop} />
+                  <Polaroid memory={p} dragging={isTop} />
                 </motion.div>
               )
             })

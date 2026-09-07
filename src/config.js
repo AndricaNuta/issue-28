@@ -87,9 +87,7 @@ export const CONFIG = {
     oopsCue: 'wipe it clear, closer to reality',
 
     title: 'There she is.',
-    // TODO one line here if you want one, in your words. Empty hides it, and
-    // the photograph carries the moment on its own.
-    body: '',
+    body: 'Matches the crocs.',
   },
 
   // --- Gift two: the massage voucher (scratch to reveal) ---
@@ -183,22 +181,41 @@ export const PLAN = {
 //  TODO replace all sixteen names.
 // ============================================================
 export const PEOPLE = [
-  { name: 'Andrica', photo: 'photos/people/01.jpg', focus: 'center 35%' },
-  { name: 'Alex', photo: 'photos/people/02.jpg', focus: 'center 35%' },
-  { name: 'Lupino', photo: 'photos/people/03.jpg', focus: 'center 35%' },
-  { name: 'Paul', photo: 'photos/people/04.jpg', focus: 'center 35%' },
-  { name: 'Andrada', photo: 'photos/people/05.jpg', focus: 'center 35%' },
-  { name: 'Laur', photo: 'photos/people/06.jpg', focus: 'center 35%' },
-  { name: 'Irina', photo: 'photos/people/07.jpg', focus: 'center 35%' },
-  { name: 'Florin', photo: 'photos/people/08.jpg', focus: 'center 35%' },
-  { name: 'Alina', photo: 'photos/people/09.jpg', focus: 'center 35%' },
-  { name: 'Boros', photo: 'photos/people/10.jpg', focus: 'center 35%' },
-  { name: 'Mihai Petre', photo: 'photos/people/11.jpg', focus: 'center 35%' },
-  { name: 'Alexandra', photo: 'photos/people/12.jpg', focus: 'center 35%' },
-  { name: 'Zoire', photo: 'photos/people/13.jpg', focus: 'center 35%' },
-  { name: 'Fratello', photo: 'photos/people/14.jpg', focus: 'center 35%' },
-  { name: 'Manu', photo: 'photos/people/15.jpg', focus: 'center 35%' },
-  { name: 'Elvis', photo: 'photos/people/16.jpg', focus: 'center 35%' },
+  'Andrica',
+  'Alex',
+  'Lupino',
+  'Paul',
+  'Andrada',
+  'Laur',
+  'Irina',
+  'Florin',
+  'Alina',
+  'Boros',
+  'Mihai Petre',
+  'Alexandra',
+  'Zoire',
+  'Fratello',
+  'Manu',
+  'Elvis',
+]
+
+// ============================================================
+//  THE MEMORIES
+//  The photographs in the pile, kept separate from the names above:
+//  these are group shots, so putting one name on one of them asks
+//  which of the four people in it that is. The names do their work
+//  on the petition and the masthead instead.
+//
+//  Add a photograph by dropping it in public/photos/people/ as the
+//  next number and adding a line here. `caption` is optional: give
+//  it the occasion, not a name, and leave it out for no caption.
+// ============================================================
+export const MEMORIES = [
+  { photo: 'photos/people/01.jpg', focus: 'center 35%' },
+  { photo: 'photos/people/02.jpg', focus: 'center 35%' },
+  { photo: 'photos/people/03.jpg', focus: 'center 35%' },
+  { photo: 'photos/people/04.jpg', focus: 'center 35%' },
+  { photo: 'photos/people/05.jpg', focus: 'center 35%' },
 ]
 
 export const PACK = {
