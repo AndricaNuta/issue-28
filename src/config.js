@@ -144,16 +144,46 @@ export const PACK = {
 }
 
 // ============================================================
-//  YOUR YEAR AHEAD
-//  Three cards she turns over. Deliberately about the year, not about
-//  her personality, so nothing here can land wrong.
+//  THE READING
+//  A three card spread for the year, plus one uninvited extra.
+//  Readings are about the year, not about her character, so nothing
+//  here can land wrong. Edit them freely.
+//  Card art lives in public/photos/tarot/.
 // ============================================================
-export const YEAR = {
+export const TAROT = {
+  kicker: 'The reading',
   title: 'Your Year Ahead',
-  standfirst: 'Three predictions. Our record is excellent and cannot be verified.',
+  standfirst: 'Three cards, drawn for you. Turn them over.',
+  cue: 'turn them over',
   cards: [
-    { label: 'Spring', text: 'You finally book the thing you keep almost booking.' },
-    { label: 'Summer', text: 'A photograph of you from this year becomes the one everyone uses.' },
-    { label: 'Autumn', text: 'Something you have been carrying quietly gets easier, and you notice on an ordinary Tuesday.' },
+    {
+      position: 'Where you are',
+      name: 'Strength',
+      image: 'photos/tarot/strength.jpg',
+      reading:
+        'You have been carrying everything, and doing it gently. The card is not about force. It says you may put some of it down.',
+    },
+    {
+      position: 'What carries you',
+      name: 'The Empress',
+      image: 'photos/tarot/empress.jpg',
+      reading:
+        'Everything around you grows because you tend it. Sixteen people are proof. Let some of that care point back at you this year.',
+    },
+    {
+      position: 'What is coming',
+      name: 'The Sun',
+      image: 'photos/tarot/sun.jpg',
+      reading:
+        'It gets easier. Not all at once, and not because you earned it by being perfect. Twenty-eight is a warm one.',
+    },
   ],
+  bonus: {
+    position: 'Uninvited',
+    name: 'The Finger',
+    image: 'photos/tarot/finger.jpg',
+    intro: 'The deck insisted on one more.',
+    reading:
+      'For anybody who gives you grief this year. Drawn on your behalf, by all sixteen of us.',
+  },
 }

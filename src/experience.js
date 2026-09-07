@@ -12,7 +12,7 @@ export const PAGES = {
   pass: { no: 2 },
   contents: { no: 3 },
   plan: { no: 4, title: 'The 28-Day Plan', note: 'The programme you asked for.' },
-  year: { no: 6, title: 'Your Year Ahead', note: 'Three predictions, unverifiable.' },
+  year: { no: 6, title: 'The Reading', note: 'Three cards for the year ahead.' },
   bag: { no: 8, title: 'The Cover Shoot', note: 'Bring your shoulder.', redacted: true },
   pack: { no: 10, title: 'Sixteen Wishes', note: 'Everyone had something to say.' },
   spa: { no: 12, title: 'Advertorial', note: 'Sixty compulsory minutes.', redacted: true },
