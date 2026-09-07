@@ -45,8 +45,8 @@ export default function Close() {
       <Rule style={{ marginTop: 22, marginBottom: 18 }} />
 
       <p style={{ fontSize: 14.5, lineHeight: 1.65, color: 'var(--ink-60)' }}>
-        Two gifts, sixteen people, one very good year ahead. Whatever you tick off, we are
-        coming with you.
+        Two gifts, one very good year ahead. Whatever you tick off, we are coming with
+        you.
       </p>
 
       <div className="mt-7 flex flex-col items-center gap-3">

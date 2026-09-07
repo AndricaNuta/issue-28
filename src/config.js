@@ -114,7 +114,7 @@ export const CONFIG = {
     petitionDemand:
       'lie down for sixty consecutive minutes, phone in another room, answering to nobody',
     petitionStamp: 'Granted',
-    petitionNote: 'Signed by all sixteen of us, and non-negotiable.',
+    petitionNote: 'Signed by everyone below, and non-negotiable.',
   },
 
   // --- Sign-off ---
@@ -240,6 +240,6 @@ export const TAROT = {
     image: 'photos/tarot/finger.jpg',
     intro: 'The deck insisted on one more.',
     reading:
-      'For anybody who gives you grief this year. Drawn on your behalf, by all sixteen of us.',
+      'For anybody who gives you grief this year. Drawn on your behalf.',
   },
 }

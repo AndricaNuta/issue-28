@@ -47,11 +47,21 @@ export default function Pack() {
   const { next } = useExperience()
   const [step, setStep] = useState('empty') // empty · deck
   const [i, setI] = useState(0)
+  // True for the first moment of the deck, so the photographs can be animated
+  // up out of the bag instead of simply being there. Refills after that use
+  // the ordinary settle.
+  const [emerging, setEmerging] = useState(false)
   const all = useMemo(() => PEOPLE.map((p, idx) => ({ ...p, id: idx })), [])
   const done = step === 'deck' && i >= all.length
   // Only the page turn goes in the navigation slot; filling the bag is an
   // action and gets a labelled button of its own, next to the bag.
   useCta(done ? { onClick: next } : null, [done, next])
+
+  const openDeck = () => {
+    setStep('deck')
+    setEmerging(true)
+    setTimeout(() => setEmerging(false), 1200)
+  }
 
   // ---------- the bag, empty ----------
   // Arriving straight at a deck of photographs after the reveal was abrupt:
@@ -79,7 +89,7 @@ export default function Pack() {
         </motion.div>
 
         <div className="flex justify-center mt-2">
-          <Action onClick={() => setStep('deck')} label={PACK.emptyCta} icon="plus" delay={0.5} />
+          <Action onClick={openDeck} label={PACK.emptyCta} icon="plus" delay={0.5} />
         </div>
       </div>
     )
@@ -147,7 +157,7 @@ export default function Pack() {
   return (
     <div className="w-full max-w-[380px] mx-auto">
       <div className="flex items-baseline justify-between">
-        <Kicker>Sixteen of us</Kicker>
+        <Kicker>Our memories</Kicker>
         <span className="kicker" style={{ color: 'var(--ink-40)' }}>
           {i + 1} / {all.length}
         </span>
@@ -187,7 +197,17 @@ export default function Pack() {
                     if (!isTop) return
                     if (Math.hypot(info.offset.x, info.offset.y) > FLICK) advance()
                   }}
-                  initial={{ opacity: 0, scale: 0.94 }}
+                  initial={
+                    emerging
+                      ? {
+                          // out of the mouth of the bag, which sat below
+                          opacity: 0,
+                          y: 300,
+                          scale: 0.4,
+                          rotate: p.id % 2 ? 26 : -26,
+                        }
+                      : { opacity: 0, scale: 0.94 }
+                  }
                   animate={{
                     opacity: 1,
                     scale: 1 - depth * 0.02,
@@ -202,7 +222,11 @@ export default function Pack() {
                     opacity: 0,
                     transition: { duration: 0.38 },
                   }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 22 }}
+                  transition={
+                    emerging
+                      ? { type: 'spring', stiffness: 120, damping: 15, delay: (3 - depth) * 0.13 }
+                      : { type: 'spring', stiffness: 200, damping: 22 }
+                  }
                   whileDrag={{ scale: 1.03 }}
                 >
                   <Polaroid person={p} dragging={isTop} />
