@@ -15,7 +15,7 @@ export const CONFIG = {
   issueDate: 'September 2026',
   edition: 'Special birthday edition',
   // Printed down the left of the cover, magazine style.
-  coverLines: ['Our memories', 'The 28-day plan', 'Your year ahead'],
+  coverLines: ['The year in review', 'Tarot reading', 'Special sections'],
   // For her access pass on the entry page. Keep it short and funny.
   occupation: 'CEO',
   // Printed along the foot of the pass.
@@ -159,6 +159,9 @@ export const DIVIDERS = {
 //  They are the actual gift on this page.
 // ============================================================
 export const PLAN = {
+  // The list is her own birthday wishes, so the page is framed as the review
+  // of the year in which she was going to do them.
+  title: 'Year in Review',
   standfirst:
     'We know all you wanted for your birthday this year was to get fit, put your life in order and other Virgo-like wishes.',
   items: [

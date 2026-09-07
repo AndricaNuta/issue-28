@@ -80,7 +80,10 @@ export default function Plan() {
 
   return (
     <div className="w-full max-w-[380px] mx-auto">
-      <p className="display" style={{ fontSize: 24, lineHeight: 1.32, fontWeight: 400 }}>
+      <h1 className="display" style={{ fontSize: 38, lineHeight: 1.05 }}>
+        {PLAN.title}
+      </h1>
+      <p className="mt-3" style={{ fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-60)' }}>
         {PLAN.standfirst}
       </p>
 
