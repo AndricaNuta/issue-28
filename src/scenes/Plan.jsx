@@ -1,24 +1,59 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
 import { PLAN } from '../config.js'
 import { Kicker, Rule } from '../components/Paper.jsx'
 
-// Her actual wish for this year, printed as the programme she asked for. The
-// last line arrives already ticked and will not come off, which is the whole
-// argument of the page, made as a mechanic rather than a speech.
-function Tick({ show }) {
+// Her wish, printed as the programme she asked for, then struck out with a red
+// pen. One tap does the whole page. It used to be six checkboxes followed by a
+// paragraph explaining the joke, which is a lecture with homework attached.
+
+// A hand-drawn strike: slightly off-level and bowed, so it reads as a pen
+// rather than a text-decoration.
+function Strike({ show, delay = 0, seed = 0 }) {
+  const dip = 2 + (seed % 3)
+  const lift = (seed % 2 ? 1 : -1) * 1.5
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+    <svg
+      className="absolute pointer-events-none"
+      style={{ left: -6, right: -6, top: '50%', height: 16, width: 'calc(100% + 12px)', transform: 'translateY(-50%)' }}
+      viewBox="0 0 300 16"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
       <motion.path
-        d="M3.5 10.5 L7.5 14.5 L16.5 4.5"
+        d={`M2 ${8 + lift} Q150 ${8 + lift + dip} 298 ${8 - lift}`}
         fill="none"
         stroke="var(--accent)"
-        strokeWidth="1.9"
+        strokeWidth="2.2"
         strokeLinecap="round"
         initial={{ pathLength: 0, opacity: 0 }}
         animate={{ pathLength: show ? 1 : 0, opacity: show ? 1 : 0 }}
-        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.34, delay, ease: [0.4, 0, 0.3, 1] }}
+      />
+    </svg>
+  )
+}
+
+// The one line the pen spares gets underlined instead.
+function Underline({ show, delay = 0 }) {
+  return (
+    <svg
+      className="absolute pointer-events-none"
+      style={{ left: -4, bottom: -7, height: 12, width: 'calc(100% + 8px)' }}
+      viewBox="0 0 300 12"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <motion.path
+        d="M3 7 Q150 2 297 6"
+        fill="none"
+        stroke="var(--accent)"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: show ? 1 : 0, opacity: show ? 1 : 0 }}
+        transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
       />
     </svg>
   )
@@ -26,150 +61,121 @@ function Tick({ show }) {
 
 export default function Plan() {
   const { next } = useExperience()
-
-  const lockedIdx = useMemo(
-    () => PLAN.items.map((it, i) => (it.locked ? i : -1)).filter((i) => i >= 0),
-    [],
-  )
-  const [ticked, setTicked] = useState(() => new Set(lockedIdx))
-  const [openQuip, setOpenQuip] = useState(null)
-  const [nudge, setNudge] = useState(null)
-
-  const optional = PLAN.items.map((it, i) => (it.locked ? -1 : i)).filter((i) => i >= 0)
-  const doneCount = optional.filter((i) => ticked.has(i)).length
-  const allDone = doneCount === optional.length
-
-  const toggle = (i) => {
-    const item = PLAN.items[i]
-    setOpenQuip(i)
-    if (item.locked) {
-      setNudge(i)
-      setTimeout(() => setNudge(null), 650)
-      return
-    }
-    setTicked((prev) => {
-      const n = new Set(prev)
-      n.has(i) ? n.delete(i) : n.add(i)
-      return n
-    })
-  }
+  const [struck, setStruck] = useState(false)
+  const lastDelay = PLAN.items.length * 0.16
 
   return (
-    <div className="w-full max-w-[400px] mx-auto">
-      <div className="flex items-baseline justify-between">
-        <Kicker>Wellness</Kicker>
-        <span className="kicker" style={{ color: 'var(--ink-40)' }}>
-          {doneCount} of {optional.length}
-        </span>
-      </div>
-
-      <h1 className="display mt-2" style={{ fontSize: 40 }}>
+    <div className="w-full max-w-[380px] mx-auto">
+      <Kicker>{PLAN.kicker}</Kicker>
+      <h1 className="display mt-2" style={{ fontSize: 42, lineHeight: 1 }}>
         {PLAN.title}
       </h1>
-      <p className="serif-it mt-3" style={{ fontSize: 16, lineHeight: 1.5, color: 'var(--ink-60)' }}>
+      <p className="serif-it mt-3" style={{ fontSize: 16.5, lineHeight: 1.45, color: 'var(--ink-60)' }}>
         {PLAN.standfirst}
       </p>
 
-      <div className="mt-6">
+      {/* the programme. one tap strikes the lot. */}
+      <button
+        onClick={() => setStruck(true)}
+        className="w-full text-left bg-transparent border-0 p-0 mt-6"
+        style={{ cursor: struck ? 'default' : 'pointer' }}
+        aria-label={struck ? 'The plan, struck out' : 'Strike out the plan'}
+      >
         <Rule />
-        {PLAN.items.map((item, i) => {
-          const on = ticked.has(i)
-          const isOpen = openQuip === i
-          return (
-            <div key={i}>
-              <motion.button
-                onClick={() => toggle(i)}
-                className="w-full text-left flex items-start gap-3.5 bg-transparent border-0 cursor-pointer"
-                style={{ padding: '15px 2px' }}
-                animate={nudge === i ? { x: [0, -6, 5, -3, 0] } : { x: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <span
-                  className="relative grid place-items-center shrink-0"
-                  style={{
-                    width: 22,
-                    height: 22,
-                    marginTop: 2,
-                    borderRadius: 2,
-                    boxShadow: `inset 0 0 0 1px ${item.locked ? 'var(--accent)' : 'var(--hair)'}`,
-                    background: item.locked ? 'var(--accent-soft)' : 'transparent',
-                  }}
+        {PLAN.items.map((item, i) => (
+          <div key={i}>
+            <div style={{ padding: '15px 2px' }}>
+              <span className="relative inline-block">
+                <motion.span
+                  className="block"
+                  style={{ fontSize: 16.5, lineHeight: 1.35 }}
+                  animate={{ color: struck ? 'var(--ink-40)' : 'var(--ink)' }}
+                  transition={{ delay: struck ? i * 0.16 : 0, duration: 0.4 }}
                 >
-                  <span className="absolute">
-                    <Tick show={on} />
-                  </span>
-                </span>
-
-                <span className="min-w-0 flex-1">
-                  <span
-                    style={{
-                      fontSize: 16,
-                      fontWeight: item.locked ? 500 : 400,
-                      lineHeight: 1.4,
-                      display: 'inline-block',
-                      color: on && !item.locked ? 'var(--ink-40)' : 'var(--ink)',
-                      textDecorationLine: on && !item.locked ? 'line-through' : 'none',
-                      transition: 'color 0.3s',
-                    }}
-                  >
-                    {item.text}
-                  </span>
-
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.span
-                        className="block serif-it"
-                        style={{
-                          fontSize: 14.5,
-                          color: item.locked ? 'var(--accent)' : 'var(--ink-40)',
-                          marginTop: 3,
-                        }}
-                        initial={{ opacity: 0, y: -3 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0 }}
-                      >
-                        {item.quip}
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </span>
-              </motion.button>
-              <Rule />
+                  {item}
+                </motion.span>
+                <Strike show={struck} delay={i * 0.16} seed={i} />
+              </span>
             </div>
-          )
-        })}
+            <Rule />
+          </div>
+        ))}
+
+        {/* the survivor */}
+        <div style={{ padding: '17px 2px 15px' }}>
+          <span className="relative inline-block">
+            <span className="display block" style={{ fontSize: 21, lineHeight: 1.2 }}>
+              {PLAN.keep}
+            </span>
+            <Underline show={struck} delay={lastDelay + 0.2} />
+          </span>
+        </div>
+        <Rule />
+      </button>
+
+      {/* the cue, and then the margin note in its place */}
+      <div className="mt-5" style={{ minHeight: 74 }}>
+        <AnimatePresence mode="wait">
+          {!struck ? (
+            <motion.div
+              key="cue"
+              className="flex items-center justify-center gap-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.span
+                className="script"
+                style={{ fontSize: 26, color: 'var(--accent)' }}
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                {PLAN.cue}
+              </motion.span>
+              <motion.span
+                style={{ color: 'var(--accent)', fontSize: 17 }}
+                animate={{ y: [0, 4, 0] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                aria-hidden="true"
+              >
+                ↑
+              </motion.span>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="mark"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: lastDelay + 0.5, duration: 0.5 }}
+            >
+              <p
+                className="script"
+                style={{ fontSize: 32, color: 'var(--accent)', transform: 'rotate(-2deg)', lineHeight: 1 }}
+              >
+                {PLAN.mark}
+              </p>
+              <p className="mt-2" style={{ fontSize: 15, lineHeight: 1.55, color: 'var(--ink-60)' }}>
+                {PLAN.signoff}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <AnimatePresence>
-        {allDone && (
+        {struck && (
           <motion.div
-            className="mt-7"
-            initial={{ opacity: 0, y: 16 }}
+            className="mt-4 flex justify-center"
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ delay: lastDelay + 0.9 }}
           >
-            <Kicker>From all sixteen of us</Kicker>
-            <h2 className="display mt-2" style={{ fontSize: 29 }}>
-              {PLAN.payoff.title}
-            </h2>
-            <p className="mt-3" style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-60)' }}>
-              {PLAN.payoff.body}
-            </p>
+            <button className="btn" onClick={next}>
+              Keep reading
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <div className="mt-7 flex flex-col items-center gap-1">
-        {allDone ? (
-          <button className="btn" onClick={next}>
-            Keep reading
-          </button>
-        ) : (
-          <p className="serif-it text-center" style={{ fontSize: 14.5, color: 'var(--ink-40)' }}>
-            Tick everything you are willing to commit to.
-          </p>
-        )}
-      </div>
     </div>
   )
 }

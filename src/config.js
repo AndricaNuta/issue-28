@@ -92,28 +92,29 @@ export const CONFIG = {
 
 // ============================================================
 //  THE 28-DAY PLAN
-//  Her actual birthday wish this year: life in order, clean eating,
-//  the gym, the CEO morning. She ticks these off. The last one is
-//  already ticked and cannot be un-ticked. That is the point.
-//  Edit these lines freely, they should sound like your group.
+//  Her wish this year was to get her life in order: clean eating,
+//  the gym, the CEO morning. So the programme is printed, and then
+//  struck out with a red pen, all but the last line.
+//  Keep the lines short: they have to fit on one row each.
 // ============================================================
 export const PLAN = {
+  kicker: 'Wellness',
   title: 'The 28-Day Plan',
-  standfirst:
-    'You said you wanted your life in order this year. Clean eating, the gym, the CEO morning. Here is the programme.',
+  standfirst: 'You said you wanted your life in order this year.',
+  // Struck out, one after another.
   items: [
-    { text: 'Wake at 5am, radiant, unprompted', quip: 'Filed under fiction.' },
-    { text: 'Gym six times a week', quip: 'We will come twice and complain throughout.' },
-    { text: 'Eat exclusively green things', quip: 'Pistachio gelato is green. We checked.' },
-    { text: 'Build the CEO mindset', quip: 'You already run sixteen people. That is a company.' },
-    { text: '10,000 steps a day', quip: 'Shopping counts. Non-negotiable.' },
-    { text: 'Be loved exactly as you are', quip: 'Completed 28 years ago. Cannot be undone.', locked: true },
+    'Wake at 5am, radiant, unprompted',
+    'Gym six times a week',
+    'Eat exclusively green things',
+    'Build the CEO mindset',
+    '10,000 steps a day',
   ],
-  payoff: {
-    title: 'Here is your wish, granted.',
-    body:
-      'Get fit, eat clean, run the empire, we will be there for all of it. But none of it is the price of anything. You are not a project to be finished. Nothing on that list makes you more loved than you already were.',
-  },
+  // The line that survives the pen.
+  keep: 'Be loved exactly as you are',
+  cue: 'tap it',
+  // Written in the margin in red, after the striking.
+  mark: 'not required',
+  signoff: 'Nothing on that list is the price of anything.',
 }
 
 // ============================================================
