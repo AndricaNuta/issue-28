@@ -96,9 +96,14 @@ export const CONFIG = {
     treatment: 'Gift card',
     duration: '320 lei',
     validUntil: '6 March 2027',
-    code: '47C39-•••••',
-    // The gift card itself, sitting in public/. She can open or save it.
-    pdf: 'voucher.pdf',
+    // Masked on purpose: the repo is public, and the certificate is
+    // transferable, so the full code stays off the site. Enough of it shows
+    // for her to recognise the card you send her.
+    code: '47C39-\u2022\u2022\u2022\u2022\u2022',
+    codeNote: 'Full code on the card itself.',
+    // The PDF is kept out of the repo for the same reason. Set this to
+    // 'voucher.pdf' only if you ever make the repo private.
+    pdf: '',
     site: 'thaicospa.ro',
     openLabel: 'Open the voucher',
     note: 'The only part of the wellness plan that is compulsory.',

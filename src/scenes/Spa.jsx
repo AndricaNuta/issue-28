@@ -292,6 +292,11 @@ export default function Spa() {
                 {v.code ? `Code ${v.code}` : ''}
               </p>
             )}
+            {v.codeNote && (
+              <p className="serif-it" style={{ fontSize: 12.5, color: 'var(--ink-40)', marginTop: 4 }}>
+                {v.codeNote}
+              </p>
+            )}
           </div>
         </div>
 
