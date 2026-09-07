@@ -87,7 +87,9 @@ export const CONFIG = {
     oopsCue: 'wipe it',
 
     title: 'There she is.',
-    body: 'Crocs optional, bag compulsory. Go and be insufferable about it.',
+    // TODO one line here if you want one, in your words. Empty hides it, and
+    // the photograph carries the moment on its own.
+    body: '',
   },
 
   // --- Gift two: the massage voucher (scratch to reveal) ---

@@ -399,9 +399,11 @@ export default function Bag() {
           <h1 className="display mt-2" style={{ fontSize: 40 }}>
             {CONFIG.bag.title}
           </h1>
-          <p className="mt-3" style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-60)' }}>
-            {CONFIG.bag.body}
-          </p>
+          {CONFIG.bag.body && (
+            <p className="mt-3" style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-60)' }}>
+              {CONFIG.bag.body}
+            </p>
+          )}
 
           <div className="mt-7 flex justify-center">
             <Next onClick={next} tone="accent" label="Open it" />
