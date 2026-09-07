@@ -150,13 +150,15 @@ export const DIVIDERS = {
 
 // ============================================================
 //  THE 28-DAY PLAN
-//  Her wish this year was to get fit and put her life in order. The
-//  programme is printed, one tap lifts the whole thing off the page,
-//  and what is left is the only line that matters, alone.
-//  All four pieces of copy below are hers.
+//  Her wish this year was to get fit and put her life in order. One
+//  tap crosses that programme off, and a different list writes itself
+//  in its place: not "you do not need any of this" but "here is what
+//  we would wish for you instead". The reward is something arriving.
+//
+//  TODO the five lines in `ours` are the ones to write yourselves.
+//  They are the actual gift on this page.
 // ============================================================
 export const PLAN = {
-  // Her sentence opens the page: there is no kicker and no title above it.
   standfirst:
     'We know all you wanted for your birthday this year was to get fit, put your life in order and other Virgo-like wishes.',
   items: [
@@ -167,12 +169,19 @@ export const PLAN = {
     '10,000 steps a day',
   ],
   cue: 'tap the list',
-  // Shown once the programme has been crossed off. Crossing them out is a
-  // wish, not a claim, which is why 'we completed them for you' rang false.
+
+  // The turn, in her words, and then our list.
   claim: 'We would gift them to you if we could.',
-  payoff: 'Just so you know, with or without these completed, you are loved exactly as you are.',
-  // Printed in red inside the sentence above. Must appear in it word for word.
-  payoffEmphasis: 'you are loved exactly as you are',
+  ourTitle: 'So here is the list we would write for you.',
+  ours: [
+    'Sleep in on a Tuesday and feel nothing about it',
+    'Eat the bread',
+    'Say no without writing a paragraph first',
+    'Be adored, loudly, by everyone in the room',
+  ],
+  // The last line, given its own weight and underlined in red.
+  finalWish: 'Be loved exactly as you are',
+  finalNote: 'That one is already done.',
 }
 
 // ============================================================
@@ -260,7 +269,7 @@ export const TAROT = {
       name: 'The Empress',
       image: 'photos/tarot/empress.jpg',
       reading:
-        'Startup founder energy. Your name on the thing, your terms, your table. Sex and the City, except you own the apartment.',
+        'Startup founder energy. Your name on the thing, your terms, your table. A Sex and the City kind of year, and the friends are already cast.',
     },
     {
       position: 'What is coming',
@@ -276,6 +285,6 @@ export const TAROT = {
     image: 'photos/tarot/finger.jpg',
     intro: 'The deck insisted on one more.',
     reading:
-      'For anybody who gives you grief this year. Drawn on your behalf.',
+      'For anyone giving bad vibes this year. Drawn on your behalf.',
   },
 }

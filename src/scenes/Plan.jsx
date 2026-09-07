@@ -4,9 +4,13 @@ import { useCta, useExperience } from '../experience.js'
 import { PLAN } from '../config.js'
 import { Rule } from '../components/Paper.jsx'
 
-// Her sentence opens the page. One tap crosses the whole programme off, which
-// is what "completed" looks like on paper: lifting the lines away instead said
-// nothing had happened. Then the page clears and her last line is left alone.
+// Her homework, traded for our list.
+//
+// Every earlier version of this page only ever took something away: the lines
+// were crossed off, then they vanished, and both messages were consolation.
+// Nothing arrived, so there was no reward in it. Now the programme she asked
+// for is crossed off and a different list writes itself into the space, which
+// is a thing being given rather than a thing being removed.
 
 // A hand-drawn strike: off-level and slightly bowed, so it reads as a pen.
 function Strike({ show, delay = 0, seed = 0 }) {
@@ -34,42 +38,62 @@ function Strike({ show, delay = 0, seed = 0 }) {
   )
 }
 
+function Underline({ show, delay = 0 }) {
+  return (
+    <svg
+      className="absolute pointer-events-none"
+      style={{ left: -4, bottom: -8, height: 12, width: 'calc(100% + 8px)' }}
+      viewBox="0 0 300 12"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <motion.path
+        d="M3 7 Q150 2 297 6"
+        fill="none"
+        stroke="var(--accent)"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: show ? 1 : 0, opacity: show ? 1 : 0 }}
+        transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      />
+    </svg>
+  )
+}
+
 export default function Plan() {
   const { next } = useExperience()
-  const [phase, setPhase] = useState('list') // list · struck · truth
+  const [phase, setPhase] = useState('list') // list · struck · ours
   const timers = useRef([])
 
-  useCta(phase === 'truth' ? { onClick: next } : null, [phase, next])
+  useCta(phase === 'ours' ? { onClick: next } : null, [phase, next])
   useEffect(() => () => timers.current.forEach(clearTimeout), [])
 
   const cross = () => {
     if (phase !== 'list') return
     setPhase('struck')
-    timers.current.push(setTimeout(() => setPhase('truth'), 4200))
+    timers.current.push(setTimeout(() => setPhase('ours'), 2600))
   }
 
   const struck = phase !== 'list'
-
-  // Her sentence, with the half that matters printed in red.
-  const [before, after] = PLAN.payoff.split(PLAN.payoffEmphasis)
+  const ours = phase === 'ours'
 
   return (
     <div className="w-full max-w-[380px] mx-auto relative" style={{ minHeight: 560 }}>
       <AnimatePresence>
-        {phase !== 'truth' && (
+        {!ours && (
           <motion.div
             key="programme"
             className="absolute inset-x-0 top-0"
-            exit={{ opacity: 0, transition: { duration: 0.9 } }}
+            exit={{ opacity: 0, y: -16, transition: { duration: 0.7 } }}
           >
-            {/* her sentence, as the opening */}
             <p className="display" style={{ fontSize: 24, lineHeight: 1.32, fontWeight: 400 }}>
               {PLAN.standfirst}
             </p>
 
             <button
               onClick={cross}
-              className="w-full text-left bg-transparent border-0 p-0 mt-6"
+              className="w-full text-left bg-transparent border-0 p-0 mt-5"
               style={{ cursor: phase === 'list' ? 'pointer' : 'default' }}
               aria-label="Cross the programme off"
             >
@@ -94,8 +118,7 @@ export default function Plan() {
               ))}
             </button>
 
-            {/* the cue, and then the wish in its place */}
-            <div className="mt-5 text-center" style={{ minHeight: 82 }}>
+            <div className="mt-5 text-center" style={{ minHeight: 74 }}>
               <AnimatePresence mode="wait">
                 {phase === 'list' ? (
                   <motion.p
@@ -116,7 +139,7 @@ export default function Plan() {
                     style={{ fontSize: 23, lineHeight: 1.3, color: 'var(--accent)' }}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.1, duration: 0.9 }}
+                    transition={{ delay: 1.05, duration: 0.8 }}
                   >
                     {PLAN.claim}
                   </motion.p>
@@ -127,27 +150,71 @@ export default function Plan() {
         )}
       </AnimatePresence>
 
-      {/* what is left, on an empty page */}
+      {/* our list, writing itself into the space the other one left */}
       <AnimatePresence>
-        {phase === 'truth' && (
-          <motion.p
-            key="truth"
-            className="absolute inset-x-0 text-center"
-            style={{ fontSize: 25, lineHeight: 1.45, top: 150 }}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        {ours && (
+          <motion.div
+            key="ours"
+            className="absolute inset-x-0 top-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
           >
-            <span className="serif-it" style={{ color: 'var(--ink-60)' }}>
-              {before}
-            </span>
-            <span className="display" style={{ color: 'var(--accent)' }}>
-              {PLAN.payoffEmphasis}
-            </span>
-            <span className="serif-it" style={{ color: 'var(--ink-60)' }}>
-              {after}
-            </span>
-          </motion.p>
+            <motion.p
+              className="display"
+              style={{ fontSize: 25, lineHeight: 1.3 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45, duration: 0.8 }}
+            >
+              {PLAN.ourTitle}
+            </motion.p>
+
+            <div className="mt-6">
+              <Rule />
+              {PLAN.ours.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -14 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.9 + i * 0.28, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <div className="flex items-baseline gap-3" style={{ padding: '15px 2px' }}>
+                    <span className="numeral shrink-0" style={{ fontSize: 15, color: 'var(--accent)', width: 18 }}>
+                      {i + 1}
+                    </span>
+                    <span style={{ fontSize: 16.5, lineHeight: 1.35 }}>{item}</span>
+                  </div>
+                  <Rule />
+                </motion.div>
+              ))}
+
+              {/* the one that was never anybody's to do */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 + PLAN.ours.length * 0.28 + 0.35, duration: 0.8 }}
+              >
+                <div style={{ padding: '19px 2px 16px' }}>
+                  <span className="relative inline-block">
+                    <span className="display block" style={{ fontSize: 23, lineHeight: 1.2 }}>
+                      {PLAN.finalWish}
+                    </span>
+                    <Underline show delay={0.9 + PLAN.ours.length * 0.28 + 0.8} />
+                  </span>
+                  <motion.p
+                    className="script mt-3"
+                    style={{ fontSize: 18, color: 'var(--accent)' }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.9 + PLAN.ours.length * 0.28 + 1.2, duration: 0.7 }}
+                  >
+                    {PLAN.finalNote}
+                  </motion.p>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
