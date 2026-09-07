@@ -47,7 +47,7 @@ export const CONFIG = {
   // A wish dropped inside this circle goes in. Generous on purpose.
   bagMouth: { x: 46, y: 55, r: 30 },
 
-  // --- Where the bag has to land (the cover shoot) ---
+  // --- Where the bag has to land when she tries it on ---
   // Percentages of the photo frame. Open the page with `npm run dev` and drag
   // the bag around: a readout under it prints the coordinates. Copy them here.
   bagTarget: {
