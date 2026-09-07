@@ -25,10 +25,18 @@ function Polaroid({ memory, style, dragging, playing = false }) {
     const v = videoRef.current
     if (!v) return
     if (playing) {
-      v.play().catch(() => {})
+      // With sound where the browser allows it. She has tapped her way here,
+      // so the page has the user activation unmuted playback requires; when
+      // it is refused anyway, fall back to muted rather than to nothing.
+      v.muted = false
+      v.play().catch(() => {
+        v.muted = true
+        v.play().catch(() => {})
+      })
     } else {
       v.pause()
       v.currentTime = 0
+      v.muted = true
     }
   }, [playing])
 
@@ -48,7 +56,6 @@ function Polaroid({ memory, style, dragging, playing = false }) {
           ref={videoRef}
           src={import.meta.env.BASE_URL + memory.video}
           poster={import.meta.env.BASE_URL + memory.photo}
-          muted
           loop
           playsInline
           preload="auto"
