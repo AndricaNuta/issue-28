@@ -17,7 +17,7 @@ export const CONFIG = {
   // Printed down the left of the cover, magazine style.
   coverLines: ["What's in her bag?", 'The 28-day plan', 'Your year ahead'],
   // For her access pass on the entry page. Keep it short and funny.
-  occupation: 'Birthday girl',   // TODO
+  occupation: 'CEO',
   // Printed along the foot of the pass.
   passStatus: 'Trial adulting',
 
@@ -94,11 +94,15 @@ export const CONFIG = {
 
   // --- Gift two: the massage voucher (scratch to reveal) ---
   voucher: {
-    place: 'PLACE HERE',            // TODO spa or salon
-    treatment: 'Full body massage', // TODO
-    duration: '60 minutes',         // TODO
-    validUntil: '',                 // TODO e.g. '31 March 2027'. '' hides it.
-    code: '',                       // TODO voucher code. '' hides it.
+    place: 'THAIco SPA',
+    treatment: 'Gift card',
+    duration: '320 lei',
+    validUntil: '6 March 2027',
+    code: '47C39-•••••',
+    // The gift card itself, sitting in public/. She can open or save it.
+    pdf: 'voucher.pdf',
+    site: 'thaicospa.ro',
+    openLabel: 'Open the voucher',
     note: 'The only part of the wellness plan that is compulsory.',
 
     // --- Why this gift, before the reveal. Edit freely, this is the sincere bit. ---
@@ -178,13 +182,24 @@ export const PLAN = {
 //  for a photograph with no caption.
 //  TODO replace all sixteen names.
 // ============================================================
-export const PEOPLE = Array.from({ length: 16 }, (_, i) => ({
-  name: `Person ${i + 1}`,
-  photo: `photos/people/${String(i + 1).padStart(2, '0')}.jpg`,
-  // Which part of the photo the square polaroid window shows. Handy for group
-  // shots: 'center 20%' pulls it up, 'left center' pulls it left.
-  focus: 'center 35%',
-}))
+export const PEOPLE = [
+  { name: 'Andrica', photo: 'photos/people/01.jpg', focus: 'center 35%' },
+  { name: 'Alex', photo: 'photos/people/02.jpg', focus: 'center 35%' },
+  { name: 'Lupino', photo: 'photos/people/03.jpg', focus: 'center 35%' },
+  { name: 'Paul', photo: 'photos/people/04.jpg', focus: 'center 35%' },
+  { name: 'Andrada', photo: 'photos/people/05.jpg', focus: 'center 35%' },
+  { name: 'Laur', photo: 'photos/people/06.jpg', focus: 'center 35%' },
+  { name: 'Irina', photo: 'photos/people/07.jpg', focus: 'center 35%' },
+  { name: 'Florin', photo: 'photos/people/08.jpg', focus: 'center 35%' },
+  { name: 'Alina', photo: 'photos/people/09.jpg', focus: 'center 35%' },
+  { name: 'Boros', photo: 'photos/people/10.jpg', focus: 'center 35%' },
+  { name: 'Mihai Petre', photo: 'photos/people/11.jpg', focus: 'center 35%' },
+  { name: 'Alexandra', photo: 'photos/people/12.jpg', focus: 'center 35%' },
+  { name: 'Zoire', photo: 'photos/people/13.jpg', focus: 'center 35%' },
+  { name: 'Fratello', photo: 'photos/people/14.jpg', focus: 'center 35%' },
+  { name: 'Manu', photo: 'photos/people/15.jpg', focus: 'center 35%' },
+  { name: 'Elvis', photo: 'photos/people/16.jpg', focus: 'center 35%' },
+]
 
 export const PACK = {
   // Step one: the bag, empty.

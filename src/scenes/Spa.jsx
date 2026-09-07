@@ -299,7 +299,7 @@ export default function Spa() {
       </div>
 
       <div className="flex items-end justify-between mt-5">
-        <Barcode width={72} height={20} seed={91} label="ONE VOUCHER · NON-TRANSFERABLE" />
+        <Barcode width={72} height={20} seed={91} label={`ONE VOUCHER · ${v.site || ''}`} />
         {!revealed && (
           <button className="link" onClick={finish}>
             just reveal it
@@ -314,6 +314,55 @@ export default function Spa() {
               Book it. Actually book it, do not save it for a better week. There is never a
               better week.
             </p>
+
+            {/* the actual gift card, to open or to keep */}
+            {v.pdf && (
+              <div className="flex justify-center mt-6">
+                <motion.a
+                  href={import.meta.env.BASE_URL + v.pdf}
+                  target="_blank"
+                  rel="noreferrer"
+                  download
+                  className="flex items-center gap-2.5"
+                  style={{
+                    background: 'var(--accent)',
+                    color: '#F6F1E8',
+                    borderRadius: 999,
+                    padding: '14px 24px 14px 20px',
+                    textDecoration: 'none',
+                    boxShadow: '0 8px 22px rgba(181,52,42,0.3)',
+                  }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.45, duration: 0.5 }}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <span className="grid place-items-center" style={{ width: 22, height: 22 }} aria-hidden="true">
+                    <svg width="20" height="16" viewBox="0 0 22 17">
+                      <path
+                        d="M1.5 4.5 A2 2 0 0 0 1.5 12.5 V15.5 H20.5 V12.5 A2 2 0 0 1 20.5 4.5 V1.5 H1.5 Z"
+                        fill="none"
+                        stroke="#F6F1E8"
+                        strokeWidth="1.5"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-sans)',
+                      fontWeight: 600,
+                      fontSize: 11.5,
+                      letterSpacing: '0.16em',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    {v.openLabel}
+                  </span>
+                </motion.a>
+              </div>
+            )}
             <div className="mt-6 flex justify-center">
               <Next onClick={next} label="Last page" />
             </div>
