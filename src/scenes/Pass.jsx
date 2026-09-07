@@ -81,7 +81,7 @@ export default function Pass() {
           <h1
             style={{
               fontFamily: 'Figtree, system-ui, sans-serif',
-              fontWeight: 700,
+              fontWeight: 600,
               fontSize: 27,
               lineHeight: 0.98,
               letterSpacing: '-0.035em',

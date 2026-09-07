@@ -23,8 +23,9 @@
   --font-display: 'Instrument Sans', system-ui, sans-serif;
   --font-script: 'Instrument Sans', system-ui, sans-serif;
   --font-sans: 'Instrument Sans', system-ui, sans-serif;
+  /* Three styles in total: regular, semibold, and regular italic. */
   --display-weight: 600;
-  --masthead-weight: 700;
+  --masthead-weight: 600;
 }
 
 * { -webkit-tap-highlight-color: transparent; }
@@ -94,7 +95,7 @@ body {
   font-size: 10.5px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .numeral {
@@ -126,7 +127,7 @@ body {
 /* ---------- Buttons ---------- */
 .btn {
   font-family: var(--font-sans);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;

@@ -57,7 +57,7 @@ export default function Action({ onClick, label, icon = 'hand', delay = 0 }) {
       <span
         style={{
           fontFamily: 'var(--font-sans)',
-          fontWeight: 700,
+          fontWeight: 600,
           fontSize: 11.5,
           letterSpacing: '0.16em',
           textTransform: 'uppercase',
