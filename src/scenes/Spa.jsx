@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience } from '../experience.js'
 import { CONFIG } from '../config.js'
-import { Barcode, Kicker, Rule } from '../components/Paper.jsx'
+import { Barcode, Kicker, Photo, Rule } from '../components/Paper.jsx'
 
 // GIFT TWO, printed as the advertorial at the back, under a scratch panel.
 const W = 320
@@ -107,7 +107,22 @@ export default function Spa() {
         {v.note}
       </p>
 
-      <Rule style={{ marginTop: 20, marginBottom: 18 }} />
+      {/* the advertorial photograph */}
+      <div className="mt-5">
+        <Photo
+          src={CONFIG.photos.mask}
+          alt="Mid-treatment"
+          placeholder="MASK PHOTO"
+          objectPosition="center 30%"
+          className="w-full block"
+          style={{ aspectRatio: '4 / 3', borderRadius: 2 }}
+        />
+        <p className="mt-2" style={{ fontSize: 11.5, color: 'var(--ink-40)', lineHeight: 1.45 }}>
+          {v.caption}
+        </p>
+      </div>
+
+      <Rule style={{ marginTop: 18, marginBottom: 18 }} />
 
       <div className="relative w-full" style={{ aspectRatio: `${W} / ${H}` }}>
         <div

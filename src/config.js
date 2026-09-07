@@ -27,6 +27,8 @@ export const CONFIG = {
     bag: 'photos/bag.png',
     // The same bag open from above. This is what she packs the wishes into.
     bagOpen: 'photos/bag-open.png',
+    // Her mid sheet-mask, for the spa advertorial. Funny on purpose.
+    mask: 'photos/mask.jpg',
   },
 
   // Where the mouth of the open bag sits, as percentages of that photo.
@@ -62,6 +64,8 @@ export const CONFIG = {
     validUntil: '',                 // TODO e.g. '31 March 2027'. '' hides it.
     code: '',                       // TODO voucher code. '' hides it.
     note: 'The only part of the wellness plan that is compulsory.',
+    // Printed under the photograph, in the voice of a real advertorial.
+    caption: 'Our model, mid-treatment. Results as pictured.',
   },
 
   // --- Sign-off ---

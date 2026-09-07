@@ -112,16 +112,20 @@ export default function App() {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.42, ease: [0.36, 0.06, 0.2, 1] }}
-                className="absolute inset-0 flex items-center justify-center overflow-y-auto overflow-x-hidden no-scrollbar"
+                className="absolute inset-0 overflow-y-auto overflow-x-hidden no-scrollbar"
                 style={{
-                  padding: '64px 22px max(34px, env(safe-area-inset-bottom))',
                   transformOrigin: dir > 0 ? 'left center' : 'right center',
                   transformStyle: 'preserve-3d',
                   backfaceVisibility: 'hidden',
                   willChange: 'transform, opacity',
                 }}
               >
-                <Active />
+                <div
+                  className="min-h-full flex items-center justify-center"
+                  style={{ padding: '68px 22px max(34px, env(safe-area-inset-bottom))' }}
+                >
+                  <Active />
+                </div>
               </motion.section>
             </AnimatePresence>
           </div>
