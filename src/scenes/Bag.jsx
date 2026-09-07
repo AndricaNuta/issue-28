@@ -4,6 +4,7 @@ import { useExperience } from '../experience.js'
 import { CONFIG } from '../config.js'
 import { frameDistance, usePointerDrag } from '../lib/drag.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
+import Action from '../components/Action.jsx'
 import Next from '../components/Next.jsx'
 
 // GIFT ONE, in four beats: why, the drag onto her shoulder in the glossy shot,
@@ -258,7 +259,7 @@ export default function Bag() {
         </p>
 
         <div className="mt-7 flex justify-center">
-          <Next onClick={() => setStep('drag')} tone="accent" icon="hand" label={CONFIG.bag.task} />
+          <Action onClick={() => setStep('drag')} label={CONFIG.bag.task} icon="hand" delay={0.2} />
         </div>
       </div>
     )

@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience, useCta } from '../experience.js'
 import { CONFIG, PACK, PEOPLE } from '../config.js'
 import { Kicker, Photo, Rule } from '../components/Paper.jsx'
+import Action from '../components/Action.jsx'
 
 // A pile of photographs, the way they actually come out of a drawer: overlapping,
 // at angles, top one first. She flicks through. Dragging each one into the bag
@@ -48,14 +49,9 @@ export default function Pack() {
   const [i, setI] = useState(0)
   const all = useMemo(() => PEOPLE.map((p, idx) => ({ ...p, id: idx })), [])
   const done = step === 'deck' && i >= all.length
-  useCta(
-    step === 'empty'
-      ? { onClick: () => setStep('deck'), tone: 'accent', label: PACK.emptyCta, icon: 'hand' }
-      : done
-        ? { onClick: next, tone: 'accent' }
-        : null,
-    [step, done, next],
-  )
+  // Only the page turn goes in the navigation slot; filling the bag is an
+  // action and gets a labelled button of its own, next to the bag.
+  useCta(done ? { onClick: next } : null, [done, next])
 
   // ---------- the bag, empty ----------
   // Arriving straight at a deck of photographs after the reveal was abrupt:
@@ -81,6 +77,10 @@ export default function Pack() {
             style={{ aspectRatio: '779 / 900', objectFit: 'contain' }}
           />
         </motion.div>
+
+        <div className="flex justify-center mt-2">
+          <Action onClick={() => setStep('deck')} label={PACK.emptyCta} icon="plus" delay={0.5} />
+        </div>
       </div>
     )
   }

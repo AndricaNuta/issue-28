@@ -4,6 +4,7 @@ import { useExperience } from '../experience.js'
 import { CONFIG, PEOPLE } from '../config.js'
 import { Barcode, Kicker, Photo, Rule } from '../components/Paper.jsx'
 import Next from '../components/Next.jsx'
+import Action from '../components/Action.jsx'
 
 // GIFT TWO, in three beats. The scratch card used to arrive with no reason
 // behind it, which made an hour of massage look like a coupon. Now it is: why
@@ -241,7 +242,7 @@ export default function Spa() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.6 }}
         >
-          <Next onClick={() => setStep('card')} tone="accent" label="Claim it" />
+          <Action onClick={() => setStep('card')} label="Claim it" icon="ticket" delay={0.2} />
         </motion.div>
       </div>
     )
