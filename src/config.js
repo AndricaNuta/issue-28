@@ -30,6 +30,8 @@ export const CONFIG = {
     bagOpen: 'photos/bag-open.png',
     // Her mid sheet-mask, for the spa advertorial. Funny on purpose.
     mask: 'photos/mask.jpg',
+    // A childhood photograph, for the "this is who turns 28" pass.
+    baby: 'photos/baby.jpg',
   },
 
   // Where the mouth of the open bag sits, as percentages of that photo.

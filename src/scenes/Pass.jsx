@@ -95,10 +95,10 @@ export default function Pass() {
           <div className="mt-4 flex justify-center">
             <div style={{ width: '74%' }}>
               <Photo
-                src={CONFIG.photos.her}
+                src={CONFIG.photos.baby}
                 alt={CONFIG.name}
-                placeholder="HER PHOTO"
-                objectPosition="center 22%"
+                placeholder="CHILDHOOD PHOTO"
+                objectPosition="center 45%"
                 className="w-full block"
                 style={{ aspectRatio: '1 / 1', borderRadius: 1 }}
               />
@@ -128,7 +128,7 @@ export default function Pass() {
         transition={{ delay: 0.5, duration: 0.6 }}
       >
         <p className="serif-it text-center" style={{ fontSize: 16, color: 'var(--ink-60)', maxWidth: '20em' }}>
-          Wear it at all times. There are three things to do and two things to keep.
+          Wear it at all times. Read to the back, where two of the pages are yours to keep.
         </p>
         <button className="btn" onClick={() => next()}>
           Enter the issue
