@@ -77,7 +77,9 @@ export const CONFIG = {
     introBody: 'The one you kept going back to look at. It is not a browser tab any more.',
     // It has been ordered but has not landed yet, so the page says so.
     status: "It's on its way",
-    task: 'Put it on her shoulder',
+    task: 'Try it on',
+    // The instruction once she is on the drag itself.
+    dragHint: 'Drag it onto her shoulder',
 
     // After it lands on the glossy shot: the joke, and the wipe.
     oopsTitle: 'Hm. Too much.',

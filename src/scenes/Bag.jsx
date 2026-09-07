@@ -422,7 +422,7 @@ export default function Bag() {
       </div>
 
       <p className="mt-2" style={{ fontSize: 14, lineHeight: 1.5, color: 'var(--ink-60)' }}>
-        {CONFIG.bag.task}.
+        {CONFIG.bag.dragHint}.
       </p>
 
       <div ref={frameRef} className="relative w-full mt-4" style={{ borderRadius: 3, overflow: 'hidden' }}>
@@ -511,7 +511,7 @@ export default function Bag() {
         ) : (
           <>
             <p style={{ fontSize: 14, color: msg ? 'var(--accent)' : 'var(--ink-40)' }}>
-              {msg || 'Drag it up onto her shoulder.'}
+              {msg || `${CONFIG.bag.dragHint}.`}
             </p>
             {attempts >= 3 && (
               <button className="link" onClick={placeForHer}>
