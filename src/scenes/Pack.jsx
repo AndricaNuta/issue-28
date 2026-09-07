@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useExperience, useCta } from '../experience.js'
 import { CONFIG, MEMORIES, PACK } from '../config.js'
@@ -15,6 +15,23 @@ const tiltFor = (i) => ((i * 37) % 15) - 7
 const offsetFor = (i) => ({ x: ((i * 53) % 17) - 8, y: ((i * 29) % 13) - 6 })
 
 function Polaroid({ memory, style, dragging, playing = false }) {
+  const videoRef = useRef(null)
+
+  // A clip has to be started and stopped by hand. The autoplay attribute is
+  // only read when the element loads, and these mount at the back of the pile
+  // where they are not playing yet, so by the time a card reaches the top
+  // flipping the attribute does nothing at all.
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    if (playing) {
+      v.play().catch(() => {})
+    } else {
+      v.pause()
+      v.currentTime = 0
+    }
+  }, [playing])
+
   return (
     <div
       style={{
@@ -28,13 +45,13 @@ function Polaroid({ memory, style, dragging, playing = false }) {
         // Muted and looping, and only while it is the card on top: several
         // clips decoding at once for the sake of the pile behind is waste.
         <video
+          ref={videoRef}
           src={import.meta.env.BASE_URL + memory.video}
           poster={import.meta.env.BASE_URL + memory.photo}
           muted
           loop
           playsInline
-          autoPlay={playing}
-          preload={playing ? 'auto' : 'metadata'}
+          preload="auto"
           className="w-full block"
           style={{ aspectRatio: '1 / 1', objectFit: 'cover', objectPosition: memory.focus || 'center 35%' }}
         />
